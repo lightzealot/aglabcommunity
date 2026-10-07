@@ -13,6 +13,8 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV ENABLE_JOBS=true
 COPY --from=build /app/package*.json ./
+# next start necesita la config en runtime (p. ej. el límite de subidas de las acciones del servidor)
+COPY --from=build /app/next.config.ts ./
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/.next ./.next
 COPY --from=build /app/public ./public
