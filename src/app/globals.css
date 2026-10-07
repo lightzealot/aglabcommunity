@@ -1,26 +1,104 @@
 @import "tailwindcss";
 
+/* Tokens tomados de andresgomez.store */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #ffffff;
+  --tint: #f2f7ff;
+  --sidebar: #f9f9f9;
+  --ink: #0d0d0d;
+  --ash: #5d5d5d;
+  --hollow: #8f8f8f;
+  --hairline: rgba(0, 0, 0, 0.1);
+  --veil: rgba(0, 0, 0, 0.05);
+  --accent: #1961d5;
+  --accent-soft: #e6eefc;
+  --radius: 10px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-paper: var(--paper);
+  --color-tint: var(--tint);
+  --color-sidebar: var(--sidebar);
+  --color-ink: var(--ink);
+  --color-ash: var(--ash);
+  --color-hollow: var(--hollow);
+  --color-hairline: var(--hairline);
+  --color-veil: var(--veil);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --font-display: var(--font-barlow), sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--tint);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+
+@layer components {
+  .display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 0.95;
+  }
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+  }
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 4px;
+    padding: 0.7rem 1.1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.15s, background 0.15s;
+    border: 1px solid transparent;
+  }
+  .btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+  .btn-ghost {
+    background: var(--paper);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .btn-ghost:hover:not(:disabled) {
+    background: var(--accent-soft);
+  }
+  .input {
+    width: 100%;
+    border: 1px solid var(--hairline);
+    border-radius: 4px;
+    background: var(--paper);
+    padding: 0.7rem 0.85rem;
+    font-size: 0.9375rem;
+    outline: none;
+  }
+  .input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
 }
