@@ -3,13 +3,18 @@
 import { authClient } from "@/lib/auth-client";
 
 export function GoogleButton() {
-  if (process.env.NEXT_PUBLIC_GOOGLE_ENABLED !== "true") return null;
   return (
     <>
       <button
         type="button"
         className="btn btn-ghost w-full"
-        onClick={() => authClient.signIn.social({ provider: "google", callbackURL: "/" })}
+        onClick={() =>
+          authClient.signIn.social({
+            provider: "google",
+            callbackURL: "/",
+            errorCallbackURL: "/login?error=google",
+          })
+        }
       >
         Continuar con Google
       </button>

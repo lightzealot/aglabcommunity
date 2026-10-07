@@ -39,8 +39,8 @@ Activa los **backups** del servicio (programados) y guarda una copia fuera del V
 | `UPLOAD_DIR` | `/app/uploads` |
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | opcionales, ver abajo |
 
-> `NEXT_PUBLIC_GOOGLE_ENABLED` se fija **al construir**. Si activas Google, ponla en `true`
-> como *build argument* / variable de build en EasyPanel y reconstruye.
+> El botón de Google aparece solo cuando `GOOGLE_CLIENT_ID` y `GOOGLE_CLIENT_SECRET` están definidos
+> en el servidor; basta con guardarlos y desplegar. No hay que tocar nada más.
 
 ## 5. Primer arranque
 1. Abre `https://comunidad.andresgomez.store/registro` y regístrate con el correo de `ADMIN_EMAIL`:
@@ -49,9 +49,13 @@ Activa los **backups** del servicio (programados) y guarda una copia fuera del V
 3. Escribe a otra cuenta de prueba para confirmar que llega el correo de aviso.
 
 ## Google (opcional)
-En Google Cloud Console → Credenciales → ID de cliente OAuth (aplicación web):
-- Origen autorizado: `https://comunidad.andresgomez.store`
-- URI de redirección: `https://comunidad.andresgomez.store/api/auth/callback/google`
+1. [console.cloud.google.com](https://console.cloud.google.com) → crea un proyecto (p. ej. "AG Lab").
+2. **Google Auth Platform → Branding:** nombre de la app `AG Lab`, correo de soporte, dominio autorizado `andresgomez.store`.
+3. **Audience:** tipo *External* y, cuando termines de probar, pulsa **Publish app** (en modo "Testing" solo entran los usuarios de prueba y la sesión caduca a los 7 días). Con los permisos básicos (correo y perfil) no pide verificación.
+4. **Clients → Create client → Web application:**
+   - Authorized JavaScript origins: `https://comunidad.andresgomez.store`
+   - Authorized redirect URIs: `https://comunidad.andresgomez.store/api/auth/callback/google`
+5. Copia el **Client ID** y el **Client secret** a las variables `GOOGLE_CLIENT_ID` y `GOOGLE_CLIENT_SECRET` de la app en EasyPanel, guarda y despliega.
 
 ## Mantenimiento
 - **Actualizar:** `git push` y vuelve a desplegar. Las migraciones se aplican solas.

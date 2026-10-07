@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
 import { db, schema } from "@/db";
+import { isGoogleEnabled } from "@/lib/google";
 import { emailLayout, sendMail } from "@/lib/mail";
 
 const adminEmails = (process.env.ADMIN_EMAIL ?? "")
@@ -9,7 +10,7 @@ const adminEmails = (process.env.ADMIN_EMAIL ?? "")
   .map((e) => e.trim().toLowerCase())
   .filter(Boolean);
 
-const googleEnabled = !!(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET);
+const googleEnabled = isGoogleEnabled();
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, { provider: "pg", schema }),

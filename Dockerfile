@@ -3,9 +3,6 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 COPY . .
-# Se puede cambiar desde EasyPanel como build argument
-ARG NEXT_PUBLIC_GOOGLE_ENABLED=false
-ENV NEXT_PUBLIC_GOOGLE_ENABLED=$NEXT_PUBLIC_GOOGLE_ENABLED
 RUN npm run build && npm prune --omit=dev
 
 FROM node:22-alpine
