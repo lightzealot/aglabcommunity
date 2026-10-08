@@ -50,6 +50,12 @@ try {
     await client.query("commit");
     console.log(`[seed-cursos] ${courses.length} cursos y ${lessons} lecciones creados`);
   }
+  // Siempre (sin importar la guarda): si los cursos ya se cargaron con la portada provisional .png,
+  // la cambia por la definitiva .webp. Solo toca cursos que aún tienen esa portada exacta.
+  for (const c of courses) {
+    const old = c.cover.replace(/\.webp$/, ".png");
+    if (old !== c.cover) await client.query("update course set cover_url = $1 where cover_url = $2", [c.cover, old]);
+  }
 } catch (e) {
   await client.query("rollback").catch(() => {});
   console.error("[seed-cursos] falló, no se cargó nada:", e);

@@ -4,7 +4,7 @@
    "slug": "claude-basico",
    "title": "Claude básico",
    "description": "Aprende a usar Claude desde cero: cómo pedir bien, trabajar con tus archivos y proyectos, resolver tareas del día a día y usar la IA con criterio. Con prácticas y prompts listos para copiar.\n\nCurso independiente de AG Lab. No está afiliado, patrocinado ni respaldado por Anthropic. Claude es una marca de Anthropic.",
-   "cover": "/cursos/covers/claude-basico.png",
+   "cover": "/cursos/covers/claude-basico.webp",
    "position": 1,
    "modules": [
     {
@@ -112,7 +112,7 @@
    "slug": "chatgpt-basico",
    "title": "ChatGPT básico",
    "description": "Aprende a usar ChatGPT desde cero: cómo pedir bien, personalizarlo, resolver tareas del día a día y usar la IA con criterio. Con prácticas y prompts listos para copiar.\n\nCurso independiente de AG Lab. No está afiliado, patrocinado ni respaldado por OpenAI. ChatGPT es una marca de OpenAI.",
-   "cover": "/cursos/covers/chatgpt-basico.png",
+   "cover": "/cursos/covers/chatgpt-basico.webp",
    "position": 2,
    "modules": [
     {
