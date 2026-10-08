@@ -8,20 +8,24 @@ export function PublicShell({ viewer, children }: { viewer: Viewer; children: Re
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-30 border-b border-hairline bg-paper">
         <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3">
-          <Link href="/recursos" className="flex shrink-0 items-center gap-2">
+          <Link href="/" className="flex shrink-0 items-center gap-2">
             <Logo size={34} withName={false} />
             <span className="display text-2xl">
               AG Lab<span className="text-accent">.</span>
             </span>
           </Link>
-          <nav className="ml-auto flex items-center gap-2">
+          <nav className="ml-auto flex items-center gap-1 sm:gap-2">
+            <Link href="/recursos" className="btn hidden !px-3 !py-2 text-ash hover:text-ink sm:inline-flex">
+              Recursos
+            </Link>
             {viewer.kind === "visitor" && (
               <>
                 <Link href="/login" className="btn !px-3 !py-2 text-ash hover:text-ink">
                   Entrar
                 </Link>
-                <Link href="/registro" className="btn btn-primary !py-2">
-                  Crear cuenta gratis
+                <Link href="/registro" className="btn btn-primary !px-3 !py-2 sm:!px-4">
+                  <span className="sm:hidden">Crear cuenta</span>
+                  <span className="hidden sm:inline">Crear cuenta gratis</span>
                 </Link>
               </>
             )}

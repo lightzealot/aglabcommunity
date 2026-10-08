@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Logo } from "@/components/logo";
 
 export function AuthShell({
@@ -13,7 +14,9 @@ export function AuthShell({
     <main className="flex flex-1 items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="mb-8 flex justify-center">
-          <Logo />
+          <Link href="/" aria-label="Ir al inicio">
+            <Logo />
+          </Link>
         </div>
         <div className="card p-8">
           <p className="label mb-2">Comunidad</p>

@@ -10,12 +10,12 @@ import { getCommunity } from "@/lib/community";
 import { listEvents } from "@/lib/events";
 import { myBoardIds, queryPosts } from "@/lib/feed";
 import { getLeaderboards } from "@/lib/ranking";
-import { requireMember } from "@/lib/session";
 import { timeUntil } from "@/lib/time";
 
-export default async function HomePage({ searchParams }: { searchParams: Promise<{ b?: string }> }) {
-  const { user } = await requireMember();
-  const { b } = await searchParams;
+export type FeedUser = { id: string; name: string; image?: string | null; points: number; role: string };
+
+/** Feed de la comunidad (para miembros aprobados). `b` es el filtro de board de la URL. */
+export async function FeedPage({ user, b }: { user: FeedUser; b?: string }) {
 
   const [boards, mine, [nextEvent], community, boardsRank] = await Promise.all([
     db.select().from(schema.board).orderBy(asc(schema.board.position)),

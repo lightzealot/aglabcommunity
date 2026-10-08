@@ -82,3 +82,22 @@ export const ChevronIcon = ({ className, size, dir = "right" }: P & { dir?: "lef
     <path d={dir === "left" ? "m15 5-7 7 7 7" : dir === "down" ? "m5 9 7 7 7-7" : "m9 5 7 7-7 7"} />
   </svg>
 );
+
+export const UserIcon = ({ className, size }: P) => (
+  <svg {...base(size)} className={className}>
+    <circle cx="12" cy="8" r="3.6" />
+    <path d="M4.5 20a7.5 7.5 0 0 1 15 0" />
+  </svg>
+);
+
+export const FileIcon = ({ className, size }: P) => (
+  <svg {...base(size)} className={className}>
+    <path d="M6 3h8l4 4v14H6V3Zm8 0v4h4M9 12h6M9 16h6" />
+  </svg>
+);
+
+export const ArrowRightIcon = ({ className, size }: P) => (
+  <svg {...base(size)} className={className}>
+    <path d="M5 12h14m-5-5 5 5-5 5" />
+  </svg>
+);

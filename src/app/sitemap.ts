@@ -11,6 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .from(schema.resource)
     .where(eq(schema.resource.published, true));
   return [
+    { url: `${base}/`, changeFrequency: "weekly", priority: 1 },
     { url: `${base}/recursos`, changeFrequency: "weekly", priority: 0.8 },
     ...rows.map((r) => ({ url: `${base}/recursos/${r.slug}`, lastModified: r.createdAt, priority: 0.7 })),
   ];

@@ -64,7 +64,7 @@ export function UserMenu({ user }: { user: U }) {
             className={`${item} w-full text-left`}
             onClick={async () => {
               await authClient.signOut();
-              router.replace("/login");
+              router.replace("/");
               router.refresh();
             }}
           >
