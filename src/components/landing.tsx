@@ -173,7 +173,7 @@ export function Landing({ data, viewer }: { data: LandingData; viewer: Viewer })
           <SectionHead n={num()} label="Cursos" title="Cursos gratis dentro de la comunidad" href="/registro" cta="Crear cuenta para empezar" />
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {courses.map((c) => (
-              <Link key={c.id} href="/registro" className="card group flex flex-col overflow-hidden transition hover:shadow-md">
+              <Link key={c.id} href={c.slug ? `/cursos/${c.slug}` : "/registro"} className="card group flex flex-col overflow-hidden transition hover:shadow-md">
                 <div className="aspect-[16/9] bg-accent-soft">
                   {c.coverUrl && (
                     // eslint-disable-next-line @next/next/no-img-element
@@ -183,7 +183,7 @@ export function Landing({ data, viewer }: { data: LandingData; viewer: Viewer })
                 <div className="p-4">
                   <h3 className="text-lg leading-snug font-bold uppercase group-hover:text-accent">{c.title}</h3>
                   <p className="mt-1 line-clamp-2 text-sm text-ash">{c.description.split("\n")[0]}</p>
-                  <p className="mt-3 text-xs font-semibold text-accent">Gratis · crea tu cuenta para empezar</p>
+                  <p className="mt-3 text-xs font-semibold text-accent">Gratis · ver el temario</p>
                 </div>
               </Link>
             ))}

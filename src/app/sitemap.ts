@@ -10,9 +10,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .select({ slug: schema.resource.slug, createdAt: schema.resource.createdAt })
     .from(schema.resource)
     .where(eq(schema.resource.published, true));
+  const courses = await db
+    .select({ slug: schema.course.slug, createdAt: schema.course.createdAt })
+    .from(schema.course)
+    .where(eq(schema.course.published, true));
   return [
     { url: `${base}/`, changeFrequency: "weekly", priority: 1 },
     { url: `${base}/recursos`, changeFrequency: "weekly", priority: 0.8 },
     ...rows.map((r) => ({ url: `${base}/recursos/${r.slug}`, lastModified: r.createdAt, priority: 0.7 })),
+    ...courses.flatMap((c) => (c.slug ? [{ url: `${base}/cursos/${c.slug}`, lastModified: c.createdAt, priority: 0.7 }] : [])),
   ];
 }

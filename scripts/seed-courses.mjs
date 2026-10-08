@@ -34,9 +34,9 @@ try {
     const claimed = await client.query("insert into job_log (key) values ($1) on conflict do nothing returning key", [key]);
     if (!claimed.rowCount) continue;
     const created = await client.query(
-      `insert into course (title, description, cover_url, is_paid, published, position)
-       values ($1, $2, $3, false, true, $4) returning id`,
-      [c.title, c.description, c.cover, ++position],
+      `insert into course (slug, title, description, cover_url, is_paid, published, position)
+       values ((select case when exists(select 1 from course where slug = $1::text) then null else $1::text end), $2, $3, $4, false, true, $5) returning id`,
+      [c.slug, c.title, c.description, c.cover, ++position],
     );
     createdCourses++;
     let mPos = 0;

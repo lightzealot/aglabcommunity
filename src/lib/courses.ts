@@ -1,5 +1,6 @@
 import { and, asc, eq, sql } from "drizzle-orm";
 import { db, schema } from "@/db";
+import { SLUG_RE, slugify } from "@/lib/resource-constants";
 
 type Viewer = { id: string; role: string };
 
@@ -67,3 +68,36 @@ export async function courseOutline(courseId: string, userId: string) {
 }
 
 export const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/** Slug libre para un curso nuevo: parte del título y añade -2, -3… si ya existe. */
+export async function uniqueCourseSlug(title: string) {
+  const base = slugify(title) || "curso";
+  for (let n = 1; ; n++) {
+    const slug = n === 1 ? base : `${base}-${n}`;
+    const [hit] = await db.select({ id: schema.course.id }).from(schema.course).where(eq(schema.course.slug, slug));
+    if (!hit) return slug;
+  }
+}
+
+/** Curso publicado con su temario (sin el contenido de las lecciones), para la vista previa pública. */
+export async function getCoursePreview(slug: string, includeDrafts = false) {
+  if (!SLUG_RE.test(slug)) return null;
+  const [course] = await db
+    .select()
+    .from(schema.course)
+    .where(and(eq(schema.course.slug, slug), includeDrafts ? undefined : eq(schema.course.published, true)));
+  if (!course) return null;
+  const modules = await db
+    .select()
+    .from(schema.courseModule)
+    .where(eq(schema.courseModule.courseId, course.id))
+    .orderBy(asc(schema.courseModule.position), asc(schema.courseModule.title));
+  const lessons = await db
+    .select({ id: schema.lesson.id, moduleId: schema.lesson.moduleId, title: schema.lesson.title })
+    .from(schema.lesson)
+    .innerJoin(schema.courseModule, eq(schema.courseModule.id, schema.lesson.moduleId))
+    .where(eq(schema.courseModule.courseId, course.id))
+    .orderBy(asc(schema.lesson.position), asc(schema.lesson.title));
+  const outline = modules.map((m) => ({ ...m, lessons: lessons.filter((l) => l.moduleId === m.id) }));
+  return { course, outline, total: lessons.length };
+}

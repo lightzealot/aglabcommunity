@@ -1,7 +1,7 @@
 import { getSessionCookie } from "better-auth/cookies";
 import { NextResponse, type NextRequest } from "next/server";
 
-const PUBLIC = ["/login", "/registro", "/recuperar", "/restablecer", "/recursos"];
+const PUBLIC = ["/login", "/registro", "/recuperar", "/restablecer", "/recursos", "/cursos"];
 // La página de inicio ("/") la ve cualquiera; el propio componente decide si muestra feed o landing.
 
 // Solo verifica que exista la cookie de sesión; la validación real

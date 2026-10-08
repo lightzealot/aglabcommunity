@@ -188,6 +188,8 @@ export const pointEvent = pgTable(
 // ---- Classroom ----
 export const course = pgTable("course", {
   id: uuid("id").primaryKey().defaultRandom(),
+  // Enlace público de la vista previa (/cursos/<slug>).
+  slug: text("slug").unique(),
   title: text("title").notNull(),
   description: text("description").notNull().default(""),
   coverUrl: text("cover_url"),

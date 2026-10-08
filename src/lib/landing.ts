@@ -41,7 +41,7 @@ export async function getLandingData() {
       .orderBy(asc(resource.position), asc(resource.createdAt))
       .limit(3),
     db
-      .select({ id: course.id, title: course.title, description: course.description, coverUrl: course.coverUrl })
+      .select({ id: course.id, slug: course.slug, title: course.title, description: course.description, coverUrl: course.coverUrl })
       .from(course)
       .where(eq(course.published, true))
       .orderBy(asc(course.position), asc(course.createdAt))

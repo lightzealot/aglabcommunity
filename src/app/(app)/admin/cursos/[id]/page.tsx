@@ -52,6 +52,13 @@ export default async function AdminCursoPage({ params }: { params: Promise<{ id:
       </h1>
       <p className="mt-1 text-sm">
         <Link href={`/classroom/${course.id}`} className="text-accent underline">Ver como alumno</Link>
+        {course.slug && (
+          <>
+            {" · "}
+            <Link href={`/cursos/${course.slug}`} className="text-accent underline">Vista previa pública</Link>
+            <span className="text-hollow"> · /cursos/{course.slug}{course.published ? "" : " (publica el curso para compartirlo)"}</span>
+          </>
+        )}
       </p>
 
       <div className="mt-6">

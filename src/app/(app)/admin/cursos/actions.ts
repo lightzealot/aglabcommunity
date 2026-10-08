@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { db, schema } from "@/db";
+import { uniqueCourseSlug } from "@/lib/courses";
 import { filesDir, removeFilesOfLessons, saveLessonFile } from "@/lib/files";
 import { revoke } from "@/lib/points";
 import { requireAdmin } from "@/lib/session";
@@ -39,7 +40,7 @@ export async function createCourse(formData: FormData) {
     .from(schema.course);
   const [c] = await db
     .insert(schema.course)
-    .values({ title: title.data, position: max + 1 })
+    .values({ title: title.data, slug: await uniqueCourseSlug(title.data), position: max + 1 })
     .returning({ id: schema.course.id });
   refresh();
   redirect(`/admin/cursos/${c.id}`);

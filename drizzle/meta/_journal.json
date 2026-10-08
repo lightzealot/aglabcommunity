@@ -64,6 +64,13 @@
       "when": 1791423425699,
       "tag": "0008_resources",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1791478703257,
+      "tag": "0009_course_slug",
+      "breakpoints": true
     }
   ]
 }
