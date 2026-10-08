@@ -4,10 +4,15 @@ import { UUID_RE } from "@/lib/courses";
 import { isInternalPath } from "@/lib/notify";
 import { getSession } from "@/lib/session";
 
+// Redirección relativa: detrás de un proxy, `req.url` trae la dirección interna del
+// contenedor (localhost:3000). Con `Location` relativo el navegador usa el dominio real.
+const redirectTo = (path: string) =>
+  new Response(null, { status: 303, headers: { Location: path } });
+
 // Marca como leída y redirige al destino de la notificación.
-export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }) {
+export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> }) {
   const session = await getSession();
-  if (!session) return Response.redirect(new URL("/login", req.url), 303);
+  if (!session) return redirectTo("/login");
   const { id } = await ctx.params;
   let href: string | null = null;
   if (UUID_RE.test(id)) {
@@ -18,5 +23,5 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
       .returning({ href: schema.notification.href });
     href = n?.href ?? null;
   }
-  return Response.redirect(new URL(isInternalPath(href) ? href : "/notificaciones", req.url), 303);
+  return redirectTo(isInternalPath(href) ? href : "/notificaciones");
 }
