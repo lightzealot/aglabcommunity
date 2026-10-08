@@ -1,0 +1,225 @@
+{
+ "courses": [
+  {
+   "slug": "claude-basico",
+   "title": "Claude básico",
+   "description": "Aprende a usar Claude desde cero: cómo pedir bien, trabajar con tus archivos y proyectos, resolver tareas del día a día y usar la IA con criterio. Con prácticas y prompts listos para copiar.\n\nCurso independiente de AG Lab. No está afiliado, patrocinado ni respaldado por Anthropic. Claude es una marca de Anthropic.",
+   "cover": "/cursos/covers/claude-basico.png",
+   "position": 1,
+   "modules": [
+    {
+     "title": "Primeros pasos",
+     "lessons": [
+      {
+       "title": "Qué es Claude y para qué sirve",
+       "body": "Claude es un asistente de inteligencia artificial que conversa contigo por escrito. Le explicas una tarea con tus palabras y te responde: puede redactar, resumir, explicar, analizar, ordenar ideas o revisar lo que ya escribiste.\n\n## Lo que hace bien\n\n- **Escribir y reescribir:** correos, publicaciones, propuestas, guiones.\n- **Entender textos largos:** resumir, comparar y extraer lo importante.\n- **Pensar contigo:** lluvia de ideas, pros y contras, planes paso a paso.\n- **Explicar:** temas difíciles con ejemplos y a tu nivel.\n\n## Lo que no debes esperar\n\n- Que acierte siempre: puede equivocarse con datos, fechas o cifras.\n- Que conozca tu negocio sin que se lo cuentes.\n- Que reemplace tu criterio. Tú decides qué usar.\n\n## Práctica\n\nAbre una conversación nueva y pega esto:\n\n```\nExplícame en 5 líneas qué cosas puedes hacer por mí en mi trabajo como [tu profesión]. Dame 3 ejemplos concretos que yo pueda probar hoy.\n```\n\n**Tarea:** elige uno de los ejemplos y pruébalo antes de la próxima lección.\n\n> Las opciones de la herramienta cambian con frecuencia y según tu plan. Si algo no aparece igual en tu pantalla, busca la función con el mismo nombre en su menú o ayuda.\n",
+       "resources": []
+      },
+      {
+       "title": "Tu primera conversación",
+       "body": "Una conversación con Claude funciona como una charla con un colaborador: empiezas con una petición, revisas la respuesta y la vas afinando. **No tienes que acertar a la primera.**\n\n## El ciclo básico\n\n1. **Pide** lo que necesitas, con contexto.\n2. **Lee** la respuesta con ojo crítico.\n3. **Corrige** con instrucciones concretas (\"más corto\", \"tono más cercano\", \"agrega un ejemplo\").\n\n## Frases útiles para afinar\n\n- \"Hazlo más breve, máximo 80 palabras.\"\n- \"Dame tres versiones con tonos distintos.\"\n- \"Explícalo como si yo no supiera nada del tema.\"\n- \"¿Qué información te falta para hacerlo mejor? Pregúntamela.\"\n\n## Práctica\n\n```\nQuiero escribir un mensaje para presentarme a un cliente nuevo. Antes de redactarlo, hazme las preguntas que necesites para que quede bien.\n```\n\nResponde sus preguntas y pídele dos versiones.\n\n**Tarea:** repite el ciclo (pedir, leer, corregir) tres veces sobre el mismo texto y compara la primera versión con la última.\n",
+       "resources": []
+      },
+      {
+       "title": "La fórmula de un buen prompt",
+       "body": "Un *prompt* es la instrucción que le das a la IA. Cuanto más claro, mejores resultados. Esta fórmula sirve para casi todo:\n\n> **Rol + Contexto + Tarea + Formato + Ejemplo**\n\n## Un ejemplo completo\n\n```\nActúa como estratega de contenido para Instagram (rol). Le hablo a emprendedores que empiezan (contexto). Escribe 5 ideas de carrusel sobre automatización (tarea), cada una con un gancho de máximo 10 palabras, en lista numerada (formato). Estilo parecido a: \"No es que la IA sea mala…\" (ejemplo).\n```\n\n## Regla de oro\n\nSi el resultado es genérico, **añade contexto, concreta la tarea y muestra un ejemplo de lo que esperas**.\n\n## Práctica\n\nToma una tarea real de tu semana y escríbela con los cinco ingredientes. Compárala con cómo la habrías pedido antes.\n\n**Tarea:** guarda tu mejor prompt en una nota para reutilizarlo.\n",
+       "resources": [
+        {
+         "label": "La fórmula de un buen prompt (guía y plantilla)",
+         "url": "https://comunidad.andresgomez.store/recursos/formula-buen-prompt"
+        },
+        {
+         "label": "Plantilla para explicar mejor tu tarea a una IA",
+         "url": "https://comunidad.andresgomez.store/recursos/mejores-resultados-ia"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Trabajar con tus archivos y proyectos",
+     "lessons": [
+      {
+       "title": "Subir documentos e imágenes",
+       "body": "Claude puede trabajar con archivos que le subas, como documentos, hojas de cálculo o imágenes. Así no tienes que copiar y pegar todo el contenido.\n\n## Qué puedes pedirle\n\n- **Documentos:** \"Resume este PDF en 8 puntos y dime qué decisiones pide.\"\n- **Imágenes:** \"Describe lo que ves en esta captura y sugiere mejoras.\"\n- **Tablas:** \"Encuentra patrones en estos datos y explícalos sin tecnicismos.\"\n\n## Buenas prácticas\n\n- Dile **qué quieres obtener** y **para quién** es el resultado.\n- Si el archivo es largo, pide por partes: primero un resumen, luego el detalle de lo que te interese.\n- Pide que **cite el fragmento** del que sacó cada dato, para poder verificarlo.\n\n## Práctica\n\n```\nTe adjunto un documento. Resúmelo en 6 puntos para alguien que no lo ha leído. Después lista las 3 preguntas que me haría un cliente y cómo responderías. Indica en qué parte del documento te basas.\n```\n\n**Tarea:** prueba con un documento tuyo que no contenga datos sensibles.\n\n> Las opciones de la herramienta cambian con frecuencia y según tu plan. Si algo no aparece igual en tu pantalla, busca la función con el mismo nombre en su menú o ayuda.\n",
+       "resources": []
+      },
+      {
+       "title": "Proyectos y contexto que se mantiene",
+       "body": "Repetir quién eres y cómo trabajas en cada conversación cansa. Los **proyectos** (o espacios de trabajo) permiten guardar archivos e instrucciones para que Claude los tenga siempre presentes en ese tema.\n\n## Qué conviene guardar\n\n- Una descripción breve de tu negocio y tu cliente ideal.\n- Tu manera de hablar: tono, palabras que usas y las que evitas.\n- Documentos de referencia: precios, preguntas frecuentes, ejemplos de textos tuyos.\n\n## Cómo organizarlos\n\nCrea un proyecto por **tema recurrente**: por ejemplo \"Contenido\", \"Propuestas a clientes\" o \"Estudio\". Así cada conversación nueva parte ya con el contexto correcto.\n\n## Práctica\n\nEscribe las instrucciones de tu primer proyecto:\n\n```\nEres mi asistente para [área de trabajo]. Mi negocio: [descripción en 2 líneas]. Mi cliente ideal: [quién es]. Tono: [cercano / profesional / directo]. Evita: [palabras o estilos que no uses]. Si te falta información, pregúntame antes de responder.\n```\n\n**Tarea:** crea el proyecto, sube 2 documentos de referencia y haz una consulta para ver la diferencia.\n\n> Las opciones de la herramienta cambian con frecuencia y según tu plan. Si algo no aparece igual en tu pantalla, busca la función con el mismo nombre en su menú o ayuda.\n",
+       "resources": []
+      },
+      {
+       "title": "Instrucciones y estilo de respuesta",
+       "body": "Además de los proyectos, puedes indicar **cómo prefieres que responda**: más corto o más detallado, formal o cercano, con listas o en párrafos.\n\n## Ejemplos de preferencias útiles\n\n- \"Responde en español neutro, sin tecnicismos.\"\n- \"Empieza siempre con la respuesta y luego el detalle.\"\n- \"Si no estás seguro de algo, dilo.\"\n- \"Máximo 150 palabras salvo que te pida más.\"\n\n## Un truco poderoso\n\nPega un texto tuyo que te guste y pide:\n\n```\nAnaliza el estilo de este texto: tono, longitud de las frases, vocabulario y estructura. Resume las reglas en 5 puntos que yo pueda usar como guía para que escribas como yo.\n```\n\nGuarda ese resumen en las instrucciones de tu proyecto.\n\n**Tarea:** escribe tus 5 reglas de estilo y pruébalas en un texto nuevo.\n\n> Las opciones de la herramienta cambian con frecuencia y según tu plan. Si algo no aparece igual en tu pantalla, busca la función con el mismo nombre en su menú o ayuda.\n",
+       "resources": []
+      }
+     ]
+    },
+    {
+     "title": "Tareas del día a día",
+     "lessons": [
+      {
+       "title": "Escribir y mejorar textos",
+       "body": "Aquí Claude es especialmente útil: te ayuda a **empezar** (superar la página en blanco) y a **pulir** (corregir y mejorar lo que ya tienes).\n\n## Tres usos frecuentes\n\n1. **Borrador inicial:** \"Escribe un primer borrador de…\"\n2. **Mejorar:** \"Revisa este texto: ordénalo, quita repeticiones y hazlo más claro. Mantén mi voz.\"\n3. **Adaptar:** \"Convierte este correo largo en un mensaje corto de WhatsApp.\"\n\n## Práctica: correo en dos versiones\n\n```\nActúa como asistente ejecutivo con buen criterio. Escribe un correo para [destinatario] sobre [asunto]. Tono: [cordial / firme / cercano]. Máximo 120 palabras, con un asunto claro y una sola acción al final. Dame dos versiones: una corta y una completa.\n```\n\n## Revisa siempre\n\nLee el resultado en voz alta. Si no suena como tú, dile qué cambiar. **El texto final es tuyo.**\n\n**Tarea:** mejora un texto real que tengas pendiente.\n",
+       "resources": [
+        {
+         "label": "10 recordatorios para programar (ideas de tareas recurrentes)",
+         "url": "https://comunidad.andresgomez.store/recursos/10-automatizaciones-chatgpt"
+        }
+       ]
+      },
+      {
+       "title": "Resumir, analizar y decidir",
+       "body": "Cuando tienes mucha información, Claude puede ayudarte a **entenderla y ordenarla** para decidir con más claridad.\n\n## Prompt para resumir con criterio\n\n```\nActúa como analista que resume para gente ocupada. Resume el siguiente texto en 5 puntos clave, seguido de 3 decisiones o acciones que se desprenden. Después dime qué información falta o es dudosa. Texto: [pega aquí el texto].\n```\n\n## Para decidir entre opciones\n\n```\nQuiero decidir entre [opción A] y [opción B]. Mi contexto: [presupuesto, tiempo, objetivo]. Haz una tabla de pros y contras, indica qué riesgos ves en cada una y qué información adicional me conviene conseguir antes de elegir.\n```\n\n## Importante\n\nLa IA te ayuda a **pensar**, no decide por ti. Pídele siempre que señale **qué supuestos está haciendo**.\n\n**Tarea:** usa el prompt de decisión con una duda real de tu negocio.\n",
+       "resources": []
+      },
+      {
+       "title": "Estudiar y aprender cosas nuevas",
+       "body": "Claude puede actuar como **tutor paciente**: explica a tu nivel, pone ejemplos y te hace preguntas para comprobar que entendiste.\n\n## Un tutor a tu medida\n\n```\nActúa como tutor paciente. Quiero aprender [tema] y mi nivel es [principiante / intermedio]. Explícalo con una analogía cotidiana, luego con un ejemplo paso a paso y termina con 5 preguntas de práctica. Guarda las respuestas hasta que las pida; entonces muéstralas al final.\n```\n\n## Para reforzar\n\n- \"Hazme un resumen de una página con lo esencial.\"\n- \"Ponme un caso práctico y corrígeme mi respuesta.\"\n- \"¿Qué errores comunes cometen quienes empiezan con esto?\"\n\n**Tarea:** aprende algo que llevabas tiempo posponiendo, en 20 minutos.\n",
+       "resources": []
+      }
+     ]
+    },
+    {
+     "title": "Usar IA con criterio",
+     "lessons": [
+      {
+       "title": "Verificar y reducir errores",
+       "body": "Los asistentes de IA pueden **sonar muy seguros y aun así equivocarse**: inventar datos, mezclar fechas o citar fuentes que no existen. Por eso conviene verificar.\n\n## Hábitos que ayudan\n\n- **Pide fuentes y razonamiento:** \"Explica cómo llegaste a esa conclusión.\"\n- **Verifica lo importante:** cifras, nombres, leyes, fechas y cualquier cosa que vayas a publicar.\n- **Pide que dude:** \"Marca qué partes de tu respuesta son menos fiables.\"\n- **Contrasta:** compara con otra fuente confiable antes de actuar.\n\n## Un prompt para revisar\n\n```\nRevisa tu respuesta anterior. Señala afirmaciones que podrían ser incorrectas o que necesitan verificación, y dime cómo podría comprobar cada una.\n```\n\n**Tarea:** toma una respuesta que ya recibiste y verifica dos datos por tu cuenta.\n",
+       "resources": []
+      },
+      {
+       "title": "Privacidad y datos sensibles",
+       "body": "Antes de pegar información en una herramienta de IA, piensa **qué estás compartiendo y con quién**.\n\n## No compartas\n\n- Contraseñas, claves o códigos de acceso.\n- Datos personales de clientes (documentos, tarjetas, salud) sin autorización.\n- Información confidencial de tu empresa o de terceros.\n\n## Cómo trabajar con seguridad\n\n- **Anonimiza:** cambia nombres y cifras reales por ejemplos (\"Cliente A\", \"$X\").\n- **Revisa la configuración de privacidad** de tu cuenta y de tu plan, y lee qué hace la herramienta con tus conversaciones.\n- Si trabajas con un equipo, **acuerda reglas** sobre qué se puede subir.\n\n## Práctica\n\nToma un texto con datos reales y reescríbelo anonimizado para poder usarlo sin riesgo.\n\n**Tarea:** escribe tres reglas personales de privacidad para usar IA.\n\n> Las opciones de la herramienta cambian con frecuencia y según tu plan. Si algo no aparece igual en tu pantalla, busca la función con el mismo nombre en su menú o ayuda.\n",
+       "resources": []
+      },
+      {
+       "title": "Tu plan de 7 días",
+       "body": "Aprender a usar IA es cuestión de **hábito**, no de memorizar funciones. Este plan te lo hace práctico:\n\n## Plan semanal\n\n| Día | Qué hacer |\n| --- | --- |\n| 1 | Resolver una tarea pequeña con la fórmula del prompt |\n| 2 | Crear tu proyecto con tus instrucciones |\n| 3 | Mejorar un texto real |\n| 4 | Resumir un documento largo |\n| 5 | Usar un tutor para aprender algo |\n| 6 | Verificar una respuesta importante |\n| 7 | Revisar qué funcionó y guardar tus mejores prompts |\n\n## Cierra con una pregunta\n\n```\nSegún lo que hemos hecho esta semana, ¿qué tareas repetitivas de mi trabajo podría delegarte con mejores resultados? Ordénalas por ahorro de tiempo.\n```\n\n## Siguiente paso\n\nCuéntanos en la comunidad qué tarea te ahorró más tiempo. Compartir ejemplos ayuda a todos.\n\n**¡Felicidades por terminar el curso!**\n",
+       "resources": [
+        {
+         "label": "IA: primer paso (guía y plantilla)",
+         "url": "https://comunidad.andresgomez.store/recursos/ia-primer-paso"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "chatgpt-basico",
+   "title": "ChatGPT básico",
+   "description": "Aprende a usar ChatGPT desde cero: cómo pedir bien, personalizarlo, resolver tareas del día a día y usar la IA con criterio. Con prácticas y prompts listos para copiar.\n\nCurso independiente de AG Lab. No está afiliado, patrocinado ni respaldado por OpenAI. ChatGPT es una marca de OpenAI.",
+   "cover": "/cursos/covers/chatgpt-basico.png",
+   "position": 2,
+   "modules": [
+    {
+     "title": "Primeros pasos",
+     "lessons": [
+      {
+       "title": "Qué es ChatGPT y para qué sirve",
+       "body": "ChatGPT es un asistente de inteligencia artificial con el que conversas por escrito (y, según tu versión, también por voz o imágenes). Le explicas lo que necesitas y te responde: redacta, resume, explica, traduce, organiza ideas y más.\n\n## Lo que hace bien\n\n- **Redactar y mejorar textos** de todo tipo.\n- **Resumir y explicar** información compleja.\n- **Generar ideas** y alternativas para un problema.\n- **Ordenar tu trabajo:** listas, planes, plantillas.\n\n## Lo que debes tener presente\n\n- Puede equivocarse o inventar datos: verifica lo importante.\n- No conoce tu situación a menos que se la cuentes.\n- Tú eres quien decide qué usar y qué no.\n\n## Práctica\n\n```\nExplícame en 5 líneas qué cosas puedes hacer por mí en mi trabajo como [tu profesión]. Dame 3 ejemplos concretos que yo pueda probar hoy.\n```\n\n**Tarea:** prueba uno de los ejemplos antes de la próxima lección.\n\n> Las opciones de la herramienta cambian con frecuencia y según tu plan. Si algo no aparece igual en tu pantalla, busca la función con el mismo nombre en su menú o ayuda.\n",
+       "resources": []
+      },
+      {
+       "title": "Tu primera conversación",
+       "body": "Una conversación con ChatGPT mejora **iterando**: pides, lees, corriges. No hace falta acertar a la primera.\n\n## El ciclo básico\n\n1. **Pide** con contexto.\n2. **Lee** con ojo crítico.\n3. **Corrige** con instrucciones concretas.\n\n## Frases útiles para afinar\n\n- \"Hazlo más corto, máximo 80 palabras.\"\n- \"Dame tres versiones con tonos distintos.\"\n- \"Explícalo como si no supiera nada del tema.\"\n- \"¿Qué información te falta? Hazme preguntas antes de responder.\"\n\n## Práctica\n\n```\nQuiero escribir un mensaje para presentarme a un cliente nuevo. Antes de redactarlo, hazme las preguntas que necesites para que quede bien.\n```\n\nResponde y pide dos versiones.\n\n**Tarea:** repite el ciclo tres veces sobre el mismo texto y compara la primera versión con la última.\n",
+       "resources": []
+      },
+      {
+       "title": "La fórmula de un buen prompt",
+       "body": "Un *prompt* es la instrucción que le das a la IA. Esta fórmula funciona para casi todo:\n\n> **Rol + Contexto + Tarea + Formato + Ejemplo**\n\n## Un ejemplo completo\n\n```\nActúa como estratega de contenido para Instagram (rol). Le hablo a emprendedores que empiezan (contexto). Escribe 5 ideas de carrusel sobre automatización (tarea), cada una con un gancho de máximo 10 palabras, en lista numerada (formato). Estilo parecido a: \"No es que la IA sea mala…\" (ejemplo).\n```\n\n## Regla de oro\n\nSi el resultado es genérico, **añade contexto, concreta la tarea y muestra un ejemplo de lo que esperas**.\n\n## Práctica\n\nEscribe una tarea real de tu semana con los cinco ingredientes.\n\n**Tarea:** guarda tu mejor prompt en una nota para reutilizarlo.\n",
+       "resources": [
+        {
+         "label": "La fórmula de un buen prompt (guía y plantilla)",
+         "url": "https://comunidad.andresgomez.store/recursos/formula-buen-prompt"
+        },
+        {
+         "label": "Plantilla para explicar mejor tu tarea a una IA",
+         "url": "https://comunidad.andresgomez.store/recursos/mejores-resultados-ia"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Personalizar ChatGPT",
+     "lessons": [
+      {
+       "title": "Instrucciones personalizadas y memoria",
+       "body": "Para no repetir quién eres en cada chat, ChatGPT ofrece **instrucciones personalizadas** (le cuentas cómo quieres que responda) y, según tu versión, **memoria** (recuerda datos útiles entre conversaciones).\n\n## Qué conviene indicar\n\n- A qué te dedicas y para quién trabajas.\n- Tono y estilo: formal, cercano, directo.\n- Formato preferido: listas, párrafos cortos, tablas.\n- Lo que quieres evitar.\n\n## Plantilla de instrucciones\n\n```\nSoy [profesión] y trabajo con [tipo de cliente]. Responde en español neutro, claro y sin tecnicismos. Empieza por la respuesta y luego da el detalle. Si no estás seguro de algo, dilo. Si te falta información, pregúntame antes de responder.\n```\n\n## Cuidado con la memoria\n\nRevisa de vez en cuando qué ha guardado y **borra lo que no quieras** que recuerde. No guardes datos sensibles.\n\n**Tarea:** escribe tus instrucciones y pruébalas con una consulta real.\n\n> Las opciones de la herramienta cambian con frecuencia y según tu plan. Si algo no aparece igual en tu pantalla, busca la función con el mismo nombre en su menú o ayuda.\n",
+       "resources": []
+      },
+      {
+       "title": "Subir archivos e imágenes",
+       "body": "Puedes subir archivos o imágenes para que ChatGPT trabaje sobre ellos, en lugar de copiar y pegar todo el contenido.\n\n## Ideas útiles\n\n- **Documentos:** resúmenes, preguntas y respuestas sobre el contenido, extracción de puntos clave.\n- **Hojas de cálculo:** detectar patrones y explicarlos en lenguaje sencillo.\n- **Imágenes:** describir lo que muestran, sugerir mejoras de un diseño o traducir texto de una foto.\n\n## Buenas prácticas\n\n- Di **qué quieres obtener** y **para quién**.\n- Pide por partes si el archivo es largo.\n- Pide que **indique en qué parte del archivo** se basa cada dato.\n\n## Práctica\n\n```\nTe adjunto un documento. Resúmelo en 6 puntos para alguien que no lo ha leído y lista 3 preguntas que haría un cliente con su respuesta. Indica en qué parte del documento te basas.\n```\n\n**Tarea:** prueba con un documento que no tenga datos sensibles.\n\n> Las opciones de la herramienta cambian con frecuencia y según tu plan. Si algo no aparece igual en tu pantalla, busca la función con el mismo nombre en su menú o ayuda.\n",
+       "resources": []
+      },
+      {
+       "title": "Asistentes personalizados (GPTs) y recordatorios",
+       "body": "Según tu plan, ChatGPT permite usar **asistentes especializados** (GPTs) creados por otras personas o por ti, y programar **recordatorios o tareas** para que te escriba en el momento indicado.\n\n## Cuándo usar un asistente personalizado\n\nCuando repites **la misma tarea con las mismas reglas**: por ejemplo, redactar respuestas a clientes con tu tono o preparar resúmenes de reunión con un formato fijo.\n\n## Recordatorios\n\nÚtiles para hábitos como repasar tus pendientes o preparar contenido. Prueba pedírselo así:\n\n```\nRecuérdame todos los lunes a las 8:00 que prepare las 3 prioridades de la semana, y envíame una plantilla para hacerlo en 10 minutos.\n```\n\n> Revisa qué funciones tiene tu plan: pueden variar.\n\n**Tarea:** elige una tarea que repites cada semana y pídele que te ayude a convertirla en un proceso fijo.\n",
+       "resources": [
+        {
+         "label": "10 recordatorios para programar en ChatGPT",
+         "url": "https://comunidad.andresgomez.store/recursos/10-automatizaciones-chatgpt"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Tareas del día a día",
+     "lessons": [
+      {
+       "title": "Escribir y mejorar textos",
+       "body": "ChatGPT te ayuda a **empezar** y a **pulir** lo que escribes.\n\n## Tres usos frecuentes\n\n1. **Borrador inicial:** \"Escribe un primer borrador de…\"\n2. **Mejorar:** \"Revisa este texto: ordénalo, quita repeticiones y hazlo más claro. Mantén mi voz.\"\n3. **Adaptar:** \"Convierte este correo largo en un mensaje corto de WhatsApp.\"\n\n## Práctica: correo en dos versiones\n\n```\nActúa como asistente ejecutivo con buen criterio. Escribe un correo para [destinatario] sobre [asunto]. Tono: [cordial / firme / cercano]. Máximo 120 palabras, con un asunto claro y una sola acción al final. Dame dos versiones: una corta y una completa.\n```\n\n## Revisa siempre\n\nLee el resultado en voz alta. Si no suena como tú, dile qué cambiar. **El texto final es tuyo.**\n\n**Tarea:** mejora un texto real que tengas pendiente.\n",
+       "resources": []
+      },
+      {
+       "title": "Resumir, analizar y decidir",
+       "body": "Con mucha información, ChatGPT puede ayudarte a **ordenarla y entenderla**.\n\n## Prompt para resumir con criterio\n\n```\nActúa como analista que resume para gente ocupada. Resume el siguiente texto en 5 puntos clave, seguido de 3 decisiones o acciones que se desprenden. Después dime qué información falta o es dudosa. Texto: [pega aquí el texto].\n```\n\n## Para decidir entre opciones\n\n```\nQuiero decidir entre [opción A] y [opción B]. Mi contexto: [presupuesto, tiempo, objetivo]. Haz una tabla de pros y contras, indica qué riesgos ves en cada una y qué información me conviene conseguir antes de elegir.\n```\n\n## Importante\n\nLa IA te ayuda a **pensar**, no decide por ti. Pide que señale **qué supuestos está haciendo**.\n\n**Tarea:** usa el prompt de decisión con una duda real de tu negocio.\n",
+       "resources": []
+      },
+      {
+       "title": "Crear imágenes con IA",
+       "body": "Según tu plan, ChatGPT puede **generar imágenes** a partir de una descripción. La clave es describir bien lo que quieres.\n\n## Qué incluir en la descripción\n\n- **Sujeto:** qué aparece.\n- **Escena:** dónde ocurre.\n- **Estilo:** fotografía, ilustración, minimalista.\n- **Iluminación y encuadre:** luz suave, plano cercano.\n\n## Plantilla\n\n```\nCrea una imagen de [sujeto] en [escena]. Estilo: [estilo]. Iluminación: [tipo de luz]. Encuadre: [plano]. Colores: [paleta]. Sin texto en la imagen.\n```\n\n## Mejora iterando\n\nPide cambios concretos: \"más luz\", \"fondo más limpio\", \"otro encuadre\". Es más efectivo que empezar de cero.\n\n**Tarea:** crea una imagen para una publicación real y ajústala dos veces.\n\n> Las opciones de la herramienta cambian con frecuencia y según tu plan. Si algo no aparece igual en tu pantalla, busca la función con el mismo nombre en su menú o ayuda.\n",
+       "resources": [
+        {
+         "label": "30 atajos para crear imágenes con IA",
+         "url": "https://comunidad.andresgomez.store/recursos/30-atajos-imagenes-ia"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Usar IA con criterio",
+     "lessons": [
+      {
+       "title": "Verificar y reducir errores",
+       "body": "ChatGPT puede **sonar muy seguro y aun así equivocarse**: inventar datos, mezclar fechas o citar fuentes que no existen.\n\n## Hábitos que ayudan\n\n- **Pide razonamiento y fuentes:** \"Explica cómo llegaste a esa conclusión.\"\n- **Verifica lo importante:** cifras, nombres, leyes, fechas y todo lo que vayas a publicar.\n- **Pide que dude:** \"Marca qué partes de tu respuesta son menos fiables.\"\n- **Contrasta** con otra fuente confiable antes de actuar.\n\n## Un prompt para revisar\n\n```\nRevisa tu respuesta anterior. Señala afirmaciones que podrían ser incorrectas o que necesitan verificación, y dime cómo podría comprobar cada una.\n```\n\n**Tarea:** toma una respuesta que ya recibiste y verifica dos datos por tu cuenta.\n",
+       "resources": []
+      },
+      {
+       "title": "Privacidad y datos sensibles",
+       "body": "Antes de pegar información en una herramienta de IA, piensa **qué compartes y con quién**.\n\n## No compartas\n\n- Contraseñas, claves o códigos de acceso.\n- Datos personales de clientes sin autorización.\n- Información confidencial de tu empresa o de terceros.\n\n## Cómo trabajar con seguridad\n\n- **Anonimiza:** cambia nombres y cifras reales por ejemplos (\"Cliente A\", \"$X\").\n- **Revisa los controles de datos** de tu cuenta y lee qué hace la herramienta con tus conversaciones.\n- En equipo, **acuerden reglas** sobre qué se puede subir.\n\n## Práctica\n\nReescribe un texto con datos reales de forma anonimizada.\n\n**Tarea:** escribe tres reglas personales de privacidad para usar IA.\n\n> Las opciones de la herramienta cambian con frecuencia y según tu plan. Si algo no aparece igual en tu pantalla, busca la función con el mismo nombre en su menú o ayuda.\n",
+       "resources": []
+      },
+      {
+       "title": "Tu plan de 7 días",
+       "body": "Aprender a usar IA es cuestión de **hábito**. Este plan lo vuelve práctico:\n\n## Plan semanal\n\n| Día | Qué hacer |\n| --- | --- |\n| 1 | Resolver una tarea pequeña con la fórmula del prompt |\n| 2 | Configurar tus instrucciones personalizadas |\n| 3 | Mejorar un texto real |\n| 4 | Resumir un documento largo |\n| 5 | Crear una imagen para tu contenido |\n| 6 | Verificar una respuesta importante |\n| 7 | Revisar qué funcionó y guardar tus mejores prompts |\n\n## Cierra con una pregunta\n\n```\nSegún lo que hemos hecho esta semana, ¿qué tareas repetitivas de mi trabajo podría delegarte con mejores resultados? Ordénalas por ahorro de tiempo.\n```\n\n## Siguiente paso\n\nCuéntanos en la comunidad qué tarea te ahorró más tiempo.\n\n**¡Felicidades por terminar el curso!**\n",
+       "resources": [
+        {
+         "label": "IA: primer paso (guía y plantilla)",
+         "url": "https://comunidad.andresgomez.store/recursos/ia-primer-paso"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

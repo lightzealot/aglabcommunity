@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { toggleLesson } from "@/app/(app)/classroom/actions";
 import { db, schema } from "@/db";
+import { RichText } from "@/components/rich-text";
 import { courseOutline, hasCourseAccess, UUID_RE } from "@/lib/courses";
 import { requireMember } from "@/lib/session";
 import { toEmbedUrl } from "@/lib/video";
@@ -54,7 +55,11 @@ export default async function LessonPage({
           </div>
         )}
 
-        {lesson.body && <p className="mt-5 text-[0.9375rem] break-words whitespace-pre-line">{lesson.body}</p>}
+        {lesson.body && (
+          <div className="mt-6">
+            <RichText text={lesson.body} />
+          </div>
+        )}
 
         {(lesson.resources.length > 0 || files.length > 0) && (
           <div className="card mt-6 p-4">

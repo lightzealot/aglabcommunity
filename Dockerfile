@@ -19,4 +19,4 @@ COPY --from=build /app/drizzle ./drizzle
 COPY --from=build /app/scripts ./scripts
 COPY --from=build /app/seed ./seed
 EXPOSE 3000
-CMD ["sh", "-c", "node scripts/migrate.mjs && (node scripts/seed-resources.mjs || true) && npx next start -p 3000"]
+CMD ["sh", "-c", "node scripts/migrate.mjs && (node scripts/seed-resources.mjs || true) && (node scripts/seed-courses.mjs || true) && npx next start -p 3000"]

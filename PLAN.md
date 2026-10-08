@@ -47,6 +47,9 @@ Barra superior con búsqueda, campanita y menú de usuario, y pestañas: Comunid
 ### Recursos iniciales
 Los 10 recursos de andresgomez.store/recursos viven en `seed/recursos/` (texto en Markdown + archivo `.txt` descargable) y sus portadas en `public/recursos/covers/`. `scripts/seed-resources.mjs` los carga una sola vez al arrancar (clave `seed:resources:v1` en `job_log`): si luego los editas o borras desde el admin, no se vuelven a crear. Las guías se escriben en Markdown básico (títulos, listas, citas, tablas, bloques de código con botón Copiar).
 
+### Cursos iniciales
+**Claude básico** y **ChatGPT básico** (4 módulos y 12 lecciones cada uno, gratis y publicados) viven en `seed/cursos/index.json`, con portadas en `public/cursos/covers/`. `scripts/seed-courses.mjs` los carga una sola vez al arrancar (`seed:courses:v1` en `job_log`). Las lecciones se escriben en Markdown (títulos, listas, tablas, bloques de prompt con botón Copiar). Son cursos independientes: las portadas llevan el aviso de que no están afiliados a Anthropic ni a OpenAI. **Logos:** no se incluyen; Anthropic exige permiso previo y envía los archivos bajo petición (marketing@anthropic.com) y OpenAI exige aceptar sus términos de marca. Cuando los tengas, sube la portada nueva desde Administración → Cursos.
+
 ## Imágenes
 Se guardan en `UPLOAD_DIR` (por defecto `./uploads`) y se sirven solo a miembros con sesión desde `/api/uploads/*`. En EasyPanel, monta un volumen persistente en `/app/uploads`.
 
