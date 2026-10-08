@@ -2,6 +2,7 @@ import Link from "next/link";
 import { togglePostLike } from "@/app/(app)/actions";
 import { Avatar } from "@/components/avatar";
 import { CommentIcon, PinIcon, ThumbIcon } from "@/components/icons";
+import { PostBody } from "@/components/post-body";
 import { timeAgo, timeShort } from "@/lib/time";
 
 export type FeedPost = {
@@ -56,7 +57,8 @@ export function PostCard({ p, full = false }: { p: FeedPost; full?: boolean }) {
             {p.authorName}
           </Link>
           <p className="text-xs text-hollow">
-            {full ? timeAgo(p.createdAt) : when(p.createdAt)} · <span className="font-semibold">{p.boardName}</span>
+            {full ? timeAgo(p.createdAt) : when(p.createdAt)} ·{" "}
+            <span className="rounded bg-accent-soft px-1.5 py-0.5 text-[11px] font-semibold text-accent">{p.boardName}</span>
           </p>
         </div>
         {p.pinned && (
@@ -77,9 +79,13 @@ export function PostCard({ p, full = false }: { p: FeedPost; full?: boolean }) {
                 <h2 className="text-lg font-semibold hover:text-accent">{p.title}</h2>
               </Link>
             ))}
-          <p className={`mt-1 text-[0.9375rem] break-words whitespace-pre-line ${full ? "" : "line-clamp-2 text-ash"}`}>
-            {p.body}
-          </p>
+          <div className="mt-1">
+            {full ? (
+              <p className="text-[0.9375rem] break-words whitespace-pre-line">{p.body}</p>
+            ) : (
+              <PostBody text={p.body} />
+            )}
+          </div>
         </div>
         {p.imageUrl &&
           (full ? (

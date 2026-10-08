@@ -72,7 +72,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
           </Link>
         )}
 
-        <div className="flex gap-2 overflow-x-auto pb-1">
+        <div className="flex flex-wrap gap-2">
           {pill("all", "Todos")}
           {mine.length > 0 && pill("mine", "Mis boards")}
           {boards.map((x) => pill(x.id, x.name))}
