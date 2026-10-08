@@ -2,7 +2,7 @@
 
 import { authClient } from "@/lib/auth-client";
 
-export function GoogleButton() {
+export function GoogleButton({ callbackURL = "/" }: { callbackURL?: string }) {
   return (
     <>
       <button
@@ -11,7 +11,7 @@ export function GoogleButton() {
         onClick={() =>
           authClient.signIn.social({
             provider: "google",
-            callbackURL: "/",
+            callbackURL,
             errorCallbackURL: "/login?error=google",
           })
         }

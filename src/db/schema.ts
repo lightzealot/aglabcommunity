@@ -40,6 +40,8 @@ export const user = pgTable("user", {
   emailNotifications: boolean("email_notifications").notNull().default(true),
   // Última vez que estuvo activo (para "En línea" y "Activo hace…")
   lastSeenAt: timestamp("last_seen_at"),
+  // Slug del recurso desde el que llegó (atribución del lead)
+  signupSource: text("signup_source"),
 });
 
 export const session = pgTable("session", {
@@ -338,3 +340,31 @@ export const appSetting = pgTable("app_setting", {
   key: text("key").primaryKey(),
   value: text("value").notNull(),
 });
+
+// ---- Recursos públicos (captación de leads) ----
+export const resource = pgTable("resource", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  slug: text("slug").notNull().unique(),
+  title: text("title").notNull(),
+  summary: text("summary").notNull().default(""),
+  body: text("body").notNull().default(""),
+  coverUrl: text("cover_url"),
+  published: boolean("published").notNull().default(false),
+  position: integer("position").notNull().default(0),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export const resourceFile = pgTable(
+  "resource_file",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    resourceId: uuid("resource_id")
+      .notNull()
+      .references(() => resource.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    storedName: text("stored_name").notNull(),
+    size: integer("size").notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (t) => [index("resource_file_resource_idx").on(t.resourceId)],
+);

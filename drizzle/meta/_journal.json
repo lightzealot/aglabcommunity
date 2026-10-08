@@ -57,6 +57,13 @@
       "when": 1791420867013,
       "tag": "0007_presence",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1791423425699,
+      "tag": "0008_resources",
+      "breakpoints": true
     }
   ]
 }

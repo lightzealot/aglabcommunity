@@ -7,7 +7,9 @@ import { AuthShell } from "@/components/auth-shell";
 import { GoogleButton } from "@/components/google-button";
 import { authClient } from "@/lib/auth-client";
 
-export function RegistroForm({ googleEnabled }: { googleEnabled: boolean }) {
+export function RegistroForm({ googleEnabled, from }: { googleEnabled: boolean; from?: string }) {
+  // Si llega desde un recurso, vuelve a él (con la descarga ya desbloqueada).
+  const after = from ? `/recursos/${from}?welcome=1` : "/";
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -24,7 +26,7 @@ export function RegistroForm({ googleEnabled }: { googleEnabled: boolean }) {
     });
     setLoading(false);
     if (error) return setError(error.message ?? "No pudimos crear tu cuenta.");
-    router.replace("/");
+    router.replace(after);
     router.refresh();
   }
 
@@ -33,7 +35,7 @@ export function RegistroForm({ googleEnabled }: { googleEnabled: boolean }) {
       title="Únete"
       subtitle="Crea tu cuenta. Aprobamos cada solicitud manualmente antes de dar acceso."
     >
-      {googleEnabled && <GoogleButton />}
+      {googleEnabled && <GoogleButton callbackURL={after} />}
       <form onSubmit={onSubmit} className="space-y-3">
         <input name="name" required placeholder="Nombre" className="input" autoComplete="name" />
         <input name="email" type="email" required placeholder="Correo" className="input" autoComplete="email" />

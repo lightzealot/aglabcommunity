@@ -10,9 +10,11 @@ import { authClient } from "@/lib/auth-client";
 export function LoginForm({
   googleEnabled,
   oauthError,
+  next,
 }: {
   googleEnabled: boolean;
   oauthError: boolean;
+  next: string;
 }) {
   const router = useRouter();
   const [error, setError] = useState(oauthError ? "No pudimos entrar con Google. Inténtalo de nuevo o usa tu correo." : "");
@@ -29,13 +31,13 @@ export function LoginForm({
     });
     setLoading(false);
     if (error) return setError("Correo o contraseña incorrectos.");
-    router.replace("/");
+    router.replace(next);
     router.refresh();
   }
 
   return (
     <AuthShell title="Entrar" subtitle="Accede a tu espacio en AG Lab.">
-      {googleEnabled && <GoogleButton />}
+      {googleEnabled && <GoogleButton callbackURL={next} />}
       <form onSubmit={onSubmit} className="space-y-3">
         <input name="email" type="email" required placeholder="Correo" className="input" autoComplete="email" />
         <input name="password" type="password" required placeholder="Contraseña" className="input" autoComplete="current-password" />

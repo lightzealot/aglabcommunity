@@ -1,7 +1,7 @@
 import { getSessionCookie } from "better-auth/cookies";
 import { NextResponse, type NextRequest } from "next/server";
 
-const PUBLIC = ["/login", "/registro", "/recuperar", "/restablecer"];
+const PUBLIC = ["/login", "/registro", "/recuperar", "/restablecer", "/recursos"];
 
 // Solo verifica que exista la cookie de sesión; la validación real
 // (aprobado / admin) se hace en los layouts del servidor.
@@ -17,5 +17,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|icon.png|apple-icon.png|logo.png).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|icon.png|apple-icon.png|logo.png|sitemap.xml|robots.txt).*)"],
 };

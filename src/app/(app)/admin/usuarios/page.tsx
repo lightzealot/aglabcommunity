@@ -45,6 +45,9 @@ export default async function UsuariosPage() {
                     .join(" · ")}
                 </p>
               )}
+              {u.signupSource && (
+                <p className="mt-1 text-xs text-accent">Llegó desde el recurso: {u.signupSource}</p>
+              )}
               {u.intro && (
                 <p className="mt-2 rounded bg-veil p-3 text-sm whitespace-pre-line">{u.intro}</p>
               )}

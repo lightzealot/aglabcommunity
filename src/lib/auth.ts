@@ -6,6 +6,7 @@ import { db, schema } from "@/db";
 import { isGoogleEnabled } from "@/lib/google";
 import { notify } from "@/lib/notify";
 import { getRequireApproval } from "@/lib/settings";
+import { sourceFromHeaders } from "@/lib/signup-source";
 import { emailLayout, sendMail } from "@/lib/mail";
 
 const adminEmails = (process.env.ADMIN_EMAIL ?? "")
@@ -48,21 +49,27 @@ export const auth = betterAuth({
       status: { type: "string", defaultValue: "pending", input: false },
       points: { type: "number", defaultValue: 0, input: false },
       onboarded: { type: "boolean", defaultValue: false, input: false },
+      signupSource: { type: "string", required: false, input: false },
     },
   },
   databaseHooks: {
     user: {
       create: {
-        before: async (user) => {
+        before: async (user, context) => {
           const isAdmin = adminEmails.includes(user.email.toLowerCase());
           // Con la aprobación manual desactivada, los nuevos miembros entran directo.
           const approved = isAdmin || !(await getRequireApproval());
+          // Atribución: el recurso que vio antes de registrarse (cookie), si existe.
+          const signupSource = await sourceFromHeaders(
+            context?.request?.headers ?? (context as { headers?: Headers } | null)?.headers,
+          );
           return {
             data: {
               ...user,
               role: isAdmin ? "admin" : "member",
               status: approved ? "approved" : "pending",
               onboarded: isAdmin, // el admin no pasa por el onboarding
+              ...(signupSource ? { signupSource } : {}),
             },
           };
         },
