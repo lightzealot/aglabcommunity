@@ -220,6 +220,200 @@
      ]
     }
    ]
+  },
+  {
+   "slug": "hermes-agent",
+   "title": "Hermes Agent: asistente personal y de negocios",
+   "description": "Instala y configura Hermes Agent, un agente de IA de código abierto que trabaja por ti: conócelo, dale memoria y personalidad, háblale desde Telegram, prográmale rutinas, enséñale los procesos de tu negocio y úsalo con seguridad. Con comandos reales, prácticas y prompts para copiar.\n\nCurso independiente de AG Lab. No está afiliado, patrocinado ni respaldado por Nous Research. Hermes Agent es un proyecto de Nous Research.",
+   "cover": "/cursos/covers/hermes-agent.webp",
+   "position": 3,
+   "modules": [
+    {
+     "title": "Conoce a Hermes",
+     "lessons": [
+      {
+       "title": "Qué es Hermes Agent y para qué sirve",
+       "body": "Hermes Agent es un **agente de IA de código abierto** creado por Nous Research. A diferencia de un chat, no vive en una pestaña del navegador: lo instalas en tu computador o en un servidor y se queda ahí, trabajando para ti.\n\n## En qué se diferencia de un chat\n\n| Un chat (Claude, ChatGPT) | Un agente como Hermes |\n| --- | --- |\n| Responde cuando le escribes | Puede actuar por su cuenta, a la hora que le indiques |\n| No toca tu equipo | Puede ejecutar comandos, leer y escribir archivos, navegar |\n| Cada conversación parte casi de cero | Guarda **memoria** entre sesiones |\n| Hace lo que le pides | Crea y mejora **habilidades** a partir de lo que resuelve |\n| Solo conversas en su página | Lo usas desde **Telegram, Discord, Slack, WhatsApp** y más |\n\n## Las cuatro piezas que vas a aprender\n\n- **Memoria:** recuerda tus preferencias y datos de tus proyectos.\n- **Habilidades (skills):** instrucciones reutilizables que aprende o instalas.\n- **Mensajería:** hablas con él desde el chat que ya usas.\n- **Tareas programadas:** lo que hace solo, a una hora fija.\n\n## Un aviso importante\n\nUn agente que puede ejecutar comandos es poderoso, y por eso exige **cuidado**. En el módulo 5 verás cómo usarlo de forma segura. Empieza siempre en un entorno donde puedas equivocarte sin consecuencias.\n\n**Tarea:** escribe 3 tareas repetitivas de tu semana que te gustaría que alguien hiciera por ti sin que se lo pidas cada vez.\n\n> Este curso se basa en la documentación oficial consultada en octubre de 2026. Hermes Agent cambia con frecuencia: si un comando no coincide, revisa la documentación oficial o ejecuta `hermes doctor`.\n",
+       "resources": [
+        {
+         "label": "Documentación oficial de Hermes Agent",
+         "url": "https://hermes-agent.nousresearch.com/docs"
+        }
+       ]
+      },
+      {
+       "title": "Qué necesitas antes de instalar",
+       "body": "Antes de instalar, decide **dónde vivirá** tu agente y **qué modelo de IA** usará.\n\n## Dónde instalarlo\n\n- **Tu computador:** lo más simple para aprender. Funciona en Linux, macOS, Windows y WSL2. En macOS, los paquetes de escritorio son solo para Apple Silicon.\n- **Un servidor (VPS):** recomendable si quieres que trabaje 24 horas, aunque tu computador esté apagado.\n- Existe también una **aplicación de escritorio** para Windows y macOS, y una guía para Android (Termux).\n\n## Qué modelo usará\n\nHermes **no trae su propio modelo**: se conecta a uno. Las opciones habituales son el servicio de Nous Portal, OpenRouter, OpenAI, Anthropic u otro compatible, incluso modelos locales.\n\nRequisito: el modelo debe tener **al menos 64K tokens de contexto**; con menos, Hermes lo rechaza al iniciar.\n\n## Costos: lo que casi nadie dice\n\n- El programa es de código abierto, pero **el modelo se paga por uso**. Un agente que trabaja solo puede gastar más que una conversación normal.\n- Antes de dejar tareas automáticas, revisa tu plan y tu facturación.\n- Empieza con límites de gasto en el proveedor.\n\n## Checklist previo\n\n- [ ] Decidí dónde lo instalo.\n- [ ] Tengo cuenta y clave de un proveedor de modelos (o Nous Portal).\n- [ ] Configuré un límite de gasto.\n- [ ] Voy a empezar sin datos sensibles.\n\n**Tarea:** completa el checklist y anota el proveedor que usarás.\n\n> Este curso se basa en la documentación oficial consultada en octubre de 2026. Hermes Agent cambia con frecuencia: si un comando no coincide, revisa la documentación oficial o ejecuta `hermes doctor`.\n",
+       "resources": [
+        {
+         "label": "Instalación (documentación oficial)",
+         "url": "https://hermes-agent.nousresearch.com/docs/getting-started/installation"
+        }
+       ]
+      },
+      {
+       "title": "Instalación paso a paso",
+       "body": "## 1. Instalar\n\n**Linux, macOS o WSL2:**\n\n```bash\ncurl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash\n```\n\n**Windows (PowerShell):**\n\n```powershell\niex (irm https://hermes-agent.nousresearch.com/install.ps1)\n```\n\nSi prefieres no usar la terminal, descarga el **instalador de escritorio** (Windows o macOS) desde la web oficial.\n\nEl instalador prepara todo lo que necesita (Python, Node.js y demás) y crea el comando `hermes`.\n\n## 2. Recargar la terminal\n\n```bash\nsource ~/.bashrc   # o: source ~/.zshrc\n```\n\n## 3. Elegir el modelo\n\nEl camino más corto es con Nous Portal:\n\n```bash\nhermes setup --portal\n```\n\nO elige tu propio proveedor con el asistente:\n\n```bash\nhermes model\n```\n\nPara guardar una clave de forma segura, usa el comando de configuración (así queda en el archivo correcto):\n\n```bash\nhermes config set OPENROUTER_API_KEY <tu-clave>\n```\n\n## 4. Comprobar que todo está bien\n\n```bash\nhermes doctor\nhermes config check\n```\n\n`hermes doctor` te dice qué falta y cómo arreglarlo.\n\n## Si algo falla\n\n- **`hermes: command not found`:** recarga la terminal o revisa tu PATH.\n- **`API key not set`:** ejecuta `hermes model` o `hermes config set`.\n- Orden de recuperación recomendado: `hermes doctor`, `hermes model`, `hermes setup`, `hermes gateway status`.\n\n**Tarea:** instala Hermes y ejecuta `hermes doctor` sin errores.\n\n> Este curso se basa en la documentación oficial consultada en octubre de 2026. Hermes Agent cambia con frecuencia: si un comando no coincide, revisa la documentación oficial o ejecuta `hermes doctor`.\n",
+       "resources": [
+        {
+         "label": "Instalación",
+         "url": "https://hermes-agent.nousresearch.com/docs/getting-started/installation"
+        },
+        {
+         "label": "Inicio rápido",
+         "url": "https://hermes-agent.nousresearch.com/docs/getting-started/quickstart"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Primeros pasos con tu agente",
+     "lessons": [
+      {
+       "title": "Tu primera conversación",
+       "body": "Con Hermes instalado, ábrelo escribiendo `hermes` en la terminal. Hay dos modos:\n\n```bash\nhermes          # modo clásico\nhermes --tui    # interfaz moderna (recomendada)\n```\n\n## Cómo saber que va bien\n\n- Ves el nombre del **modelo y el proveedor** que elegiste.\n- Responde sin errores.\n- Puede **usar una herramienta** cuando la necesita.\n- La conversación sigue durante varios turnos.\n\n## Comandos que usarás todo el tiempo\n\n| Comando | Para qué sirve |\n| --- | --- |\n| `/help` | Ver todos los comandos |\n| `/tools` | Ver qué herramientas tiene disponibles |\n| `/model` | Cambiar de modelo |\n| `/save` | Guardar la conversación |\n| `/new` | Empezar una sesión nueva |\n\nEscribe `/` para ver el autocompletado. Para saltar de línea usa `Alt+Enter` o `Ctrl+J`. Para interrumpirlo, envía un mensaje nuevo o pulsa `Ctrl+C`.\n\n## Retomar una sesión\n\n```bash\nhermes --continue\n```\n\n## Práctica\n\nEmpieza con una petición **concreta y fácil de verificar**:\n\n```\nDime qué herramientas tienes disponibles y, de ellas, cuáles te servirían para ayudarme con mis tareas de oficina. No ejecutes nada todavía.\n```\n\n**Tarea:** conversa 5 turnos, cierra Hermes y retoma la sesión con `hermes --continue`.\n\n> Este curso se basa en la documentación oficial consultada en octubre de 2026. Hermes Agent cambia con frecuencia: si un comando no coincide, revisa la documentación oficial o ejecuta `hermes doctor`.\n",
+       "resources": [
+        {
+         "label": "Inicio rápido",
+         "url": "https://hermes-agent.nousresearch.com/docs/getting-started/quickstart"
+        },
+        {
+         "label": "Uso de la línea de comandos",
+         "url": "https://hermes-agent.nousresearch.com/docs/user-guide/cli"
+        }
+       ]
+      },
+      {
+       "title": "Memoria: que te conozca",
+       "body": "La memoria es lo que convierte a Hermes en **tu** asistente. Guarda información entre sesiones en dos archivos pequeños y cuidados.\n\n## Dónde vive\n\nDentro de `~/.hermes/memories/`:\n\n- **`MEMORY.md`** (hasta 2.200 caracteres): notas del propio agente sobre tu entorno, tus proyectos y cómo trabajas.\n- **`USER.md`** (hasta 1.375 caracteres): tu perfil, preferencias y estilo de comunicación.\n\nSon **cortos a propósito**: se cargan al iniciar cada sesión, así que cada línea cuenta. Si se llenan, Hermes tiene que decidir qué conservar.\n\n## Búsqueda de sesiones pasadas\n\nAdemás, guarda todas tus conversaciones y puede **buscar** en ellas. Para ver las recientes:\n\n```bash\nhermes sessions list\n```\n\nLa memoria sirve para lo que debe estar **siempre** presente; la búsqueda, para recordar una conversación concreta.\n\n## Cómo enseñarle\n\nDile las cosas claras:\n\n```\nRecuerda esto sobre mí: soy [profesión], trabajo con [tipo de cliente], prefiero respuestas cortas y en español neutro, y mi semana empieza el lunes a las 8:00.\n```\n\nCompruébalo:\n\n```bash\ncat ~/.hermes/memories/USER.md\n```\n\n## Control y buenas prácticas\n\n- Usa `/new` al cambiar de tema para que cargue la memoria actualizada.\n- Puedes exigir **aprobación** antes de que guarde algo: `/memory approval on`, y luego `/memory pending`, `/memory approve <id>` o `/memory reject <id>`.\n- Revisa lo aprendido con `hermes journey list`.\n- Nunca le pidas que guarde contraseñas ni datos sensibles.\n\n**Tarea:** enséñale 5 datos sobre ti y comprueba cuáles quedaron guardados.\n\n> Este curso se basa en la documentación oficial consultada en octubre de 2026. Hermes Agent cambia con frecuencia: si un comando no coincide, revisa la documentación oficial o ejecuta `hermes doctor`.\n",
+       "resources": [
+        {
+         "label": "Memoria (documentación oficial)",
+         "url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/memory"
+        }
+       ]
+      },
+      {
+       "title": "Personalidad y contexto",
+       "body": "Hay dos formas de decirle a Hermes **cómo ser** y **qué debe saber** del trabajo.\n\n## SOUL.md: su identidad\n\nEl archivo `~/.hermes/SOUL.md` define su **voz y carácter** de forma permanente: tono, nivel de franqueza, qué evitar y cómo manejar la incertidumbre. No pongas aquí detalles de proyectos.\n\nEjemplo para un asistente de negocios:\n\n```markdown\n# Cómo debes comportarte\n- Habla en español neutro, claro y sin tecnicismos.\n- Empieza por la respuesta y luego da el detalle.\n- Si no estás seguro de algo, dilo y explica qué falta.\n- Antes de hacer algo que afecte a otras personas (enviar, borrar, pagar), pide mi confirmación.\n- Sé directo: prefiero una opinión razonada a una lista de opciones sin recomendar.\n```\n\n## /personality: un cambio temporal\n\nPara un modo puntual, sin tocar `SOUL.md`:\n\n```\n/personality concise\n/personality teacher\n/personality none\n```\n\n## Archivos de contexto del proyecto\n\nPara lo **específico de un proyecto**, Hermes lee archivos como `AGENTS.md` (o `.hermes.md`) en la carpeta donde trabajas: estructura, convenciones, cosas que no debe tocar y rutas importantes.\n\nReglas para escribirlos:\n\n- Cortos: el agente los lee en cada turno.\n- Con ejemplos concretos.\n- Incluye **lo que NO debe hacer**.\n\n**Tarea:** escribe tu `SOUL.md` con 5 reglas y verifica que cambie su manera de responder.\n\n> Este curso se basa en la documentación oficial consultada en octubre de 2026. Hermes Agent cambia con frecuencia: si un comando no coincide, revisa la documentación oficial o ejecuta `hermes doctor`.\n",
+       "resources": [
+        {
+         "label": "Personalidad y SOUL.md",
+         "url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/personality"
+        },
+        {
+         "label": "Archivos de contexto",
+         "url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/context-files"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Tu asistente personal 24/7",
+     "lessons": [
+      {
+       "title": "Conecta Telegram",
+       "body": "Hasta ahora hablas con Hermes en la terminal. El **gateway de mensajería** lo conecta a los chats que ya usas (Telegram, Discord, Slack, WhatsApp, correo y más) para que le escribas desde el celular.\n\n## Paso a paso con Telegram\n\n1. En Telegram, abre el bot oficial **@BotFather**, escribe `/newbot` y sigue los pasos. Te entregará un **token**: es como una contraseña, no lo compartas.\n2. Ejecuta el asistente de configuración:\n\n```bash\nhermes gateway setup\n```\n\nElige Telegram con las flechas y pega el token cuando te lo pida (se guarda como `TELEGRAM_BOT_TOKEN`).\n\n3. Arranca y comprueba:\n\n```bash\nhermes gateway start\nhermes gateway status\n```\n\n## Protege tu bot (importante)\n\nPor defecto el gateway **rechaza a quien no esté autorizado**. Tienes dos formas de autorizarte:\n\n- **Emparejamiento (la más fácil):** escríbele al bot desde tu cuenta. Recibirás un código; apruébalo desde tu terminal:\n\n```bash\nhermes pairing approve telegram <código>\nhermes pairing list\nhermes pairing revoke telegram <id>\n```\n\nLos códigos caducan en 1 hora.\n\n- **Lista de permitidos:** en `~/.hermes/.env`, añade `TELEGRAM_ALLOWED_USERS=<tu-id>`.\n\n> **Nunca** actives `GATEWAY_ALLOW_ALL_USERS=true` en un bot que pueda ejecutar comandos: cualquiera podría controlar tu equipo.\n\n## Que siga funcionando\n\nEn Linux, para que se inicie con el servidor:\n\n```bash\nhermes gateway install\nhermes gateway start\nsudo loginctl enable-linger $USER\n```\n\nPara aplicar cambios: `hermes gateway restart`.\n\n**Tarea:** conecta tu bot, empareja tu cuenta y envíale un mensaje desde el celular.\n\n> Este curso se basa en la documentación oficial consultada en octubre de 2026. Hermes Agent cambia con frecuencia: si un comando no coincide, revisa la documentación oficial o ejecuta `hermes doctor`.\n",
+       "resources": [
+        {
+         "label": "Gateway de mensajería",
+         "url": "https://hermes-agent.nousresearch.com/docs/user-guide/messaging/"
+        },
+        {
+         "label": "Seguridad",
+         "url": "https://hermes-agent.nousresearch.com/docs/user-guide/security"
+        }
+       ]
+      },
+      {
+       "title": "Tareas programadas: que trabaje solo",
+       "body": "Hermes incluye un programador (cron). El **gateway** revisa cada minuto si hay tareas pendientes y las ejecuta, aunque tú no estés.\n\n## Crear una tarea\n\nDesde el chat de Hermes:\n\n```\n/cron add \"in 30m\" \"Recuérdame revisar los correos pendientes\"\n/cron add \"every 2h\" \"Revisa el estado del servidor\"\n```\n\nDesde la terminal:\n\n```bash\nhermes cron create \"every 1h\" \"Resume las noticias nuevas de mi sector\"\n```\n\nO **en lenguaje normal**: *\"Todas las mañanas a las 9, busca noticias de IA y mándame un resumen por Telegram.\"*\n\n## Cómo indicar cuándo\n\n| Tipo | Ejemplos |\n| --- | --- |\n| Una sola vez | `in 30m`, `in 2h`, `in 1d` |\n| Cada cierto tiempo | `every 30m`, `every 2h` |\n| Día y hora | `every monday 9am`, `weekdays at 9am`, `daily at 7am` |\n| Expresión cron | `0 9 * * 1-5` (laborables a las 9:00) |\n\n## Administrar tus tareas\n\n```bash\nhermes cron list\nhermes cron pause <id_o_nombre>\nhermes cron resume <id_o_nombre>\nhermes cron remove <id_o_nombre>\nhermes cron doctor      # revisión de salud\n```\n\n## Recibir el resultado en Telegram\n\nAñade `--deliver telegram` al crearla. Si la tarea solo debe avisar cuando haya un problema, pídele que responda `[SILENT]` cuando todo esté bien.\n\n## Lo que debes recordar\n\n- **Cada ejecución empieza desde cero.** El texto de la tarea debe incluir *todo* lo que necesita.\n- Si el gateway estuvo caído, una tarea recurrente recupera **una** ejecución, no todas las perdidas.\n- Empieza con tareas que **solo informen**, no que actúen.\n\n**Tarea:** programa un resumen diario a las 7:00 y confirma que llega a tu Telegram.\n\n> Este curso se basa en la documentación oficial consultada en octubre de 2026. Hermes Agent cambia con frecuencia: si un comando no coincide, revisa la documentación oficial o ejecuta `hermes doctor`.\n",
+       "resources": [
+        {
+         "label": "Tareas programadas (documentación oficial)",
+         "url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/cron"
+        }
+       ]
+      },
+      {
+       "title": "Cinco rutinas para tu día",
+       "body": "Con memoria, Telegram y tareas programadas ya puedes armar un asistente personal real. Estas son cinco rutinas **que solo informan o preparan**, un buen punto de partida.\n\n## 1. Resumen de la mañana\n\n```\nTodos los días a las 7:00, prepárame un resumen con: 1) noticias de [mi sector], 2) tres prioridades sugeridas para hoy según lo que sabes de mí. Máximo 150 palabras. Envíalo por Telegram.\n```\n\n## 2. Cierre del día\n\n```\nTodos los días laborables a las 18:00, pregúntame qué pude avanzar hoy y qué quedó pendiente, y guarda un resumen breve en tu memoria.\n```\n\n## 3. Revisión semanal\n\n```\nCada viernes a las 16:00, resume lo que hablamos esta semana, lista lo pendiente y propón 3 prioridades para la próxima. Envíalo por Telegram.\n```\n\n## 4. Recordatorios con contexto\n\n```\nEl lunes a las 8:00, recuérdame revisar las facturas por cobrar y prepárame una plantilla de mensaje amable para quien esté atrasado.\n```\n\n## 5. Investigación bajo demanda\n\nDesde el celular: *\"Investiga qué hace [competidor] en Instagram y dame 5 ideas que podríamos adaptar.\"*\n\n## Cómo mejorarlas con el tiempo\n\n- Si una rutina sale genérica, **añade contexto** a la tarea o guárdalo en la memoria.\n- Pídele que **aprenda de tus correcciones**: *\"Cuando te pida un resumen, usa siempre este formato.\"*\n\n**Tarea:** activa dos de estas rutinas durante una semana y anota cuál te ahorra más tiempo.\n\n> Este curso se basa en la documentación oficial consultada en octubre de 2026. Hermes Agent cambia con frecuencia: si un comando no coincide, revisa la documentación oficial o ejecuta `hermes doctor`.\n",
+       "resources": [
+        {
+         "label": "10 recordatorios para programar (ideas de tareas recurrentes)",
+         "url": "https://comunidad.andresgomez.store/recursos/10-automatizaciones-chatgpt"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Tu asistente de negocios",
+     "lessons": [
+      {
+       "title": "Habilidades: enseñarle procesos",
+       "body": "Una **habilidad (skill)** es un documento con instrucciones que Hermes carga **solo cuando la necesita**: cómo hacer un informe, cómo responder a un cliente, cómo revisar un contrato. Es la forma de convertir *tu manera de trabajar* en algo repetible.\n\n## De dónde salen\n\n- **Las crea él mismo** cuando resuelve algo repetible o recibe correcciones tuyas.\n- **Tú se las enseñas** con `/learn`, apuntando a una carpeta, un enlace o describiendo el proceso.\n- **Las instalas** desde el catálogo (Skills Hub).\n\nCada habilidad es una carpeta con un archivo `SKILL.md`, y se guardan en `~/.hermes/skills/`. Cada una también funciona como comando, por ejemplo `/mi-habilidad`.\n\n## Enseñarle un proceso\n\n```\n/learn Quiero que aprendas mi proceso para responder consultas de nuevos clientes: 1) saludo cercano, 2) preguntar el objetivo y el presupuesto, 3) proponer una llamada, 4) cerrar con un resumen. Tono: cercano y profesional.\n```\n\n## Buscar e instalar\n\n```bash\nhermes skills browse\nhermes skills search <palabra>\nhermes skills inspect <origen/habilidad>   # ver antes de instalar\nhermes skills install <origen/habilidad>\nhermes skills list\n```\n\n## Cuidado con las de terceros\n\n- **Revisa siempre con `inspect` antes de instalar.** Una habilidad es código e instrucciones que tu agente va a obedecer.\n- Hermes analiza cada instalación en busca de riesgos, pero no es infalible.\n- Puedes exigir **aprobación** antes de que el agente escriba habilidades: pon `write_approval: true` bajo `skills:` en `~/.hermes/config.yaml`, y revisa con `/skills pending`, `/skills diff <id>` y `/skills approve <id>`.\n\n**Tarea:** enséñale con `/learn` un proceso real de tu negocio y pruébalo con un caso ficticio.\n\n> Este curso se basa en la documentación oficial consultada en octubre de 2026. Hermes Agent cambia con frecuencia: si un comando no coincide, revisa la documentación oficial o ejecuta `hermes doctor`.\n",
+       "resources": [
+        {
+         "label": "Habilidades (documentación oficial)",
+         "url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/skills"
+        }
+       ]
+      },
+      {
+       "title": "Conectar herramientas con MCP",
+       "body": "Para que Hermes trabaje con tus herramientas (archivos, correo, calendario, CRM, pagos), usa **MCP**: un estándar para conectar agentes con servicios externos.\n\n## Cómo se configura\n\nEn `~/.hermes/config.yaml`, bajo `mcp_servers`:\n\n```yaml\nmcp_servers:\n  mi_servicio:\n    url: \"https://mcp.ejemplo.com\"\n    headers:\n      Authorization: \"Bearer <tu-token>\"\n```\n\nPara servidores locales (un programa que se ejecuta en tu equipo):\n\n```yaml\nmcp_servers:\n  github:\n    command: \"npx\"\n    args: [\"-y\", \"@modelcontextprotocol/server-github\"]\n    env:\n      GITHUB_PERSONAL_ACCESS_TOKEN: \"<tu-token>\"\n```\n\n## Comprobar y ajustar\n\n```bash\nhermes mcp test <nombre>        # ¿responde el servidor?\nhermes mcp configure <nombre>   # elegir qué herramientas permitir\n```\n\nDentro de una sesión, `/reload-mcp` recarga la configuración. Las herramientas aparecen con el nombre `mcp_<servidor>_<herramienta>`.\n\n## Controla lo que puede hacer\n\nQuita las acciones peligrosas con `tools.exclude`:\n\n```yaml\nmcp_servers:\n  facturacion:\n    url: \"https://mcp.ejemplo.com\"\n    tools:\n      exclude: [delete_customer]\n```\n\n## Reglas de seguridad\n\n- Da a cada conexión **el mínimo permiso** necesario (por ejemplo, solo lectura).\n- No pegues tokens reales en ejemplos ni en documentos que compartas; guárdalos en `~/.hermes/.env`.\n- Desactiva con `enabled: false` los servidores que no uses.\n- **Lee qué instala** un servidor antes de añadirlo.\n\n**Tarea:** conecta una herramienta de solo lectura y pide una consulta sencilla.\n\n> Este curso se basa en la documentación oficial consultada en octubre de 2026. Hermes Agent cambia con frecuencia: si un comando no coincide, revisa la documentación oficial o ejecuta `hermes doctor`.\n",
+       "resources": [
+        {
+         "label": "MCP (documentación oficial)",
+         "url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/mcp"
+        }
+       ]
+      },
+      {
+       "title": "Casos de uso para un negocio de servicios",
+       "body": "Un agente rinde más cuando lo usas en **procesos concretos y repetibles**. Estos son cuatro casos para una empresa de servicios.\n\n## 1. Preparación de reuniones\n\n```\nMañana tengo una llamada con [cliente]. Con lo que sabes de él y de mis notas, prepárame: contexto en 5 líneas, 3 preguntas para entender sus objetivos y una propuesta de siguiente paso.\n```\n\n## 2. Reporte semanal para el equipo\n\nPrograma cada viernes un resumen de lo avanzado y lo pendiente, enviado a tu Telegram para que lo revises y lo reenvíes.\n\n## 3. Seguimiento de oportunidades\n\nCon una hoja de cálculo o un CRM conectado (en solo lectura):\n\n```\nCada lunes a las 9:00, revisa mis oportunidades abiertas y dime a cuáles llevo más de 7 días sin contactar. Propón un mensaje de seguimiento para cada una, sin enviarlo.\n```\n\n## 4. Borradores de respuesta\n\nEnséñale (con `/learn`) tu manera de responder a clientes. Pídele que **redacte, tú apruebas y envías**.\n\n## Una regla para todo\n\n> **Primero prepara, después tú decides.** Las acciones que afectan a otras personas (enviar, cobrar, borrar, publicar) deben pasar por tu aprobación.\n\n## Sobre datos de clientes\n\nNo le compartas datos personales de clientes sin su autorización y sin revisar cómo se guardan y a qué proveedor de modelo se envían. Si puedes, **anonimiza**.\n\n## Cómo elegir el primer proceso\n\nEscoge uno que sea: repetitivo, de bajo riesgo y fácil de revisar. Define qué es \"bien hecho\" antes de automatizarlo.\n\n**Tarea:** elige un proceso de tu negocio, descríbelo paso a paso y conviértelo en una habilidad con `/learn`.\n\n> Este curso se basa en la documentación oficial consultada en octubre de 2026. Hermes Agent cambia con frecuencia: si un comando no coincide, revisa la documentación oficial o ejecuta `hermes doctor`.\n",
+       "resources": []
+      }
+     ]
+    },
+    {
+     "title": "Seguridad y mantenimiento",
+     "lessons": [
+      {
+       "title": "Seguridad: lo que debes configurar sí o sí",
+       "body": "Hermes puede **ejecutar comandos en tu equipo**. Eso es lo que lo hace útil y lo que lo hace peligroso si se usa sin cuidado.\n\n## 1. Aprobación de comandos\n\nEn `~/.hermes/config.yaml`, `approvals.mode` define qué ocurre ante comandos peligrosos:\n\n- **`smart`** (por defecto): una IA evalúa el riesgo, bloquea lo claramente peligroso y te pregunta en lo dudoso.\n- **`manual`**: te pregunta siempre.\n- **`off`**: desactiva los controles. Úsalo solo en entornos totalmente aislados.\n\nEvita el modo `--yolo`: salta las confirmaciones.\n\n## 2. Aísla las ejecuciones\n\nHaz que los comandos corran dentro de un contenedor en vez de en tu sistema:\n\n```bash\nhermes config set terminal.backend docker\n```\n\n## 3. Protege tus claves\n\n```bash\nchmod 600 ~/.hermes/.env\n```\n\nGuarda ahí tus claves y no las subas nunca a un repositorio.\n\n## 4. Controla quién le habla\n\n- Usa **emparejamiento** o listas de permitidos.\n- **Nunca** `GATEWAY_ALLOW_ALL_USERS=true`.\n\n## 5. En un servidor\n\n- Ejecuta el gateway con un usuario **sin privilegios de administrador**.\n- Pon límites de CPU, memoria y disco al contenedor.\n- Revisa los registros en `~/.hermes/logs/`.\n\n## Checklist de seguridad\n\n- [ ] `approvals.mode` en `smart` o `manual`.\n- [ ] Comandos aislados con Docker.\n- [ ] `.env` con permisos `600`.\n- [ ] Solo yo puedo hablarle al bot.\n- [ ] Sin datos sensibles en la memoria.\n\n**Tarea:** recorre el checklist y corrige lo que falte.\n\n> Este curso se basa en la documentación oficial consultada en octubre de 2026. Hermes Agent cambia con frecuencia: si un comando no coincide, revisa la documentación oficial o ejecuta `hermes doctor`.\n",
+       "resources": [
+        {
+         "label": "Seguridad (documentación oficial)",
+         "url": "https://hermes-agent.nousresearch.com/docs/user-guide/security"
+        }
+       ]
+      },
+      {
+       "title": "Mantenimiento y solución de problemas",
+       "body": "Un agente que trabaja solo necesita **revisiones periódicas**, como cualquier servicio.\n\n## Revisión rápida (2 minutos a la semana)\n\n```bash\nhermes doctor              # ¿falta algo?\nhermes gateway status      # ¿sigue conectado?\nhermes cron list           # ¿qué tareas tengo activas?\nhermes cron doctor         # salud de las tareas programadas\n```\n\n## Mantenerlo al día\n\n```bash\nhermes update\n```\n\nSi después de actualizar falta alguna configuración: `hermes config migrate`.\n\n## Cuando algo falla, en este orden\n\n1. `hermes doctor`\n2. `hermes model` (revisar proveedor y clave)\n3. `hermes setup`\n4. `hermes sessions list` y `hermes --continue`\n5. `hermes gateway status`\n\n## Problemas frecuentes\n\n- **No responde por Telegram:** revisa `hermes gateway status` y que tu cuenta esté emparejada.\n- **Una tarea no se ejecuta:** confirma que el gateway está activo y mira `hermes cron doctor`.\n- **Respuestas flojas o gasto alto:** revisa el modelo con `/model`; para tareas simples usa uno más económico.\n\n## Controlar el gasto\n\n- Programa pocas tareas y con frecuencias razonables.\n- Usa un modelo económico para el trabajo en segundo plano.\n- Revisa el consumo en el panel de tu proveedor cada semana.\n\n## Varios agentes separados\n\nCon **perfiles** puedes tener agentes independientes (por ejemplo, uno personal y otro para el negocio), cada uno con su configuración, memoria y habilidades: `hermes -p negocio`.\n\n**Tarea:** haz la revisión rápida y anota la fecha de tu próxima revisión.\n\n> Este curso se basa en la documentación oficial consultada en octubre de 2026. Hermes Agent cambia con frecuencia: si un comando no coincide, revisa la documentación oficial o ejecuta `hermes doctor`.\n",
+       "resources": [
+        {
+         "label": "Preguntas frecuentes y solución de problemas",
+         "url": "https://hermes-agent.nousresearch.com/docs/reference/faq"
+        },
+        {
+         "label": "Referencia de comandos",
+         "url": "https://hermes-agent.nousresearch.com/docs/reference/cli-commands"
+        }
+       ]
+      },
+      {
+       "title": "Tu plan de 14 días",
+       "body": "Aprender un agente es cuestión de **ir añadiendo capacidades de a poco**. Este plan te lleva de la instalación a un asistente útil.\n\n## Plan\n\n| Días | Qué hacer |\n| --- | --- |\n| 1 | Instalar, elegir modelo y poner un límite de gasto |\n| 2 | Primera conversación y comandos básicos |\n| 3 | Enseñarle quién eres (memoria) y escribir tu `SOUL.md` |\n| 4-5 | Conectar Telegram y proteger el bot |\n| 6-7 | Programar el resumen de la mañana |\n| 8-9 | Enseñarle un proceso con `/learn` |\n| 10-11 | Conectar una herramienta de solo lectura (MCP) |\n| 12 | Revisar la seguridad con el checklist |\n| 13 | Revisar gasto y ajustar rutinas |\n| 14 | Decidir qué dejar activo y qué apagar |\n\n## Reglas para no meterte en problemas\n\n1. **Un cambio a la vez.** Si algo falla, sabrás qué fue.\n2. **Primero solo lectura.** Las acciones que modifican cosas, después.\n3. **Tú apruebas** lo que afecta a otras personas.\n4. **Revisa el gasto** cada semana.\n\n## Cierra con una pregunta\n\n```\nSegún lo que hemos configurado, ¿qué tres tareas de mi trabajo me conviene automatizar primero? Ordénalas por ahorro de tiempo y por riesgo, y dime cómo las haríamos paso a paso.\n```\n\n## Siguiente paso\n\nCuéntanos en la comunidad qué rutina te ahorró más tiempo y qué te costó configurar. Compartir ejemplos ayuda a todos.\n\n**¡Felicidades por terminar el curso!**\n\n> Este curso se basa en la documentación oficial consultada en octubre de 2026. Hermes Agent cambia con frecuencia: si un comando no coincide, revisa la documentación oficial o ejecuta `hermes doctor`.\n",
+       "resources": []
+      }
+     ]
+    }
+   ]
   }
  ]
 }

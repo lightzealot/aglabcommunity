@@ -53,6 +53,8 @@ Los 10 recursos de andresgomez.store/recursos viven en `seed/recursos/` (texto e
 ## Página de inicio pública
 `/` muestra **el feed a los miembros** y **una página de inicio a todos los demás** (visitantes, personas con cuenta que aún no entran a la comunidad y bloqueados): titular y botones a la izquierda, tarjeta "Cómo funciona · 3 pasos" a la derecha, franja de cifras reales, boards, guías, cursos y próximos eventos (solo título y fecha, nunca el enlace de la sesión) y un llamado final. Las cifras de miembros solo se muestran con 25 o más. No expone publicaciones: eso sigue siendo solo para miembros.
 
+**Hermes Agent: asistente personal y de negocios** (5 módulos, 15 lecciones) es el tercer curso inicial. Se escribió contra la documentación oficial de Nous Research (hermes-agent.nousresearch.com/docs) consultada en octubre de 2026; la herramienta cambia con frecuencia, así que conviene revisar el curso cuando salgan versiones nuevas. Los cursos iniciales usan una guarda por curso en `job_log` (`seed:course:<slug>`), así que se pueden añadir más sin duplicar los ya cargados.
+
 ## Imágenes
 Se guardan en `UPLOAD_DIR` (por defecto `./uploads`) y se sirven solo a miembros con sesión desde `/api/uploads/*`. En EasyPanel, monta un volumen persistente en `/app/uploads`.
 
