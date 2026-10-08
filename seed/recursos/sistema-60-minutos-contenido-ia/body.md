@@ -1,0 +1,278 @@
+Una guía práctica para convertir una sola idea en cinco contenidos organizados y listos para producir.
+
+Los 60 minutos son una propuesta para organizar la sesión; el tiempo necesario depende del tema y de las revisiones. En esta guía, **hook** es el gancho inicial, **caption** es el texto de publicación y **CTA** es la llamada a la acción.
+
+> **Resultado realista:** al terminar tendrás la estrategia, las ideas, los primeros borradores, los captions y el calendario de publicación. La grabación, el diseño y la edición pueden requerir tiempo adicional.
+
+## Lo que vas a preparar
+
+- 2 Reels
+- 1 carrusel
+- 2 secuencias de historias
+- 5 captions o textos de publicación
+- 1 calendario semanal
+- 1 lista de producción
+
+## Antes de iniciar el cronómetro
+
+Ten a mano:
+
+1. Una herramienta de IA conversacional.
+2. Un documento donde guardar las respuestas.
+3. Una descripción breve de tu audiencia.
+4. Un problema específico que puedas ayudar a resolver.
+5. Cinco espacios en tu calendario de contenido.
+
+No comiences pidiendo “dame ideas de contenido”. Primero define un problema. Mientras más específico sea el punto de partida, menos genérica será la respuesta de la IA.
+
+---
+
+## Minutos 0–10: define la idea central
+
+Completa esta frase:
+
+> Esta semana ayudaré a **[tipo de persona]** a conseguir **[resultado concreto]** sin **[obstáculo principal]**.
+
+### Prompt 1 — Encontrar el enfoque
+
+```text
+Actúa como estratega de contenido para Instagram.
+
+Mi audiencia es: [describe a quién ayudas].
+El tema que quiero trabajar es: [tema general].
+El problema que quiero resolver es: [problema específico].
+
+Propón 5 enfoques concretos para abordar este problema durante una semana. Cada enfoque debe:
+- prometer un resultado claro;
+- evitar afirmaciones exageradas;
+- poder convertirse en Reels, carrusel e historias;
+- estar explicado en una sola frase.
+
+Después, recomienda el enfoque con mayor potencial de utilidad y explica por qué.
+```
+
+### Elige el enfoque correcto
+
+Quédate con el que cumpla estas tres condiciones:
+
+- Resuelve un problema reconocible.
+- Puedes explicarlo con experiencia o ejemplos propios.
+- Conduce naturalmente a tu producto, servicio o recurso.
+
+**Ejemplo:** ayudar a emprendedores a preparar una semana de contenido en 60 minutos usando IA como asistente.
+
+---
+
+## Minutos 10–25: convierte la idea en cinco contenidos
+
+Distribuye la idea central entre formatos con funciones distintas:
+
+| Día | Formato | Función | Enfoque sugerido |
+|---|---|---|---|
+| Lunes | Reel | Captar atención | El problema o error frecuente |
+| Martes | Historias | Iniciar conversación | Encuesta + contexto personal |
+| Miércoles | Carrusel | Enseñar el sistema | Método paso a paso |
+| Jueves | Historias | Resolver una objeción | Pregunta + respuesta + ejemplo |
+| Viernes | Reel | Demostrar el resultado | Antes/después, caso o aprendizaje |
+
+### Prompt 2 — Crear el mapa semanal
+
+```text
+Convierte esta idea central en una semana de contenido para Instagram:
+
+IDEA: [pega tu idea central]
+AUDIENCIA: [describe la audiencia]
+OBJETIVO: [educar, generar conversación, captar leads o vender]
+
+Crea exactamente:
+- 2 ideas de Reel;
+- 1 carrusel de 6 slides;
+- 2 secuencias de historias de 3 pantallas cada una.
+
+Haz que las cinco piezas se complementen sin repetir literalmente la misma información. Para cada pieza indica:
+1. objetivo;
+2. hook;
+3. idea principal;
+4. CTA;
+5. conexión con la siguiente pieza.
+
+Usa lenguaje claro, específico y natural. No inventes datos ni resultados.
+```
+
+---
+
+## Minutos 25–40: crea los primeros borradores
+
+La IA produce la primera versión; tú aportas criterio, experiencia y voz.
+
+### Prompt 3 — Guion de Reel
+
+```text
+Escribe un guion para un Reel de 30 a 45 segundos sobre:
+[tema del Reel]
+
+Audiencia: [audiencia]
+Objetivo: [objetivo]
+Tono: [directo, cercano, educativo, provocador, etc.]
+
+Estructura:
+- hook de una frase que detenga el scroll;
+- problema explicado sin introducciones largas;
+- los puntos prácticos necesarios para explicar la idea;
+- ejemplo breve;
+- CTA de una sola acción.
+
+Escribe para ser hablado, con frases cortas. Evita clichés, promesas absolutas y palabras innecesarias. Entrega también el texto breve que aparecerá en pantalla.
+```
+
+### Prompt 4 — Carrusel de 6 slides
+
+```text
+Crea el texto de un carrusel de Instagram de 6 slides sobre:
+[tema]
+
+Audiencia: [audiencia]
+Objetivo: [objetivo]
+
+Estructura:
+1. Portada: promesa específica y fácil de entender.
+2. Contexto: explica por qué el problema ocurre.
+3. Paso 1: una acción concreta.
+4. Paso 2: una acción concreta.
+5. Paso 3: una acción concreta o advertencia.
+6. CTA: ofrece el siguiente paso.
+
+Máximo 25 palabras por slide, salvo que una explicación corta sea imprescindible. Incluye una sugerencia visual por slide. Mantén una sola idea principal en cada pantalla.
+```
+
+### Prompt 5 — Historias que generan respuesta
+
+```text
+Crea una secuencia de 3 historias sobre [tema].
+
+Historia 1: pregunta o situación en la que la audiencia se reconozca.
+Historia 2: consejo breve o cambio de perspectiva.
+Historia 3: interacción mediante encuesta, caja de preguntas o respuesta por mensaje.
+
+Escribe el texto exacto que irá en pantalla. Usa máximo 18 palabras por historia y una sola acción interactiva.
+```
+
+---
+
+## Minutos 40–50: escribe captions y CTA
+
+Cada caption debe ampliar la pieza, no transcribirla.
+
+### Prompt 6 — Caption útil y natural
+
+```text
+Escribe un caption de Instagram para esta pieza:
+[pega el guion o resumen]
+
+Debe incluir:
+- una primera línea que despierte curiosidad;
+- contexto o experiencia en 2 a 4 párrafos breves;
+- acciones aplicables, cuando el contenido las requiera;
+- una conclusión clara;
+- un CTA de una sola acción: [guardar, comentar, compartir, enviar palabra clave o visitar enlace].
+
+Tono: [describe tu tono].
+Evita frases genéricas, exceso de emojis, lenguaje robótico y afirmaciones que no puedan comprobarse.
+```
+
+### Elige un CTA según el objetivo
+
+- **Alcance:** “Compártelo con alguien que todavía improvisa su contenido.”
+- **Guardados:** “Guarda este sistema para usarlo en tu próxima sesión de contenido.”
+- **Conversación:** “¿Qué parte de tu proceso te consume más tiempo?”
+- **Recurso:** “Comenta **SEMANA** y te envío la guía completa.”
+- **Venta:** invita a conocer la solución solo si la publicación ya demostró valor.
+
+---
+
+## Minutos 50–60: organiza el calendario y la producción
+
+Completa esta plantilla:
+
+| Día | Pieza | Hook | CTA | Qué falta producir | Estado |
+|---|---|---|---|---|---|
+| Lunes | Reel 1 |  |  | Grabar / editar | Idea |
+| Martes | Historias 1 |  |  | Diseñar / grabar | Idea |
+| Miércoles | Carrusel |  |  | Diseñar | Idea |
+| Jueves | Historias 2 |  |  | Diseñar / grabar | Idea |
+| Viernes | Reel 2 |  |  | Grabar / editar | Idea |
+
+Estados recomendados: **idea → borrador → revisión → producido → programado → publicado**.
+
+### Prompt 7 — Crear la lista de producción
+
+```text
+A partir de este calendario de contenido:
+[pega las cinco piezas]
+
+Crea una lista de producción agrupada por tipo de tarea, no por publicación:
+- todo lo que debo grabar;
+- todos los recursos visuales que debo conseguir;
+- todo lo que debo diseñar;
+- todo lo que debo editar;
+- todo lo que debo programar.
+
+Ordénala para reducir cambios de contexto. Marca qué tareas pueden hacerse en bloque y señala cualquier dato o afirmación que deba verificar antes de publicar.
+```
+
+---
+
+## Prompt final: convierte el borrador de IA en contenido con identidad
+
+```text
+Revisa el siguiente contenido como editor, no como generador:
+[pega el borrador]
+
+Mi forma de comunicar es: [describe 3 rasgos de tu voz].
+Expresiones que sí uso: [ejemplos].
+Expresiones que no uso: [ejemplos].
+
+Haz lo siguiente:
+1. elimina frases genéricas y clichés;
+2. acorta las oraciones difíciles de decir;
+3. identifica afirmaciones que requieren verificación;
+4. señala dónde debería añadir una experiencia, opinión o ejemplo propio;
+5. conserva una sola idea principal;
+6. asegúrate de que el CTA coincide con el contenido.
+
+Primero muestra las observaciones. Después entrega una versión revisada sin inventar experiencias personales por mí.
+```
+
+## Checklist antes de publicar
+
+- [ ] El hook promete exactamente lo que la pieza entrega.
+- [ ] El contenido resuelve un problema concreto.
+- [ ] Añadí un ejemplo, opinión o experiencia propia.
+- [ ] Verifiqué nombres, cifras, fechas y afirmaciones.
+- [ ] Eliminé repeticiones y lenguaje robótico.
+- [ ] El texto se entiende al leerlo una sola vez.
+- [ ] Cada pieza tiene un único CTA.
+- [ ] El recurso prometido existe y está listo para enviarse.
+- [ ] La publicación se conecta con el objetivo de la semana.
+
+## Ejemplo completo de una semana
+
+**Idea central:** cómo ahorrar tiempo creando contenido con IA sin perder tu identidad.
+
+| Día | Contenido | Hook | CTA |
+|---|---|---|---|
+| Lunes | Reel: el error | “La IA no te ahorra tiempo si empiezas con este prompt.” | Guardar |
+| Martes | Historias: diagnóstico | “¿Cuánto tardas en decidir qué publicar?” | Responder encuesta |
+| Miércoles | Carrusel: método | “60 minutos para preparar una semana de contenido con IA.” | Comentar SEMANA |
+| Jueves | Historias: objeción | “¿Usar IA hace que tu contenido suene igual al de todos?” | Enviar respuesta |
+| Viernes | Reel: transformación | “De una idea a cinco piezas sin empezar de cero.” | Compartir |
+
+## Para repetir el sistema cada semana
+
+1. Conserva esta estructura y cambia únicamente la idea central.
+2. Revisa el desempeño de la semana anterior.
+3. Reutiliza las preguntas reales de tu audiencia.
+4. Mantén un banco de hooks, ejemplos y objeciones.
+5. Dedica otra sesión separada a grabar y diseñar por lotes.
+
+Trabaja por bloques y reserva otra sesión para grabar y diseñar.

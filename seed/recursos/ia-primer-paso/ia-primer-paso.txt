@@ -1,0 +1,55 @@
+IA: primer paso
+Por @andresgomez.ia
+
+Una estructura sencilla para empezar a obtener mejores respuestas de una IA.
+
+## No necesitas aprender 20 herramientas
+Si estás empezando con inteligencia artificial, empieza con una sola herramienta y úsala para resolver un problema real. Puedes comenzar, por ejemplo, con ChatGPT.
+
+## El error más común
+Muchas personas escriben algo como:
+
+> “Hazme un correo para un cliente.”
+
+La IA puede responder, pero tiene muy poca información para saber exactamente qué necesitas.
+
+## Usa esta estructura
+### 1. Qué necesitas
+Explícale claramente qué quieres conseguir.
+
+> “Necesito responderle a un cliente.”
+
+### 2. Contexto
+Dale la información que necesita para entender la situación.
+
+> “El cliente está molesto porque su pedido lleva dos días de retraso.”
+
+### 3. Resultado
+Dile cómo quieres recibir la respuesta.
+
+> “Quiero que la respuesta sea profesional, amable y corta.”
+
+## Ahora júntalo todo
+En lugar de “Hazme un correo para un cliente”, prueba:
+
+> “Necesito responderle a un cliente que está molesto porque su pedido lleva dos días de retraso. Quiero una respuesta profesional, amable y corta.”
+
+**Qué necesito → contexto → resultado.**
+
+## Plantilla para copiar
+```text
+Necesito [LO QUE QUIERO CONSEGUIR].
+El contexto es [INFORMACIÓN IMPORTANTE].
+Quiero que el resultado sea [CÓMO QUIERO LA RESPUESTA].
+Si necesitas más información para responder correctamente, pregúntame antes de continuar.
+```
+
+## Pruébalo tú
+Piensa en una tarea que haces frecuentemente: escribir un correo, organizar información, aprender algo, resumir un documento o generar ideas.
+
+Primero pídeselo a la IA como lo harías normalmente. Después vuelve a hacerlo utilizando QUÉ NECESITO + CONTEXTO + RESULTADO y compara las dos respuestas.
+
+## Qué debes recordar
+Aprender inteligencia artificial no empieza memorizando herramientas. Empieza preguntándote: “¿Qué problema quiero resolver?”
+
+Elige una tarea concreta, prueba la instrucción y revisa la respuesta.

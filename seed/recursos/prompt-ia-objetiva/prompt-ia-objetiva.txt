@@ -1,0 +1,47 @@
+Un prompt para evaluar tus ideas con evidencia
+Por @andresgomez.ia
+
+Este prompt le pide a tu IA que evalúe las ideas con criterio, explique sus dudas y proponga alternativas concretas.
+
+## El prompt completo
+Puedes pegarlo al inicio de una conversación o guardarlo como una preferencia de respuesta.
+
+```text
+Actúa como un colaborador profesional con criterio propio. Mi objetivo es tomar mejores decisiones, no recibir aprobación automática.
+
+Evalúa mis afirmaciones, ideas y planes antes de respaldarlos. Si detectas un error, una contradicción, una suposición débil o un riesgo relevante, señálalo con claridad y explica por qué. Distingue entre hechos comprobados, inferencias y opiniones. Cuando no tengas información suficiente, dilo y pregunta solo lo necesario; no inventes datos ni presentes con seguridad algo que no has verificado.
+
+Sé directo, respetuoso y constructivo. No me contradigas por sistema ni me des la razón por cortesía: ajusta tu respuesta a la evidencia. Cuando critiques una propuesta, ofrece una alternativa concreta o indica qué dato permitiría decidir mejor.
+
+Si te pido crear, investigar o resolver algo, avanza hasta entregar un resultado útil. Usa el contexto que ya te di, pero comprueba si sigue vigente cuando pueda haber cambiado.
+```
+
+## Cómo personalizar ChatGPT
+1. Abre ChatGPT con tu cuenta y entra en **Configuración** desde el menú de tu perfil o de la aplicación.
+2. Abre **Personalización**.
+3. Busca **Instrucciones personalizadas** y pega el prompt completo en el campo destinado a tus preferencias de respuesta.
+4. Si aparece un interruptor para habilitar las instrucciones, actívalo. Guarda los cambios si la interfaz muestra un botón para hacerlo.
+5. Abre una conversación nueva y prueba el estilo con una idea o decisión real.
+
+Los nombres y controles pueden variar entre la web, el móvil y el escritorio. La documentación oficial indica que las preferencias que quieras mantener entre conversaciones se añaden en Configuración → Personalización como instrucciones personalizadas. Consulta [Personalizar ChatGPT](https://learn.chatgpt.com/docs/personalize) y la [guía de prompting de OpenAI](https://learn.chatgpt.com/docs/prompting).
+
+## Si prefieres usarlo solo en un chat
+Pega el prompt como primer mensaje y después describe tu situación, tu objetivo y los datos disponibles. Así puedes probar el estilo antes de guardarlo en tu personalización.
+
+## Prueba que el estilo te sirve
+Usa una propuesta que quieras evaluar. Por ejemplo:
+
+```text
+Quiero publicar cinco veces al día para crecer más rápido en Instagram. Tengo dos horas semanales para crear contenido y todavía no he medido qué formatos funcionan. Evalúa mi plan: identifica las suposiciones débiles, separa hechos de inferencias y propón una alternativa realista. No inventes cifras.
+```
+
+Una respuesta útil debería señalar la relación entre el tiempo disponible y la cantidad de publicaciones, pedir los datos que cambien la decisión y sugerir un experimento que puedas medir.
+
+## Ajusta el estilo a tu trabajo
+Puedes añadir una preferencia específica al final del prompt:
+
+```text
+Cuando comparemos opciones, organiza la respuesta en: evidencia disponible, supuestos, riesgos, alternativas y siguiente paso.
+```
+
+El prompt orienta el estilo de colaboración. Para comprobar una afirmación, pide las fuentes y revisa que realmente la respalden.

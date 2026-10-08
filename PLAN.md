@@ -44,6 +44,9 @@ Barra superior con búsqueda, campanita y menú de usuario, y pestañas: Comunid
 ## Recursos públicos (captación de leads)
 `/recursos` es público: cualquiera lee la guía y ve los archivos, pero **descargar exige crear cuenta** (basta con tener cuenta, aunque aún no esté aprobada en la comunidad). Los miembros ven la misma biblioteca como la pestaña "Recursos". Cada página lleva un CTA a `/registro?from=<recurso>`; el origen se guarda en `user.signup_source` (cookie `ag_from`, 30 días, primer contacto) y el admin ve los leads por recurso en `/admin/recursos`. Tras registrarse, el lead vuelve al recurso con la descarga desbloqueada. Incluye `sitemap.xml` y `robots.txt` (solo `/recursos` se indexa) y metadatos para compartir.
 
+### Recursos iniciales
+Los 10 recursos de andresgomez.store/recursos viven en `seed/recursos/` (texto en Markdown + archivo `.txt` descargable) y sus portadas en `public/recursos/covers/`. `scripts/seed-resources.mjs` los carga una sola vez al arrancar (clave `seed:resources:v1` en `job_log`): si luego los editas o borras desde el admin, no se vuelven a crear. Las guías se escriben en Markdown básico (títulos, listas, citas, tablas, bloques de código con botón Copiar).
+
 ## Imágenes
 Se guardan en `UPLOAD_DIR` (por defecto `./uploads`) y se sirven solo a miembros con sesión desde `/api/uploads/*`. En EasyPanel, monta un volumen persistente en `/app/uploads`.
 

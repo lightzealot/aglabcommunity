@@ -1,0 +1,412 @@
+Guía del skill **video-pizarra** para crear un MP4 vertical. Está dirigida a quienes usan Claude Code y pueden instalar herramientas y ejecutar comandos en su equipo.
+
+Repo: https://github.com/santmun/video-pizarra
+
+## Cómo se crea el video
+
+El video no se "genera": se **programa**. Cada escena es código que dibuja gráficos vectoriales (SVG) y los anima con GSAP dentro de un navegador. Después un navegador headless captura el resultado cuadro por cuadro y ffmpeg los pega en un MP4, con efectos de sonido sintetizados en Python.
+
+El render se ejecuta localmente a partir del código del proyecto. El uso del modelo puede tener costo.
+
+Puedes editar escenas, texto y tiempos en los archivos del proyecto.
+
+## 1 · Qué necesitas instalar
+
+Cuatro cosas, todas gratis y de código abierto:
+
+| **Qué** | **Para qué** | **Cómo comprobar que ya lo tienes** |
+| --- | --- | --- |
+| **Node.js** (18 o más) | corre el motor y el render | `node -v` |
+| **Python 3** con `numpy` y `Pillow` | efectos de sonido y hojas de contacto | `python3 -c "import numpy, PIL"` |
+| **ffmpeg** | arma el MP4 y mezcla el audio | `ffmpeg -version` |
+| **Chromium de Playwright** | captura los cuadros | se instala con `npx playwright install chromium` |
+
+En Mac, lo que falte:
+
+```bash
+brew install node python ffmpeg
+
+python3 -m pip install --user numpy Pillow
+```
+
+Dos dependencias son **opcionales**, solo si usas esas funciones:
+
+- `librosa` — detectar los beats de la música (para que las transiciones caigan en el ritmo).
+
+- `rembg` — recortar el fondo de una foto tuya.
+
+Ambas se instalan en un entorno virtual por proyecto, no hace falta tenerlas de entrada.
+
+### Instalar el skill
+
+```bash
+git clone https://github.com/santmun/video-pizarra ~/.claude/skills/video-pizarra
+```
+
+Reinicia Claude Code y el skill aparece disponible. A partir de ahí basta pedir "hazme un video animado sobre X" y se activa solo.
+
+## 2 · Los dos motores
+
+El repo trae dos formas distintas de hacer video. Elige según el look.
+
+### template/ — pizarrón / dibujo a mano
+
+SVG + GSAP. Se siente dibujado en vivo: plumón, gis, pluma, lápiz, pincel; la herramienta persigue el trazo mientras escribe. Cada escena tiene su propio fondo. Es el que usé para el video de ejemplo.
+
+Sirve para: explicar, noticias, lanzamientos, contenido divertido y cercano.
+
+### template-estilos/ — acuarela, cuaderno, minimal
+
+Otro motor, sobre canvas, con 4 estilos listos: `acuarela` (papel con tinta que hierve), `acuarela-viva` (naranja/negro/blanco/rojo), `cuaderno` (bullet journal con marcatextos) y `minimal` (blanco premium). Se escribe como una lista de escenas con tipos predefinidos (`hook`, `statement`, `chapter`, `list`, `stat`, `compare`, `quote`, `media`, `steps`, `cta`).
+
+Sirve para: algo más limpio y editorial. Mira `catalogo-estilos/` para elegir antes de empezar.
+
+Se pueden **mezclar** los dos con ffmpeg, o mezclar estilos dentro de un mismo video poniendo `style` en cada escena.
+
+## 3 · El flujo completo
+
+### Paso 1 — La entrevista (no te la saltes)
+
+Esto es lo que separa un video bueno de uno genérico. Lo que hay que definir:
+
+- **El tema y LA UNA idea** que el espectador debe llevarse. Si hay datos o cifras, consíguelos con su fuente.
+
+- **Formato**: 9:16 vertical (Reels/TikTok/Shorts) o 16:9 horizontal (YouTube).
+
+- **Duración**: 45–60 s, 60–75 s (lo mejor para explicar algo) o 90 s.
+
+- **Tono y público**.
+
+- **Personaje**: la mascota por defecto, tu logo, tu propio personaje, o ninguno.
+
+- **Colores y tipografía** de tu marca.
+
+- **Música**: propia, generada, o nada (solo efectos — funciona muy bien).
+
+- **CTA**.
+
+Si ya traes todo eso en el pedido, se arranca directo.
+
+### Paso 2 — Investigar y verificar
+
+Si el tema tiene cifras, se buscan fuentes y se anota cada dato con la suya. Regla dura: **solo va a pantalla lo que aparece en la fuente**. Nada de calcular cifras derivadas ni deducir un "precio anterior" desde un porcentaje. Si un dato viene solo de medios secundarios, hay que decirlo.
+
+### Paso 3 — Storyboard antes de animar
+
+Se escribe un `STORYBOARD.md` con una tabla: por escena, **fondo · herramienta · texto en pantalla · qué hace el personaje · transición de salida**.
+
+Cambiar un storyboard cuesta minutos. Cambiar un video, horas. Este paso se aprueba antes de tocar código.
+
+### Paso 4 — Montar el proyecto
+
+```bash
+PROJ=~/Documents/mi-video
+
+mkdir -p "$PROJ/audio" && cp -R ~/.claude/skills/video-pizarra/template/. "$PROJ/"
+
+cd "$PROJ" && npm install && npx playwright install chromium
+
+cp scenes.example.js scenes.js
+```
+
+`scenes.example.js` es un video real y terminado, con todos los patrones usados. Es el mejor punto de partida: se reescribe para el tema nuevo.
+
+Para previsualizar en vivo mientras trabajas: `npx serve .` y abre `index.html` en el navegador.
+
+### Paso 5 — QA visual (obligatorio, antes del render final)
+
+```bash
+node render.mjs --every 1.2 && python3 contact.py 10
+```
+
+Eso genera `contact.jpg`: una hoja de contacto con todo el video en miniaturas. Ahí se cazan los errores reales — texto cortado, personajes tapando el texto, escenas vacías, cosas fuera de cuadro.
+
+Para revisar las transiciones, que es donde más se rompe:
+
+```bash
+node render.mjs --stills 12.1,12.3,12.5
+```
+
+El archivo `hits.json` te dice en qué segundo cae cada transición, así sabes dónde mirar.
+
+### Paso 6 — Música y beats (opcional)
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install librosa
+
+.venv/bin/python beats.py audio/music.mp3
+```
+
+Genera `audio/beats.json`. Con eso las transiciones caen en los golpes fuertes y la cámara se sacude en los acentos. Sin música, sáltalo: los efectos solos funcionan.
+
+### Paso 7 — Render final
+
+```bash
+./build.sh mi-video
+```
+
+Saca dos archivos:
+
+- `mi-video.mp4` — el master, para publicar.
+
+- `mi-video-movil.mp4` — copia ligera para mandar por chat.
+
+Incluye efectos sintetizados, subida de música en las transiciones y volumen normalizado a −14 LUFS (el estándar de redes). Tarda ~3–5 min por minuto de video; conviene correrlo en segundo plano.
+
+## 4 · Lo esencial del motor (pizarrón)
+
+Todo vive en `scenes.js`, que llama a `bootVideo(async (V) => { ... return endTime; }, config)`.
+
+### El modelo de tiempo
+
+Se lleva un cursor `t`. Cada escena abre con `const a = t;`, coloca sus eventos en `a + offset`, y cierra con `t = a + duraciónDeLaEscena`. Las transiciones reciben `t` y **devuelven el nuevo** `t`.
+
+Los tiempos son "segundos de guion": el motor los multiplica por `config.speed` (0.8 por defecto, o sea 20% más rápido).
+
+### Lienzo y zona segura
+
+1080×1920, origen arriba a la izquierda. En vertical, **el texto va entre y≈250 y y≈1650** — arriba y abajo la interfaz de Reels/TikTok se come el contenido. El titular suele ir en y 300–450.
+
+### Las piezas que más vas a usar
+
+```javascript
+// escena con su fondo
+
+const s3 = newScene('sepia');   // paper, chalk, graph, notebook, blue, kraft, blueprint, sepia
+
+const g = s3.g;                 // todo se dibuja aquí dentro
+
+// texto
+
+const t1 = T(g, x, y, 'Texto', { size: 100, color: PAL.orange, cls: 'hand' });
+
+write(t1, at, dur);   // se revela de izquierda a derecha, la herramienta lo persigue
+
+pop(t1, at);          // rebota y entra, sin herramienta
+
+type(t1, at, dur);    // máquina de escribir, con clics de tecla
+
+// herramienta activa
+
+setTool('marker');    // marker, chalk, quill, pencil, brush, o null
+
+// formas
+
+const p = P(g, 'M100,200 L500,200', { color, w: 7, fill: H('yellow') });
+
+draw(p, at, dur);
+
+// la mascota
+
+const m = mover(g, x, y, escala);          // y = la parte de ARRIBA del personaje
+
+const c = mascot(m.g, 0, 0, 1);
+
+drawMascot(c, at, dur);                     // se dibuja trazo por trazo
+
+face(c, at, 'happy', { mouth: 'grin', emote: 'sparkle' });
+
+arms(c, at, { L: 60, R: -60 });             // grados; L positivo = levanta
+
+hop(c, at, 2); wink(c, at); wave(c, 'R', at, 3);
+```
+
+Fuentes: `hand` = Caveat (titulares), `kalam` = Kalam (líneas de apoyo), `code` = JetBrains Mono.
+
+### Las transiciones
+
+Cada una devuelve el nuevo `t` y se **motiva** con algo de la escena:
+
+| **Llamada** | **Qué pasa** | **Cuándo usarla** |
+| --- | --- | --- |
+| `TR.zoomInto(a, b, t, {x, y})` | la cámara se mete en un punto | terminaste sobre el personaje (entra a su ojo) |
+| `TR.eraser(a, b, t)` | un borrador limpia el pizarrón | del pizarrón a lo que sea |
+| `TR.whipDown(a, b, t, {drop})` | algo pesado cae y la cámara lo sigue | una bolsa, un yunque, una moneda |
+| `TR.expand(a, b, t, {x,y,w,h,color})` | una forma crece hasta ser el fondo siguiente | una barra, un botón, una tarjeta |
+| `TR.slideUp(a, b, t)` | entra una hoja deslizándose | "y ahora la lista…" |
+| `TR.iris(a, b, t, {x, y})` | un círculo de tinta revienta desde un punto | un impacto, un clic |
+| `TR.burstDrop(a, b, t, {burst})` | un globo revienta y cae la escena siguiente | un globo de diálogo |
+| `TR.flip(a, b, t)` | el cuadro se voltea como carta | "el otro lado", un precio |
+| `TR.flash(a, b, t)` | destello blanco cálido | una revelación |
+
+**Nunca repitas la misma transición seguida.** Duran 0.4–0.8 s.
+
+### El final
+
+```javascript
+t = finale(t, {
+
+  resets: [[bolsaQueCayó, { y: 0, rotation: 0 }]],
+
+  cta: (layer, at) => { /* tu CTA aquí */ },
+
+});
+
+return t;
+```
+
+Todas las escenas vuelan a un mosaico tipo storyboard. Lo que una transición dejó fuera de lugar (algo que cayó, un globo que reventó) hay que resetearlo en `resets` para que el mosaico se vea completo.
+
+## 5 · Cómo se escribe una historia que funciona
+
+### La estructura (60–75 s, 8–10 escenas)
+
+| **Escena** | **Rol** | **Pregunta que responde** |
+| --- | --- | --- |
+| 1 | Hook | ¿por qué me quedo? |
+| 2 | Revelación | ¿de qué hablamos? |
+| 3 | Problema | ¿por qué importa? ¿cómo era antes? |
+| 4 | Giro | ¿qué cambia? |
+| 5–8 | Pruebas (una por escena) | ¿por qué te creo? |
+| 9 | Twist / remate | lo memorable |
+| — | Final + CTA | ¿qué hago ahora? |
+
+**Una idea por escena.** Si una escena tiene dos, se parte en dos.
+
+### El hook
+
+La primera frase aparece a los ~0.2 segundos. Nada de intros, logos ni "en este video te voy a explicar". Los que funcionan:
+
+- El personaje saluda y promete algo.
+
+- La cifra imposible ("esto cuesta 40% menos").
+
+- La pregunta directa.
+
+- El error común ("todos usan X mal").
+
+- El antes/después en el primer segundo.
+
+### El texto
+
+La mayoría ve sin sonido, así que el texto tiene que sostener el video solo:
+
+- **Titular** grande arriba (90–130 px), que se entiende sin audio.
+
+- **Una** línea de apoyo debajo (55–70 px).
+
+- Cifras enormes (140–250 px) cuando la cifra **es** la noticia.
+
+- Máximo ~12 palabras visibles por escena.
+
+### Cada dato se convierte en una acción
+
+El texto explica, el personaje **actúa**. Nunca al revés: un video "solo con acciones" no se entiende.
+
+| **Dato** | **Acción en pantalla** |
+| --- | --- |
+| "X% más barato" | barras que crecen; el personaje patea la etiqueta de precio |
+| "más rápido" | patineta, cohete, líneas de velocidad |
+| "le ganó a Y" | vencidas, una carrera con marcador |
+| "caro antes" | un rey contando monedas, una fila de gente esperando |
+| "paso 1, 2, 3" | el personaje recorre un camino dibujado |
+| "mito vs. realidad" | una tarjeta que se voltea |
+
+### Ritmo
+
+- Transiciones de 0.4–0.8 s, sin pausas muertas antes.
+
+- Siempre se mueve algo: si el texto terminó, el personaje reacciona.
+
+- Caras: 2–4 cambios por escena, siempre con parpadeo. Nunca cortes secos.
+
+- Fondo distinto por escena, herramienta distinta, y varias escenas **sin** herramienta.
+
+- Abre y cierra con el mismo fondo (efecto de libro que se cierra).
+
+## 6 · Los errores que ya se cometieron
+
+Esta lista sale de videos reales rechazados. Vale más que cualquier tutorial.
+
+### Dirección
+
+- **"Se siente como presentación"** — diapositiva tras diapositiva, aunque cada una se vea bien. Para historias, usa el modo historia: personaje continuo y cámara que lo sigue.
+
+- **Entradas y salidas sin sentido** — el personaje aparece en otro lado en cada escena. Donde termina una escena empieza la siguiente, o la transición lo justifica.
+
+- **El mismo layout siempre** (texto arriba, personaje al centro abajo). Varía: texto a un lado, dentro de un marco, sobre un objeto.
+
+- **Personaje decorativo** — solo parado ahí. En cada escena tiene que hacer algo físico con un objeto: dibujar, teclear, tachar, escalar, empujar.
+
+- **Escenas sobresaturadas** — título + subtítulo + lista + etiquetas + gráfica. Es: 1 texto grande + 1 elemento + el personaje.
+
+- **Fondos planos sin mundo** — cada escena necesita un escenario.
+
+- **Hook recargado** — persona, texto, prompt y mascota en el primer segundo. Un solo foco.
+
+- **Música que no pidieron.** Pregunta. Los efectos solos funcionan.
+
+### Honestidad
+
+- **Nombres de terceros en pantalla** sin permiso — di "un cliente", "un miembro de la comunidad".
+
+- **Prometer lo que no regalas** — que lo que se ve coincida con lo que entregas.
+
+- **"100% código" con imágenes de IA** — si el video dice que es código, no metas imagen ni video generados. (La música generada sí es IA de audio: no la llames código.)
+
+- **Cifras inventadas** — si falta un dato real, pon "MOCKUP" y dilo.
+
+- **Mencionar marcas sin mostrarlas** — si dices "Instagram", muestra el ícono.
+
+### Técnicos
+
+- **Brazos escondidos**: más de ~80° los mete detrás del cuerpo. Usa 40–75°.
+
+- **Todo en negro**: un `tl.fromTo` aplicó sus valores iniciales al construir. Solución: `immediateRender: false`.
+
+- **Elemento corrido tras escalar**: `transformOrigin` de GSAP dentro de grupos rotados. Usa `mover()` o un proxy.
+
+- **"Fantasmas" en un cuadro de prueba**: dos escenas a la vez. Antes de buscar el bug, fíjate si ese segundo cae dentro de una transición.
+
+- **Archivo de 150–200 MB**: es normal (la línea viva y el grano cambian cada cuadro). Para compartir usa la copia `-movil`.
+
+### Regla que sostiene todo
+
+El render funciona **buscando** cada instante, no reproduciendo. Por eso todo tiene que ser una función pura del tiempo: nada de `setTimeout`, nada de números aleatorios. Si necesitas un efecto propio, usa `mover()` o `onFrame()`.
+
+## 7 · Personalizarlo a tu marca
+
+| **Quieres…** | **Cómo** |
+| --- | --- |
+| Tus colores | `palette` y `hatches` en la config |
+| Tu tipografía | cualquier fuente de Google Fonts |
+| Tu logo o personaje como mascota | `mascotShape` con su silueta, o `image()` con un PNG transparente |
+| Salir tú | `person: { photo }` con `cutout.py tu-foto.jpg` |
+| Tus capturas | escenas `media`, `sticker`, `shotCard` |
+| Tu voz | ponla en `audio/vo.wav` |
+| Otro idioma | escribe los textos en ese idioma |
+| Formato horizontal | `bootVideo(build, { width: 1920, height: 1080 })` y recalcula posiciones |
+
+Si ya te grabaste a cámara, tu video puede ser la base y la animación entra solo encima de los tramos animados (`anclas.py` → `timing.js` → `componer.sh`).
+
+## 8 · Resumen en 10 líneas
+
+```bash
+# una sola vez
+
+brew install node python ffmpeg
+
+python3 -m pip install --user numpy Pillow
+
+git clone https://github.com/santmun/video-pizarra ~/.claude/skills/video-pizarra
+
+# por cada video
+
+mkdir -p ~/Documents/mi-video/audio
+
+cp -R ~/.claude/skills/video-pizarra/template/. ~/Documents/mi-video/
+
+cd ~/Documents/mi-video && npm install && npx playwright install chromium
+
+cp scenes.example.js scenes.js          # escribe aquí tu video
+
+node render.mjs --every 1.2 && python3 contact.py 10   # QA: abre contact.jpg
+
+./build.sh mi-video                     # master + copia para celular
+```
+
+Guía generada con Claude Opus 5.5 a partir del repo `santmun/video-pizarra`.
+
+## Fuente de la guía
+
+[Ver el documento original](https://docs.google.com/document/d/1ePjdt_CNMhL4pkUszWEeBpn-sU4dolYRlV9tehYy_jA/edit). Recurso compartido por @andresgomez.ia. El skill pertenece al repositorio [santmun/video-pizarra](https://github.com/santmun/video-pizarra).

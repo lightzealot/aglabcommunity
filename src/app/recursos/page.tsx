@@ -4,7 +4,7 @@ import { getViewer, listPublishedResources } from "@/lib/resources";
 
 export const metadata: Metadata = {
   title: "Recursos gratuitos",
-  description: "Plantillas, guías y archivos gratis para implementar IA y automatización en tu negocio.",
+  description: "Guías, prompts y plantillas gratis para usar la inteligencia artificial en tu trabajo y en tu negocio.",
 };
 
 export default async function RecursosPage() {
@@ -17,10 +17,10 @@ export default async function RecursosPage() {
         <section className="mx-auto max-w-3xl pb-8 text-center">
           <p className="label mb-2">Recursos gratuitos</p>
           <h1 className="display text-6xl sm:text-7xl">
-            Plantillas y guías para automatizar tu negocio<span className="text-accent">.</span>
+            Guías y plantillas para usar IA en tu trabajo<span className="text-accent">.</span>
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-ash">
-            Lee todo gratis. Para descargar los archivos crea tu cuenta y entra a la comunidad de AG Lab.
+            Lee todas las guías gratis. Para descargar los archivos, crea tu cuenta y entra a la comunidad de AG Lab.
           </p>
           <Link href="/registro" className="btn btn-primary mt-6">
             Crear mi cuenta gratis

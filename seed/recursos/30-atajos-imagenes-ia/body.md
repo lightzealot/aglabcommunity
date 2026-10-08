@@ -1,0 +1,155 @@
+Estos nombres son referencias de estilos y presets; no son comandos universales de todas las IA. Comprueba si tu herramienta los reconoce. Si no, utiliza la descripción de cada ficha como instrucción.
+
+Cada ficha incluye el comando, qué resultado produce y los usos para los
+que funciona mejor.
+
+
+## 01 /productexplosion
+Crea una composición donde las diferentes partes o ingredientes aparecen separados, manteniendo una relación visual con el producto original.
+
+**Ideal para:** alimentos, tecnología, zapatillas y productos compuestos por diferentes elementos.
+
+## 02 /3dbillboard
+Integra el producto en una escena publicitaria exterior con una composición que genera sensación de volumen y profundidad.
+
+**Ideal para:** productos, moda, tecnología, lanzamientos y campañas creativas.
+
+## 03 /lifestyleshot
+Toma un producto aislado y lo integra en un contexto más natural, ayudando a visualizar cómo podría utilizarse en la vida real.
+
+**Ideal para:** ecommerce, moda, accesorios, decoración y productos de consumo.
+
+## 04 /Studio
+Busca una presentación más limpia y profesional mediante iluminación controlada, sombras y una composición propia de fotografía comercial.
+
+**Ideal para:** ecommerce, cosmética, accesorios, alimentos y catálogos.
+
+## 05 /adcreative
+Toma una imagen existente y la convierte en una composición con una dirección más comercial, pensada para captar atención y presentar mejor el producto.
+
+**Ideal para:** publicidad, ecommerce, promociones, lanzamientos y redes sociales.
+
+## 06 /goldenhour
+Modifica la iluminación y atmósfera para recrear la luz característica de la hora dorada, aportando tonos cálidos, sombras suaves y mayor profundidad.
+
+**Ideal para:** propiedades, turismo, automóviles, paisajes y fotografía exterior.
+
+## 07 /macrodetail
+Genera una vista mucho más cercana del protagonista para poner el foco en terminaciones, materiales y pequeños detalles que normalmente pasan desapercibidos.
+
+**Ideal para:** relojes, joyería, cuero, tecnología, cosmética y productos premium.
+
+## 08 /magazinecover
+Reinterpreta el protagonista con una dirección visual inspirada en una portada de revista, trabajando jerarquía, encuadre y estética editorial.
+
+**Ideal para:** productos, moda, gastronomía, marca personal y contenido editorial.
+
+## 09 /backgroundswap
+Reemplaza el fondo original por un nuevo entorno, permitiendo explorar diferentes contextos sin tener que volver a fotografiar el producto.
+
+**Ideal para:** ecommerce, productos, vehículos, moda y contenido publicitario.
+
+## 10 /visualmetaphor
+Utiliza el protagonista como punto de partida para construir una metáfora que represente un concepto de manera creativa y menos literal.
+
+**Ideal para:** publicidad, campañas, branding, conceptos creativos y redes sociales.
+
+## 11 /paperdiorama
+Transforma la imagen en una pequeña composición construida visualmente con papel, capas y elementos recortados.
+
+**Ideal para:** deportes, turismo, paisajes, storytelling y contenido creativo.
+
+## 12 /vinyltoy
+Reinterpreta una persona, personaje u objeto con la estética de una figura de vinilo, conservando sus características más reconocibles.
+
+**Ideal para:** personas, personajes, mascotas, marca personal y contenido creativo.
+
+## 13 /productblueprint
+Transforma la presentación del producto para destacar visualmente su estructura, componentes y diseño con una estética inspirada en planos técnicos.
+
+**Ideal para:** tecnología, herramientas, electrodomésticos, vehículos y productos con múltiples componentes.
+
+## 14 /isometricworld
+Integra el objeto dentro de una escena tridimensional vista desde una perspectiva isométrica, creando un pequeño universo visual alrededor de él.
+
+**Ideal para:** productos, tecnología, negocios, edificios y contenido creativo.
+
+## 15 /claymation
+Crea una imagen de personas, objetos o escenarios con estética de plastilina o stop-motion.
+
+**Ideal para:** gastronomía, personas, storytelling, campañas y contenido para redes sociales.
+
+## 16 /plushie
+Transforma una persona, mascota u objeto en una versión suave y acolchada, intentando conservar sus características más reconocibles.
+
+**Ideal para:** mascotas, personajes, objetos, regalos conceptuales y contenido creativo.
+
+## 17 /flatlay
+Crea una presentación cenital donde el producto y los objetos complementarios se distribuyen de forma ordenada y visualmente atractiva.
+
+**Ideal para:** moda, accesorios, cosmética, gastronomía, tecnología y ecommerce.
+
+## 18 /splashshot
+Crea una composición dinámica donde salpicaduras, gotas, hielo u otros elementos líquidos ayudan a destacar el producto.
+
+**Ideal para:** bebidas, cosmética, alimentos y productos asociados a frescura.
+
+## 19 /ingredients
+Presenta el envase acompañado por ingredientes, materias primas o elementos relacionados con su elaboración.
+
+**Ideal para:** café, alimentos, bebidas, cosmética y productos naturales.
+
+## 20 /scaleup
+Aumenta exageradamente el tamaño del protagonista y lo integra dentro de un entorno real para crear una escena inesperada.
+
+**Ideal para:** moda, productos, campañas creativas, lanzamientos y contenido de alto impacto.
+
+## 21 /miniatureworld
+Transforma la escala de la escena incorporando pequeños personajes y elementos que interactúan con el protagonista como si fuera gigantesco.
+
+**Ideal para:** productos, vehículos, alimentos, herramientas y storytelling visual.
+
+## 22 /motion
+Transforma una imagen estática incorporando recursos visuales que transmiten desplazamiento, energía y acción.
+
+**Ideal para:** deportes, patinetas, bicicletas, motocicletas, automóviles y zapatillas.
+
+## 23 /freezeaction
+Captura una escena como si la cámara hubiera detenido exactamente el instante de mayor movimiento, manteniendo líquidos, partículas u objetos suspendidos.
+
+**Ideal para:** bebidas, alimentos, deportes y publicidad dinámica.
+
+## 24 /unboxing
+Construye una escena de apertura donde el producto, packaging y elementos incluidos aparecen organizados como parte de una experiencia de unboxing.
+
+**Ideal para:** tecnología, ecommerce, kits, productos premium y lanzamientos.
+
+## 25 /productstack
+Replica y organiza diferentes unidades del producto para crear una imagen más abundante, ordenada y visualmente atractiva.
+
+**Ideal para:** cosmética, bebidas, alimentos, packaging y productos con distintas variantes.
+
+## 26 /ghostmannequin
+Presenta la ropa como si estuviera siendo utilizada por una persona invisible, manteniendo su forma y volumen.
+
+**Ideal para:** moda, ecommerce, catálogos, chaquetas, camisas y vestidos.
+
+## 27 /tryon
+Toma un producto aislado y explora cómo podría verse integrado de manera natural en una persona o situación de uso.
+
+**Ideal para:** ropa, carteras, lentes, joyería, accesorios y moda.
+
+## 28 /seasonal
+Mantiene el producto como protagonista y modifica el contexto visual para relacionarlo con una fecha, estación o momento comercial.
+
+**Ideal para:** Navidad, San Valentín, Día de la Madre, invierno, verano y campañas estacionales.
+
+## 29 /roomstage
+Utiliza la fotografía de una habitación como referencia para explorar cómo podría verse incorporando mobiliario y decoración.
+
+**Ideal para:** inmobiliarias, corredores de propiedades, arquitectura, interiorismo y decoración.
+
+## 30 /architectural
+Reinterpreta la presentación visual de una construcción poniendo mayor atención en líneas, materiales, iluminación y composición.
+
+**Ideal para:** arquitectura, inmobiliarias, construcción, hoteles y proyectos inmobiliarios.

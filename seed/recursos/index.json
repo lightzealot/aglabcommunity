@@ -1,0 +1,82 @@
+[
+  {
+    "slug": "prompt-ia-objetiva",
+    "title": "Un prompt para evaluar tus ideas con evidencia",
+    "summary": "Pídele a la IA que revise tus supuestos, señale errores y explique qué información falta. Incluye cómo guardar la instrucción en ChatGPT.",
+    "position": 1,
+    "cover": "/recursos/covers/prompt-ia-objetiva.webp",
+    "file": "prompt-ia-objetiva.txt"
+  },
+  {
+    "slug": "formula-buen-prompt",
+    "title": "La fórmula de un buen prompt",
+    "summary": "Rol, contexto, tarea, formato y ejemplo: una fórmula sencilla y cinco prompts listos para copiar y adaptar.",
+    "position": 2,
+    "cover": "/recursos/covers/formula-buen-prompt.webp",
+    "file": "formula-buen-prompt.txt"
+  },
+  {
+    "slug": "videos-animados-claude",
+    "title": "Cómo hacer videos animados con Claude",
+    "summary": "De una idea a un MP4 con el skill video-pizarra: instalación, storyboard, animación, sonido y render. Sin suscripciones de edición; el uso del modelo puede tener costo.",
+    "position": 3,
+    "cover": "/recursos/covers/videos-animados-claude.webp",
+    "file": "videos-animados-claude.txt"
+  },
+  {
+    "slug": "sistema-60-minutos-contenido-ia",
+    "title": "Sistema de 60 minutos para crear una semana de contenido con IA",
+    "summary": "De una idea a Reels, carrusel, historias y un calendario semanal listo para producir.",
+    "position": 4,
+    "cover": "/recursos/covers/sistema-60-minutos-contenido-ia.webp",
+    "file": "sistema-60-minutos-contenido-ia.txt"
+  },
+  {
+    "slug": "10-automatizaciones-chatgpt",
+    "title": "10 recordatorios para programar en ChatGPT",
+    "summary": "Diez recordatorios listos para adaptar: contenido, estudio, pendientes y proyectos.",
+    "position": 5,
+    "cover": "/recursos/covers/10-automatizaciones-chatgpt.webp",
+    "file": "10-automatizaciones-chatgpt.txt"
+  },
+  {
+    "slug": "ia-primer-paso",
+    "title": "IA: primer paso",
+    "summary": "Empieza con un problema real y una estructura sencilla para obtener mejores respuestas.",
+    "position": 6,
+    "cover": "/recursos/covers/ia-primer-paso.webp",
+    "file": "ia-primer-paso.txt"
+  },
+  {
+    "slug": "mejores-resultados-ia",
+    "title": "Plantilla para explicar mejor tu tarea a una IA",
+    "summary": "Explica tu situación, define el objetivo y pide el formato que necesitas.",
+    "position": 7,
+    "cover": "/recursos/covers/mejores-resultados-ia.webp",
+    "file": "mejores-resultados-ia.txt"
+  },
+  {
+    "slug": "30-atajos-imagenes-ia",
+    "title": "30 atajos para crear imágenes con IA",
+    "summary": "Explora treinta direcciones visuales para productos, escenas y personajes.",
+    "position": 8,
+    "cover": "/recursos/covers/30-atajos-imagenes-ia.webp",
+    "file": "30-atajos-imagenes-ia.txt"
+  },
+  {
+    "slug": "plantilla-google-flow",
+    "title": "Plantilla para crear imágenes en Google Flow",
+    "summary": "Define el sujeto, la escena, el estilo, la iluminación y el encuadre de cada imagen.",
+    "position": 9,
+    "cover": "/recursos/covers/plantilla-google-flow.webp",
+    "file": "plantilla-google-flow.txt"
+  },
+  {
+    "slug": "google-flow-principiantes",
+    "title": "Google Flow para principiantes",
+    "summary": "Crea tu primer proyecto, trabaja con referencias y mejora tus imágenes y videos.",
+    "position": 10,
+    "cover": "/recursos/covers/google-flow-principiantes.webp",
+    "file": "google-flow-principiantes.txt"
+  }
+]

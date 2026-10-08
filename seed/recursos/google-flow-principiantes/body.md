@@ -1,0 +1,98 @@
+## ¿Qué es Google Flow?
+
+Google Flow es un estudio creativo con inteligencia artificial pensado para crear y desarrollar contenido visual. Permite generar imágenes, crear clips de video, reutilizar personajes u objetos como referencias, organizar recursos y construir secuencias con varios clips.
+
+## ¿Qué puedes hacer?
+
+1. Crear imágenes desde una descripción.
+2. Convertir una idea o imagen en un clip de video.
+3. Usar referencias para mantener personajes, objetos o estilos.
+4. Probar movimientos, encuadres y perspectivas de cámara.
+5. Extender y editar clips existentes.
+6. Organizar varios clips en una secuencia con Scenebuilder.
+7. Guardar un fotograma de un video y reutilizarlo como referencia.
+
+## Importante sobre el acceso
+
+Google Flow funciona con límites de uso y créditos de IA. El acceso disponible depende del país, de la cuenta y del plan. Hay opciones de prueba y planes de pago con distintos límites; los créditos adicionales pueden tener costo.
+
+Por eso, no debe presentarse como una herramienta completamente gratuita. Antes de generar contenido, revisa en tu cuenta cuántos créditos tienes y cuánto consume el modelo seleccionado.
+
+## Cómo crear tu primer proyecto
+
+1. Entra en https://flow.google.com/ e inicia sesión con tu cuenta personal de Google.
+2. Crea un proyecto nuevo.
+3. Decide qué quieres producir: una imagen o un video.
+4. Escribe una instrucción describiendo la escena.
+5. Añade referencias si necesitas conservar un personaje, producto, objeto o estilo.
+6. Selecciona las opciones disponibles, como orientación, duración o cantidad de resultados.
+7. Genera el contenido y revisa el resultado.
+8. Ajusta una sola variable por intento: cámara, iluminación, acción, estilo o composición.
+9. Guarda los mejores resultados dentro del proyecto.
+10. Si tienes varios clips, ordénalos y recórtalos en Scenebuilder antes de descargarlos.
+
+## Fórmula sencilla para escribir un prompt
+
+[Sujeto] + [acción] + [lugar] + [tipo de plano] + [movimiento de cámara] + [iluminación] + [estilo]
+
+Ejemplo:
+
+“Un creador de contenido trabajando frente a un portátil en un estudio moderno, plano medio, la cámara se acerca lentamente, iluminación azul y naranja, estilo cinematográfico realista.”
+
+## 3 prompts para probar
+
+## Prompt 1 — imagen profesional
+
+```text
+“Retrato editorial de un creador de tecnología frente a un escritorio minimalista, expresión segura y natural, iluminación lateral suave, fondo oscuro con detalles azules, fotografía profesional, textura realista, composición vertical.”
+```
+
+## Prompt 2 — video de producto
+
+```text
+“Un teléfono inteligente sobre una mesa negra, luces de estudio recorren sus bordes mientras la cámara gira lentamente alrededor del producto, reflejos controlados, fondo oscuro, estética publicitaria premium, movimiento suave y realista.”
+```
+
+## Prompt 3 — escena para Reel
+
+```text
+“Un creador trabaja en su portátil dentro de un avión. Las paredes del avión desaparecen gradualmente y queda sentado sobre las nubes mientras continúa trabajando con tranquilidad. Plano medio, cámara acercándose lentamente, luz cálida de amanecer, estilo cinematográfico realista.”
+```
+
+## Cómo mejorar un resultado sin empezar de cero
+
+No cambies todo el prompt al mismo tiempo. Identifica el problema y corrige únicamente esa parte.
+
+- Si el encuadre está mal: especifica primer plano, plano medio o plano general.
+- Si la escena se mueve demasiado: pide cámara fija o movimiento lento.
+- Si el personaje cambia: usa la misma referencia y describe los rasgos que deben conservarse.
+- Si el resultado parece artificial: pide iluminación natural, textura realista y movimiento físicamente coherente.
+- Si no ocurre la acción correcta: describe una sola acción, en orden y sin instrucciones contradictorias.
+
+## Errores comunes
+
+- Escribir instrucciones demasiado generales.
+- Pedir muchas acciones distintas en un solo clip.
+- Cambiar personaje, cámara, ambiente y estilo en cada intento.
+- No usar referencias cuando la consistencia es importante.
+- Gastar créditos repitiendo la misma generación sin analizar qué falló.
+- Dar por hecho que el primer resultado será el definitivo.
+
+## Tarea práctica
+
+1. Elige una idea sencilla de 5 a 8 segundos.
+2. Escribe el prompt con la fórmula de esta guía.
+3. Genera una primera versión.
+4. Detecta un solo aspecto que quieras mejorar.
+5. Realiza una segunda generación cambiando únicamente ese aspecto.
+
+Compara las dos versiones y observa qué cambió al ajustar una sola variable.
+
+## Fuentes oficiales
+
+- [Google Flow](https://flow.google.com/)
+- [Crear y editar imágenes en Flow](https://support.google.com/flow/answer/16729550?hl=es)
+- [Centro de ayuda de Google Flow](https://support.google.com/flow/)
+- [Gestionar los créditos de Flow](https://support.google.com/flow/answer/16526234?hl=es)
+
+Nota: las funciones, modelos, disponibilidad y límites pueden cambiar. Revisa siempre la información mostrada dentro de tu cuenta.

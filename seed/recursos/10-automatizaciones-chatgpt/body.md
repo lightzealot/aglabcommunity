@@ -1,0 +1,82 @@
+Una automatización sencilla puede ser un recordatorio que se repite. Tú eliges qué debes hacer y cuándo quieres que ChatGPT te avise.
+
+**En estos ejemplos, ChatGPT te recuerda la acción; no la realiza por ti.**
+
+## Cómo empezar
+1. Abre ChatGPT y entra en Programadas / Scheduled, si esa opción está disponible en tu cuenta.
+2. Crea una tarea recurrente con uno de los mensajes de abajo. Puedes copiarlo y adaptar la frecuencia.
+3. Confirma que la tarea quedó programada y revisa el horario y la zona horaria.
+4. Revisa las opciones de notificación disponibles en Configuración → Notificaciones.
+
+## 10 mensajes listos para copiar
+### 01. Contenido
+
+```text
+Todos los lunes por la mañana, recuérdame planear el contenido de la semana.
+```
+
+### 02. Estudio
+
+```text
+Cada día entre semana por la tarde, recuérdame estudiar inteligencia artificial durante 20 minutos.
+```
+
+### 03. Pendientes
+
+```text
+Todos los viernes por la tarde, recuérdame revisar los pendientes que dejé abiertos esta semana.
+```
+
+### 04. Finanzas personales
+
+```text
+El primer lunes de cada mes por la mañana, recuérdame revisar mis gastos y actualizar mi presupuesto.
+```
+
+### 05. Responder mensajes
+
+```text
+Cada día entre semana por la tarde, recuérdame responder los mensajes importantes que dejé pendientes.
+```
+
+### 06. Organizar la semana
+
+```text
+Todos los domingos por la tarde, recuérdame elegir mis tres prioridades para la próxima semana.
+```
+
+### 07. Proyectos
+
+```text
+Todos los miércoles por la mañana, recuérdame revisar qué avance hice en mi proyecto personal.
+```
+
+### 08. Copia de seguridad
+
+```text
+El primer viernes de cada mes por la tarde, recuérdame comprobar que mis archivos importantes tengan copia de seguridad.
+```
+
+### 09. Publicar contenido
+
+```text
+Todos los martes por la mañana, recuérdame revisar y publicar el contenido que preparé.
+```
+
+### 10. Aprender algo nuevo
+
+```text
+Todos los sábados por la mañana, recuérdame practicar una herramienta nueva de IA durante 30 minutos.
+```
+
+## Haz cada mensaje más útil
+Añade el objetivo concreto de la tarea. Por ejemplo:
+
+```text
+Recuérdame revisar mis pendientes y elegir el primero que debo resolver.
+```
+
+## Disponibilidad y horarios
+La disponibilidad, los límites y las opciones de programación pueden variar según tu cuenta, plan y aplicación. Si necesitas una hora exacta, comprueba las opciones que aparecen en tu cuenta antes de confirmar la tarea.
+
+Consulta la [guía oficial de tareas programadas de OpenAI](https://learn.chatgpt.com/docs/automations).
