@@ -33,7 +33,7 @@ export function RegistroForm({ googleEnabled, from }: { googleEnabled: boolean; 
   return (
     <AuthShell
       title="Únete"
-      subtitle="Crea tu cuenta. Aprobamos cada solicitud manualmente antes de dar acceso."
+      subtitle="Crea tu cuenta gratis."
     >
       {googleEnabled && <GoogleButton callbackURL={after} />}
       <form onSubmit={onSubmit} className="space-y-3">
