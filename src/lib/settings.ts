@@ -26,3 +26,26 @@ export async function setRequireApproval(value: boolean) {
     .values({ key: REQUIRE_APPROVAL, value: String(value) })
     .onConflictDoUpdate({ target: schema.appSetting.key, set: { value: String(value) } });
 }
+
+export async function getSetting(key: string): Promise<string | null> {
+  try {
+    const [row] = await db
+      .select({ value: schema.appSetting.value })
+      .from(schema.appSetting)
+      .where(eq(schema.appSetting.key, key));
+    return row?.value ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export async function setSetting(key: string, value: string | null) {
+  if (value === null) {
+    await db.delete(schema.appSetting).where(eq(schema.appSetting.key, key));
+    return;
+  }
+  await db
+    .insert(schema.appSetting)
+    .values({ key, value })
+    .onConflictDoUpdate({ target: schema.appSetting.key, set: { value } });
+}

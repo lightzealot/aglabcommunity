@@ -218,9 +218,22 @@ export async function updateProfile(_prev: FormState, formData: FormData): Promi
     .safeParse({ name: formData.get("name"), bio: formData.get("bio") || undefined });
   if (!parsed.success) return { error: parsed.error.issues[0].message };
 
+  let image: string | null | undefined;
+  const avatar = formData.get("avatar");
+  if (avatar instanceof File && avatar.size > 0) {
+    try {
+      image = await saveImage(avatar);
+    } catch (e) {
+      return { error: e instanceof Error ? e.message : "No pudimos subir la foto." };
+    }
+  } else if (formData.get("removeAvatar") === "on") {
+    image = null;
+  }
+
   await db
     .update(schema.user)
     .set({
+      ...(image !== undefined ? { image } : {}),
       name: parsed.data.name,
       bio: parsed.data.bio ?? null,
       emailNotifications: formData.get("emailNotifications") === "on",

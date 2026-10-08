@@ -1,14 +1,16 @@
 import { eq, sql } from "drizzle-orm";
 import { db, schema } from "@/db";
 import { requireAdmin } from "@/lib/session";
-import { getRequireApproval } from "@/lib/settings";
+import { getRequireApproval, getSetting } from "@/lib/settings";
 import { approveAllPending, saveApprovalSetting } from "./actions";
+import { CommunityForm } from "./community-form";
 
 export const metadata = { title: "Configuración" };
 
 export default async function ConfiguracionPage() {
   await requireAdmin();
   const requireApproval = await getRequireApproval();
+  const [description, coverUrl] = await Promise.all([getSetting("description"), getSetting("cover_url")]);
   const [{ pending }] = await db
     .select({ pending: sql<number>`count(*)::int` })
     .from(schema.user)
@@ -22,6 +24,12 @@ export default async function ConfiguracionPage() {
       </h1>
 
       <section className="card mt-6 p-5">
+        <h2 className="text-lg font-semibold">Descripción y portada</h2>
+        <p className="mt-1 text-sm text-ash">Se muestran en la tarjeta lateral y en la pestaña “Acerca de”.</p>
+        <CommunityForm description={description ?? ""} coverUrl={coverUrl} />
+      </section>
+
+      <section className="card mt-4 p-5">
         <div className="flex flex-wrap items-start gap-4">
           <div className="min-w-0 flex-1">
             <h2 className="text-lg font-semibold">Aprobar solicitudes manualmente</h2>

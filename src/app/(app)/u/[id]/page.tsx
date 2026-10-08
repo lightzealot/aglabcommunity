@@ -15,6 +15,7 @@ export default async function UserPage({ params }: { params: Promise<{ id: strin
     .select({
       id: schema.user.id,
       name: schema.user.name,
+      image: schema.user.image,
       bio: schema.user.bio,
       level: schema.user.level,
       points: schema.user.points,
@@ -30,7 +31,7 @@ export default async function UserPage({ params }: { params: Promise<{ id: strin
   return (
     <>
       <div className="card flex items-center gap-5 p-6">
-        <Avatar name={u.name} size={72} />
+        <Avatar name={u.name} image={u.image} points={u.points} size={84} />
         <div className="min-w-0 flex-1">
           <h1 className="display text-4xl">{u.name}<span className="text-accent">.</span></h1>
           <p className="label !text-ash mt-1">

@@ -22,7 +22,7 @@ export default async function PerfilPage() {
         Mi perfil<span className="text-accent">.</span>
       </h1>
       <p className="mt-2 mb-6 text-sm text-ash">{user.email} · {user.points} puntos · 🔥 racha de {streak} día{streak === 1 ? "" : "s"}</p>
-      <ProfileForm name={user.name} bio={bio ?? ""} emailNotifications={emailNotifications} />
+      <ProfileForm name={user.name} bio={bio ?? ""} emailNotifications={emailNotifications} image={user.image ?? null} />
     </>
   );
 }

@@ -19,7 +19,7 @@ export default async function CoursePage({ params }: { params: Promise<{ courseI
   const pct = total ? Math.round((done / total) * 100) : 0;
 
   return (
-    <>
+    <div className="mx-auto w-full max-w-3xl">
       <Link href="/classroom" className="text-sm text-ash hover:text-ink">← Classroom</Link>
       <div className="mt-3 flex flex-wrap items-center gap-3">
         <h1 className="display text-5xl">
@@ -89,6 +89,6 @@ export default async function CoursePage({ params }: { params: Promise<{ courseI
         ))}
         {outline.length === 0 && <p className="text-sm text-ash">Este curso aún no tiene contenido.</p>}
       </div>
-    </>
+    </div>
   );
 }

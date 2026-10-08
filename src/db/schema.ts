@@ -38,6 +38,8 @@ export const user = pgTable("user", {
   streak: integer("streak").notNull().default(0),
   lastActiveDate: date("last_active_date", { mode: "string" }),
   emailNotifications: boolean("email_notifications").notNull().default(true),
+  // Última vez que estuvo activo (para "En línea" y "Activo hace…")
+  lastSeenAt: timestamp("last_seen_at"),
 });
 
 export const session = pgTable("session", {

@@ -38,6 +38,9 @@ PDF, ZIP, JSON, Office, CSV, TXT, MD e imágenes, máx. 25 MB, 20 por lección. 
 ## Ranking
 `/ranking`: líneas de puntos acumulados de los 5 primeros (solo miembros, no el admin), con etiquetas al final de cada línea y leyenda con lo ganado en el periodo; ticker "Esta semana" con puestos que subió o bajó cada uno; y tabla del top 20. Todo sale del historial `point_event`.
 
+## Interfaz (estilo Skool)
+Barra superior con búsqueda, campanita y menú de usuario, y pestañas: Comunidad, Cursos, Calendario, Miembros, Clasificación y Acerca de. Feed con tarjeta plegable "Escribe algo…", tarjetas con foto y nivel, columna lateral con la comunidad y el top 3. Calendario mensual (o lista), miembros con "En línea" / "Activo hace…", clasificación con 9 niveles y tres tablas (7 días, 30 días y total), más la gráfica de evolución. Foto de perfil, y descripción y portada de la comunidad editables en `/admin/configuracion`. Quedan fuera por ahora: Mapa y Chat directo.
+
 ## Imágenes
 Se guardan en `UPLOAD_DIR` (por defecto `./uploads`) y se sirven solo a miembros con sesión desde `/api/uploads/*`. En EasyPanel, monta un volumen persistente en `/app/uploads`.
 

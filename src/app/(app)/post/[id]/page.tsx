@@ -28,6 +28,8 @@ export default async function PostPage({ params }: { params: Promise<{ id: strin
       createdAt: comment.createdAt,
       authorId: author.id,
       authorName: author.name,
+      authorImage: author.image,
+      authorPoints: author.points,
       likes: sql<number>`(select count(*)::int from comment_like cl where cl.comment_id = ${comment.id})`,
       liked: sql<boolean>`exists(select 1 from comment_like cl where cl.comment_id = ${comment.id} and cl.user_id = ${user.id})`,
     })
@@ -66,7 +68,7 @@ export default async function PostPage({ params }: { params: Promise<{ id: strin
       <div className="space-y-3">
         {comments.map((c) => (
           <div key={c.id} className="card flex gap-3 p-4">
-            <Avatar name={c.authorName} size={32} />
+            <Avatar name={c.authorName} image={c.authorImage} points={c.authorPoints} size={36} />
             <div className="min-w-0 flex-1">
               <p className="text-sm">
                 <Link href={`/u/${c.authorId}`} className="font-semibold hover:text-accent">{c.authorName}</Link>
