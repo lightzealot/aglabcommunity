@@ -62,6 +62,9 @@ export default async function AppLayout({ children }: { children: React.ReactNod
               <Link href="/admin/boards" className="rounded px-3 py-2 text-sm font-semibold hover:bg-veil">
                 Boards
               </Link>
+              <Link href="/admin/configuracion" className="rounded px-3 py-2 text-sm font-semibold hover:bg-veil">
+                Configuración
+              </Link>
             </>
           )}
         </nav>

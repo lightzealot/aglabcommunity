@@ -330,3 +330,9 @@ export const jobLog = pgTable("job_log", {
   key: text("key").primaryKey(),
   ranAt: timestamp("ran_at").notNull().defaultNow(),
 });
+
+// Ajustes globales de la comunidad (clave/valor). Se editan en /admin/configuracion.
+export const appSetting = pgTable("app_setting", {
+  key: text("key").primaryKey(),
+  value: text("value").notNull(),
+});

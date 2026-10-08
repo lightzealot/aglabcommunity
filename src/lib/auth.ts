@@ -1,8 +1,11 @@
+import { eq } from "drizzle-orm";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
 import { db, schema } from "@/db";
 import { isGoogleEnabled } from "@/lib/google";
+import { notify } from "@/lib/notify";
+import { getRequireApproval } from "@/lib/settings";
 import { emailLayout, sendMail } from "@/lib/mail";
 
 const adminEmails = (process.env.ADMIN_EMAIL ?? "")
@@ -52,11 +55,13 @@ export const auth = betterAuth({
       create: {
         before: async (user) => {
           const isAdmin = adminEmails.includes(user.email.toLowerCase());
+          // Con la aprobación manual desactivada, los nuevos miembros entran directo.
+          const approved = isAdmin || !(await getRequireApproval());
           return {
             data: {
               ...user,
               role: isAdmin ? "admin" : "member",
-              status: isAdmin ? "approved" : "pending",
+              status: approved ? "approved" : "pending",
               onboarded: isAdmin, // el admin no pasa por el onboarding
             },
           };
@@ -64,16 +69,34 @@ export const auth = betterAuth({
         after: async (user) => {
           if (adminEmails.includes(user.email.toLowerCase())) return;
           const base = process.env.BETTER_AUTH_URL ?? "";
+          const [row] = await db
+            .select({ status: schema.user.status })
+            .from(schema.user)
+            .where(eq(schema.user.id, user.id));
+          const joined = row?.status === "approved";
+
+          if (joined) {
+            await notify(user.id, {
+              type: "welcome",
+              title: "¡Bienvenido a AG Lab!",
+              body: "Ya eres parte de la comunidad.",
+              href: "/",
+            });
+          }
+          const subject = joined ? `Nuevo miembro: ${user.name}` : `Nueva solicitud: ${user.name}`;
+          const text = joined
+            ? `${user.name} (${user.email}) se unió a AG Lab.`
+            : `${user.name} (${user.email}) pidió acceso a AG Lab.`;
           await Promise.all(
             adminEmails.map((to) =>
               sendMail({
                 to,
-                subject: `Nueva solicitud: ${user.name}`,
-                text: `${user.name} (${user.email}) pidió acceso a AG Lab.`,
+                subject,
+                text,
                 html: emailLayout(
-                  "Nueva solicitud de acceso",
-                  `${user.name} (${user.email}) pidió acceso a AG Lab.`,
-                  { label: "Revisar usuarios", url: `${base}/admin/usuarios` },
+                  joined ? "Nuevo miembro" : "Nueva solicitud de acceso",
+                  text,
+                  { label: "Ver usuarios", url: `${base}/admin/usuarios` },
                 ),
               }).catch((e) => console.error("[mail] aviso admin falló", e)),
             ),
