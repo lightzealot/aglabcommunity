@@ -17,7 +17,6 @@ const barlow = Barlow_Condensed({
 export const metadata: Metadata = {
   title: { default: "AG Lab", template: "%s · AG Lab" },
   description: "La comunidad de Andrés Gómez para implementar IA y automatización en tu negocio.",
-  icons: { icon: "/logo.png" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
