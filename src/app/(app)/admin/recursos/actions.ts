@@ -37,12 +37,11 @@ export async function createResource(formData: FormData) {
   await requireAdmin();
   const title = z.string().trim().min(2).max(120).safeParse(formData.get("title"));
   if (!title.success) return;
-  const [{ max }] = await db
-    .select({ max: sql<number>`coalesce(max(${schema.resource.position}), 0)::int` })
-    .from(schema.resource);
+  // El recurso nuevo va de primero: pasa a la posición 0 y los demás bajan un puesto.
+  await db.update(schema.resource).set({ position: sql`${schema.resource.position} + 1` });
   const [r] = await db
     .insert(schema.resource)
-    .values({ title: title.data, slug: await uniqueSlug(slugify(title.data)), position: max + 1 })
+    .values({ title: title.data, slug: await uniqueSlug(slugify(title.data)), position: 0 })
     .returning({ id: schema.resource.id });
   refresh();
   redirect(`/admin/recursos/${r.id}`);

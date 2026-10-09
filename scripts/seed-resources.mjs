@@ -58,11 +58,12 @@ try {
     const claimed = await client.query("insert into job_log (key) values ($1) on conflict do nothing returning key", [`seed:resource:${it.slug}`]);
     if (!claimed.rowCount) continue;
     const body = readFileSync(path.join(root, it.slug, "body.md"), "utf8");
-    const { rows } = await client.query("select coalesce(max(position), 0)::int as max from resource");
+    // Va de primero: los demás bajan un puesto.
+    await client.query("update resource set position = position + 1");
     const ins = await client.query(
       `insert into resource (slug, title, summary, body, cover_url, published, position)
        values ($1, $2, $3, $4, $5, true, $6) on conflict (slug) do nothing`,
-      [it.slug, it.title, it.summary, body, it.cover, Math.max(it.position, rows[0].max + 1)],
+      [it.slug, it.title, it.summary, body, it.cover, 0],
     );
     console.log(`[seed] recurso ${it.slug}: ${ins.rowCount ? "creado" : "ya existía"}`);
   }
