@@ -55,17 +55,28 @@ try {
   }
   await client.query("begin");
   for (const it of extras) {
-    const claimed = await client.query("insert into job_log (key) values ($1) on conflict do nothing returning key", [`seed:resource:${it.slug}`]);
-    if (!claimed.rowCount) continue;
     const body = readFileSync(path.join(root, it.slug, "body.md"), "utf8");
-    // Va de primero: los demás bajan un puesto.
-    await client.query("update resource set position = position + 1");
-    const ins = await client.query(
-      `insert into resource (slug, title, summary, body, cover_url, published, position)
-       values ($1, $2, $3, $4, $5, true, $6) on conflict (slug) do nothing`,
-      [it.slug, it.title, it.summary, body, it.cover, 0],
-    );
-    console.log(`[seed] recurso ${it.slug}: ${ins.rowCount ? "creado" : "ya existía"}`);
+    const claimed = await client.query("insert into job_log (key) values ($1) on conflict do nothing returning key", [`seed:resource:${it.slug}`]);
+    if (claimed.rowCount) {
+      // Va de primero: los demás bajan un puesto.
+      await client.query("update resource set position = position + 1");
+      const ins = await client.query(
+        `insert into resource (slug, title, summary, body, cover_url, published, position)
+         values ($1, $2, $3, $4, $5, true, 0) on conflict (slug) do nothing`,
+        [it.slug, it.title, it.summary, body, it.cover],
+      );
+      console.log(`[seed] recurso ${it.slug}: ${ins.rowCount ? "creado" : "ya existía"}`);
+    }
+    // Revisiones (r2, r3…): reescriben una sola vez el texto y la portada de un recurso ya cargado.
+    for (let r = 2; r <= (it.revision ?? 1); r++) {
+      const rev = await client.query("insert into job_log (key) values ($1) on conflict do nothing returning key", [`seed:resource:${it.slug}:r${r}`]);
+      if (!rev.rowCount) continue;
+      const upd = await client.query(
+        "update resource set title = $2, summary = $3, body = $4, cover_url = $5 where slug = $1",
+        [it.slug, it.title, it.summary, body, it.cover],
+      );
+      console.log(`[seed] recurso ${it.slug}: revisión ${r} ${upd.rowCount ? "aplicada" : "(no existe, omitida)"}`);
+    }
   }
   await client.query("commit");
 } catch (e) {

@@ -81,10 +81,11 @@
   },
   {
     "slug": "higgsfield-guia",
-    "title": "Higgsfield: planes, créditos y qué incluye (octubre 2026)",
-    "summary": "Qué es Higgsfield, cuánto cuesta cada plan, qué significa \"ilimitado\" y cuál elegir para crear imágenes y videos con IA. Enlace de afiliado.",
+    "title": "Higgsfield: crea videos e imágenes con IA (planes oct 2026)",
+    "summary": "Más de 30 modelos de imagen y video con IA en un solo lugar. Planes desde $15 al mes y descuento al registrarte. Enlace de afiliado.",
     "position": 11,
     "cover": "/recursos/covers/higgsfield-guia.webp",
-    "extra": true
+    "extra": true,
+    "revision": 2
   }
 ]

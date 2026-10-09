@@ -3,7 +3,7 @@ import { CodeBlock } from "@/components/code-block";
 
 /**
  * Markdown básico para guías: ##/### títulos, listas (- y 1.), citas (>), bloques de código (```),
- * tablas con |, **negrita**, `código`, [texto](https://enlace) y enlaces sueltos.
+ * tablas con |, botón de llamado a la acción (=> [texto](https://enlace)), **negrita**, `código`, [texto](https://enlace) y enlaces sueltos.
  * Todo se renderiza con elementos de React (nunca HTML crudo), así que no hay inyección.
  */
 
@@ -47,6 +47,7 @@ type Block =
   | { t: "p"; text: string }
   | { t: "code"; text: string }
   | { t: "quote"; text: string }
+  | { t: "cta"; text: string; href: string }
   | { t: "ul" | "ol"; items: string[] }
   | { t: "table"; rows: string[][] };
 
@@ -60,8 +61,9 @@ const splitRow = (l: string) =>
     .map((c) => c.trim());
 const bullet = (l: string) => /^\s*[-*]\s+/.test(l);
 const ordered = (l: string) => /^\s*\d+\.\s+/.test(l);
+const CTA_RE = /^=>\s*\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)\s*$/;
 const special = (l: string) =>
-  l.startsWith("```") || /^#{1,3}\s/.test(l) || l.startsWith(">") || bullet(l) || ordered(l) || isTableRow(l);
+  CTA_RE.test(l) || l.startsWith("```") || /^#{1,3}\s/.test(l) || l.startsWith(">") || bullet(l) || ordered(l) || isTableRow(l);
 
 function parse(src: string): Block[] {
   const lines = src.replace(/\r\n/g, "\n").split("\n");
@@ -77,6 +79,10 @@ function parse(src: string): Block[] {
       while (i < lines.length && !lines[i].startsWith("```")) buf.push(lines[i++]);
       i++; // cierre
       blocks.push({ t: "code", text: buf.join("\n").replace(/^\n+|\n+$/g, "") });
+    } else if (CTA_RE.test(line)) {
+      const m = CTA_RE.exec(line)!;
+      blocks.push({ t: "cta", text: m[1], href: m[2] });
+      i++;
     } else if (/^#{1,3}\s/.test(line)) {
       const m = /^(#{1,3})\s+(.*)$/.exec(line)!;
       blocks.push({ t: "h", level: m[1].length >= 3 ? 3 : 2, text: m[2] });
@@ -135,6 +141,12 @@ export function RichText({ text }: { text: string }) {
               <h3 key={i} className="pt-2 text-lg font-bold">
                 {inline(b.text)}
               </h3>
+            );
+          case "cta":
+            return (
+              <a key={i} href={b.href} target="_blank" rel="noopener noreferrer nofollow sponsored" className="btn btn-primary !px-6 !py-3 text-base">
+                {b.text}
+              </a>
             );
           case "code":
             return <CodeBlock key={i} code={b.text} />;
