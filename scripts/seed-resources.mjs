@@ -15,7 +15,10 @@ if (!existsSync(path.join(root, "index.json"))) {
   console.log("[seed] no hay recursos iniciales");
   process.exit(0);
 }
-const items = JSON.parse(readFileSync(path.join(root, "index.json"), "utf8"));
+const all = JSON.parse(readFileSync(path.join(root, "index.json"), "utf8"));
+// Los primeros recursos van con la guarda "v1"; los marcados "extra" se cargan uno a uno (guarda por slug), sin archivo.
+const items = all.filter((i) => !i.extra);
+const extras = all.filter((i) => i.extra);
 
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 const client = await pool.connect();
@@ -50,6 +53,20 @@ try {
     await client.query("commit");
     console.log(`[seed] ${created} recursos iniciales creados`);
   }
+  await client.query("begin");
+  for (const it of extras) {
+    const claimed = await client.query("insert into job_log (key) values ($1) on conflict do nothing returning key", [`seed:resource:${it.slug}`]);
+    if (!claimed.rowCount) continue;
+    const body = readFileSync(path.join(root, it.slug, "body.md"), "utf8");
+    const { rows } = await client.query("select coalesce(max(position), 0)::int as max from resource");
+    const ins = await client.query(
+      `insert into resource (slug, title, summary, body, cover_url, published, position)
+       values ($1, $2, $3, $4, $5, true, $6) on conflict (slug) do nothing`,
+      [it.slug, it.title, it.summary, body, it.cover, Math.max(it.position, rows[0].max + 1)],
+    );
+    console.log(`[seed] recurso ${it.slug}: ${ins.rowCount ? "creado" : "ya existía"}`);
+  }
+  await client.query("commit");
 } catch (e) {
   await client.query("rollback").catch(() => {});
   console.error("[seed] falló, no se cargó nada:", e);

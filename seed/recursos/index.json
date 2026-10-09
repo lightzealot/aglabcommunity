@@ -78,5 +78,13 @@
     "position": 10,
     "cover": "/recursos/covers/google-flow-principiantes.webp",
     "file": "google-flow-principiantes.txt"
+  },
+  {
+    "slug": "higgsfield-guia",
+    "title": "Higgsfield: planes, créditos y qué incluye (octubre 2026)",
+    "summary": "Qué es Higgsfield, cuánto cuesta cada plan, qué significa \"ilimitado\" y cuál elegir para crear imágenes y videos con IA. Enlace de afiliado.",
+    "position": 11,
+    "cover": "/recursos/covers/higgsfield-guia.webp",
+    "extra": true
   }
 ]
