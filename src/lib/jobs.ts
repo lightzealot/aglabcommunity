@@ -1,6 +1,7 @@
 import { and, desc, eq, gt, gte, isNull, lte, sql } from "drizzle-orm";
 import { db, schema } from "@/db";
 import { emailLayout, esc, sendMail } from "@/lib/mail";
+import { ensureDailyNews } from "@/lib/news";
 import { notify } from "@/lib/notify";
 import { dateKey, TZ } from "@/lib/streak";
 
@@ -144,7 +145,11 @@ export async function sendWeeklyDigest(now = new Date()) {
 export async function runJobs(now = new Date()) {
   const reminders = await sendEventReminders(now);
   const digest = await sendWeeklyDigest(now);
-  return { reminders, digest };
+  const news = await ensureDailyNews(now).catch((e) => {
+    console.error("[jobs] noticia del día falló", e);
+    return false;
+  });
+  return { reminders, digest, news };
 }
 
 const g = globalThis as unknown as { jobsStarted?: boolean };
@@ -156,5 +161,5 @@ export function startJobs() {
     runJobs().catch((e) => console.error("[jobs] error", e));
   setTimeout(tick, 15_000);
   setInterval(tick, 5 * 60_000);
-  console.log("[jobs] programados: recordatorios cada 5 min, resumen los lunes 8:00");
+  console.log("[jobs] programados: recordatorios cada 5 min, resumen los lunes 8:00, noticia del día");
 }

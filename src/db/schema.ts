@@ -370,3 +370,17 @@ export const resourceFile = pgTable(
   },
   (t) => [index("resource_file_resource_idx").on(t.resourceId)],
 );
+
+// ---- Noticia destacada del día (se elige sola desde feeds RSS) ----
+export const news = pgTable("news", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  // Fecha local (YYYY-MM-DD) a la que pertenece: una sola noticia por día.
+  day: text("day").notNull().unique(),
+  title: text("title").notNull(),
+  summary: text("summary").notNull().default(""),
+  url: text("url").notNull().unique(),
+  source: text("source").notNull(),
+  imageUrl: text("image_url"),
+  publishedAt: timestamp("published_at").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
