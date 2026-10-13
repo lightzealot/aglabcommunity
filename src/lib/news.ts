@@ -8,16 +8,23 @@ const FEEDS = [
   { source: "Genbeta", url: "https://www.genbeta.com/tag/inteligencia-artificial/rss2.xml" },
 ];
 
-// Lo que más le sirve a la comunidad: herramientas y uso práctico, no solo hardware o política.
+// Lo que más le sirve a la comunidad: herramientas que se pueden usar hoy y negocio, no espectáculo ni política.
+/** Palabra completa (con tildes): "ley" no coincide con "leyenda" ni "api" con "capital". */
+const words = (alts: string) => new RegExp(`(?<![\\p{L}\\d])(?:${alts})(?![\\p{L}\\d])`, "iu");
+
 const BOOSTS: [RegExp, number][] = [
-  [/\b(chatgpt|openai|claude|anthropic|gemini|copilot|deepseek|mistral|perplexity|grok|llama)\b/i, 4],
-  [/\b(agentes?|automatiza\w*|flujos? de trabajo|prompts?|asistentes?)\b/i, 3],
-  [/\b(lanza|presenta|nuevo|nueva|gratis|herramienta|funci[oó]n|actualizaci[oó]n)\b/i, 1.5],
-  [/\b(negocios?|empresas?|productividad|trabajo|pymes?)\b/i, 1],
+  [words("chatgpt|openai|claude|anthropic|gemini|copilot|deepseek|mistral|perplexity|grok|llama|notebooklm|cursor|midjourney|sora|veo"), 4],
+  [words("agentes?|automatiza\\p{L}*|flujos? de trabajo|prompts?|asistentes?|workflows?|n8n|zapier"), 4],
+  [words("herramientas?|app|apps|aplicaci[oó]n|plataforma|funci[oó]n|funciones|gratis|gratuit[ao]|plugin|extensi[oó]n|api"), 3],
+  [words("negocios?|empresas?|pymes?|emprendedor\\p{L}*|ventas?|marketing|clientes?|productividad|trabajo|profesionales?|equipos?"), 3],
+  [words("lanza|presenta|nuevo|nueva|actualizaci[oó]n|c[oó]mo (usar|crear|ahorrar)|gu[ií]a|trucos?"), 1.5],
 ];
 const PENALTIES: [RegExp, number][] = [
-  [/\b(oferta|descuento|cupón|chollo|rebaja)s?\b/i, -6],
-  [/\b(demanda|juicio|elecciones|guerra)\b/i, -2],
+  [words("ofertas?|descuentos?|cup[oó]n|cupones|chollos?|rebajas?"), -8],
+  [words("pel[ií]culas?|series?|cine|actor|actriz|director|netflix|hbo|disney|m[uú]sica|cantante|videojuegos?|famos[ao]s?|celebridad\\p{L}*"), -7],
+  [words("demanda|juicio|elecciones|guerra|gobierno|ley|regulaci[oó]n|trump|partido|militar"), -4],
+  [words("chips?|gpu|nvidia|gigavatios?|centros? de datos|semiconductores?|bolsa|acciones|inversores?"), -3],
+  [words("opini[oó]n|paradoja|filosof\\p{L}*|distop\\p{L}*|apocalipsis"), -2],
 ];
 
 const MAX_AGE_H = 36;
@@ -107,7 +114,10 @@ function score(c: Candidate, now: Date) {
   let s = 0;
   for (const [re, w] of BOOSTS) if (re.test(c.title)) s += w * 1.5;
   for (const [re, w] of BOOSTS) if (re.test(c.summary)) s += w * 0.5;
-  for (const [re, w] of PENALTIES) if (re.test(text)) s += w;
+  for (const [re, w] of PENALTIES) {
+    if (re.test(c.title)) s += w * 1.5;
+    else if (re.test(text)) s += w;
+  }
   if (c.hasImage) s += 1;
   if (c.summary.length >= 160) s += 1;
   // Más fresca, mejor: hasta +3 si salió en las últimas horas.
