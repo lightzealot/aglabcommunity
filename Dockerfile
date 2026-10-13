@@ -1,14 +1,16 @@
 FROM node:22-alpine AS build
 WORKDIR /app
+ENV NEXT_TELEMETRY_DISABLED=1
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --no-audit --no-fund
 COPY . .
-RUN npm run build && npm prune --omit=dev
+RUN npm run build && npm prune --omit=dev --no-audit --no-fund
 
 FROM node:22-alpine
 WORKDIR /app
 ENV NODE_ENV=production
 ENV ENABLE_JOBS=true
+ENV NEXT_TELEMETRY_DISABLED=1
 COPY --from=build /app/package*.json ./
 # next start necesita la config en runtime (p. ej. el límite de subidas de las acciones del servidor)
 COPY --from=build /app/next.config.ts ./
@@ -19,4 +21,4 @@ COPY --from=build /app/drizzle ./drizzle
 COPY --from=build /app/scripts ./scripts
 COPY --from=build /app/seed ./seed
 EXPOSE 3000
-CMD ["sh", "-c", "node scripts/migrate.mjs && (node scripts/seed-resources.mjs || true) && (node scripts/seed-courses.mjs || true) && npx next start -p 3000"]
+CMD ["sh", "-c", "node scripts/migrate.mjs && (node scripts/seed-resources.mjs || true) && (node scripts/seed-courses.mjs || true) && exec node_modules/.bin/next start -p 3000"]

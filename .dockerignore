@@ -4,3 +4,7 @@ node_modules
 .git
 uploads
 seed/cursos/fondos
+.claude
+.next/cache
+*.md
+!seed/**/*.md

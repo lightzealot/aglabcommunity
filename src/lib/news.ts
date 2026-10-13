@@ -27,8 +27,11 @@ type Candidate = {
   title: string;
   url: string;
   source: string;
+  /** Extracto corto: solo sirve para puntuar, nunca se muestra. */
   summary: string;
-  imageUrl: string | null;
+  /** Texto completo de la nota: materia prima para escribir el resumen propio. */
+  text: string;
+  hasImage: boolean;
   publishedAt: Date;
   score: number;
 };
@@ -90,7 +93,8 @@ function parseFeed(xml: string, source: string): Candidate[] {
       url,
       source,
       summary: makeSummary(desc),
-      imageUrl: isHttps(img) ? img : null,
+      text: plainText(desc).slice(0, 8000),
+      hasImage: isHttps(img),
       publishedAt: published,
       score: 0,
     });
@@ -104,7 +108,7 @@ function score(c: Candidate, now: Date) {
   for (const [re, w] of BOOSTS) if (re.test(c.title)) s += w * 1.5;
   for (const [re, w] of BOOSTS) if (re.test(c.summary)) s += w * 0.5;
   for (const [re, w] of PENALTIES) if (re.test(text)) s += w;
-  if (c.imageUrl) s += 1;
+  if (c.hasImage) s += 1;
   if (c.summary.length >= 160) s += 1;
   // Más fresca, mejor: hasta +3 si salió en las últimas horas.
   const ageH = (now.getTime() - c.publishedAt.getTime()) / 3_600_000;
@@ -132,8 +136,56 @@ export async function loadCandidates(now: Date): Promise<Candidate[]> {
   return results.flat().map((c) => ({ ...c, score: score(c, now) }));
 }
 
+const APIFY_ACTOR = "tidytools~web-page-summarizer";
+
+/** Una pasada por el resumidor de Apify (IA, sin clave de modelo). Devuelve el texto o null. */
+async function apifySummarize(token: string, text: string, style: "paragraph" | "one-line", maxWords: number) {
+  const res = await fetch(`https://api.apify.com/v2/acts/${APIFY_ACTOR}/run-sync-get-dataset-items`, {
+    method: "POST",
+    headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
+    body: JSON.stringify({
+      texts: [text],
+      style,
+      maxWords,
+      outputLanguage: "Spanish",
+      focus: "qué pasó, por qué importa y qué puede hacer un profesional o dueño de negocio con esto",
+    }),
+    signal: AbortSignal.timeout(120_000),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status} ${(await res.text()).slice(0, 200)}`);
+  const items = (await res.json()) as { success?: boolean; summary?: string }[];
+  return items[0]?.success && items[0].summary ? items[0].summary.trim() : null;
+}
+
 /**
- * Elige y guarda la noticia destacada de hoy si todavía no hay una.
+ * Escribe el titular y el resumen con IA (actor de Apify), no con copia de la nota.
+ * Devuelve null si no hay token o el resultado no sirve: nunca se publica texto copiado.
+ */
+async function writeOwnSummary(c: Candidate): Promise<{ title: string; summary: string } | null> {
+  const token = process.env.APIFY_TOKEN;
+  if (!token) {
+    console.warn("[news] falta APIFY_TOKEN: no se publica sin resumen propio");
+    return null;
+  }
+  const source = `${c.title}\n\n${c.text}`;
+  try {
+    const [summary, title] = await Promise.all([
+      apifySummarize(token, source, "paragraph", 130),
+      apifySummarize(token, source, "one-line", 14),
+    ]);
+    if (!summary || !title) throw new Error("el resumidor no devolvió resultado");
+    const cleanTitle = title.replace(/^["“«]|["”»]$/g, "").replace(/\.$/, "").trim();
+    if (cleanTitle.length < 10 || summary.length < 150) throw new Error("resultado demasiado corto");
+    if (cleanTitle.toLowerCase() === c.title.toLowerCase()) throw new Error("el titular es igual al original");
+    return { title: cleanTitle.slice(0, 140), summary };
+  } catch (e) {
+    console.error("[news] no se pudo escribir el resumen", e);
+    return null;
+  }
+}
+
+/**
+ * Elige la noticia destacada de hoy (si todavía no hay una), escribe el resumen propio y lo guarda.
  * Es idempotente: `day` es único, así que dos réplicas no la duplican.
  * Devuelve true si creó una noticia nueva.
  */
@@ -152,20 +204,24 @@ export async function ensureDailyNews(now = new Date()) {
   }
 
   const best = pool.sort((a, b) => b.score - a.score)[0];
+  const own = await writeOwnSummary(best);
+  if (!own) return false;
+
+  // La fuente y el enlace original solo se guardan para no repetir noticias; no se muestran.
   const inserted = await db
     .insert(schema.news)
     .values({
       day,
-      title: best.title,
-      summary: best.summary,
+      title: own.title,
+      summary: own.summary,
       url: best.url,
       source: best.source,
-      imageUrl: best.imageUrl,
+      imageUrl: null,
       publishedAt: best.publishedAt,
     })
     .onConflictDoNothing()
     .returning({ id: schema.news.id });
-  if (inserted.length) console.log(`[news] ${day}: ${best.source} · ${best.title}`);
+  if (inserted.length) console.log(`[news] ${day}: publicada (${best.source})`);
   return inserted.length > 0;
 }
 
