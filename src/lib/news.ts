@@ -170,12 +170,12 @@ async function writeOwnSummary(c: Candidate): Promise<{ title: string; summary: 
   const source = `${c.title}\n\n${c.text}`;
   try {
     const [summary, title] = await Promise.all([
-      apifySummarize(token, source, "paragraph", 130),
+      apifySummarize(token, source, "paragraph", 260),
       apifySummarize(token, source, "one-line", 14),
     ]);
     if (!summary || !title) throw new Error("el resumidor no devolvió resultado");
     const cleanTitle = title.replace(/^["“«]|["”»]$/g, "").replace(/\.$/, "").trim();
-    if (cleanTitle.length < 10 || summary.length < 150) throw new Error("resultado demasiado corto");
+    if (cleanTitle.length < 10 || summary.length < 300) throw new Error("resultado demasiado corto");
     if (cleanTitle.toLowerCase() === c.title.toLowerCase()) throw new Error("el titular es igual al original");
     return { title: cleanTitle.slice(0, 140), summary };
   } catch (e) {

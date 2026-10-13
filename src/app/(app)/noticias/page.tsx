@@ -1,3 +1,4 @@
+import { NewsCover } from "@/components/news-cover";
 import { listNews } from "@/lib/news";
 import { requireMember } from "@/lib/session";
 import { dateKey } from "@/lib/streak";
@@ -10,11 +11,18 @@ const dayLabel = (day: string) =>
     new Date(`${day}T12:00:00Z`),
   );
 
-const paragraphs = (t: string) =>
-  t
+/** Respeta los párrafos del texto; si viene todo seguido, lo parte cada 3 frases para que se lea mejor. */
+const paragraphs = (t: string) => {
+  const blocks = t
     .split(/\n{2,}/)
     .map((p) => p.trim())
     .filter(Boolean);
+  if (blocks.length > 1) return blocks;
+  const sentences = t.match(/[^.!?]+[.!?]+(\s|$)|[^.!?]+$/g)?.map((x) => x.trim()) ?? [t];
+  const out: string[] = [];
+  for (let i = 0; i < sentences.length; i += 3) out.push(sentences.slice(i, i + 3).join(" "));
+  return out;
+};
 
 export default async function NoticiasPage() {
   const { user } = await requireMember();
@@ -46,7 +54,9 @@ export default async function NoticiasPage() {
         <p className="card p-10 text-center text-sm text-ash">La primera noticia destacada aparecerá en unos minutos.</p>
       ) : (
         <>
-          <article className="card p-6">
+          <article className="card overflow-hidden">
+            <NewsCover day={featured.day} label={dayLabel(featured.day)} />
+            <div className="p-6">
             <p className="label !text-ash">
               {featured.day === today ? "Noticia destacada de hoy" : `Destacada · ${dayLabel(featured.day)}`}
             </p>
@@ -57,6 +67,7 @@ export default async function NoticiasPage() {
               ))}
             </div>
             <div className="mt-5 text-right">{remove(featured.id)}</div>
+            </div>
           </article>
 
           {older.length > 0 && (
@@ -64,17 +75,18 @@ export default async function NoticiasPage() {
               <h2 className="mb-3 text-sm font-semibold text-ash">Anteriores</h2>
               <div className="space-y-3">
                 {older.map((n) => (
-                  <details key={n.id} className="card group p-4">
-                    <summary className="cursor-pointer list-none">
+                  <details key={n.id} className="card group overflow-hidden">
+                    <summary className="cursor-pointer list-none p-4">
                       <p className="label !text-ash">{dayLabel(n.day)}</p>
                       <span className="mt-0.5 block text-lg leading-snug font-semibold group-open:text-accent">{n.title}</span>
                     </summary>
-                    <div className="mt-3 space-y-3 text-sm text-ash">
+                    <NewsCover day={n.day} label={dayLabel(n.day)} compact />
+                    <div className="space-y-3 p-4 text-sm text-ash">
                       {paragraphs(n.summary).map((p, i) => (
                         <p key={i}>{p}</p>
                       ))}
+                      <div className="text-right">{remove(n.id)}</div>
                     </div>
-                    <div className="mt-3 text-right">{remove(n.id)}</div>
                   </details>
                 ))}
               </div>
