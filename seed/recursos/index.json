@@ -87,5 +87,13 @@
     "cover": "/recursos/covers/higgsfield-guia.webp",
     "extra": true,
     "revision": 3
+  },
+  {
+    "slug": "repositorio-github",
+    "title": "Qué es un repositorio en GitHub: ejemplos y ejercicios",
+    "summary": "Entiende qué es un repositorio, para qué sirve y practica con seis ejercicios: crea el tuyo, haz commits, usa ramas y deshaz errores.",
+    "position": 12,
+    "cover": "/recursos/covers/repositorio-github.webp",
+    "extra": true
   }
 ]
