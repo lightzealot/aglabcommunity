@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { AppShell } from "@/components/app-shell";
 import { FeedPage } from "@/components/feed-page";
+import { JsonLd } from "@/components/json-ld";
 import { Landing } from "@/components/landing";
 import { PublicShell } from "@/components/public-shell";
 import { getLandingData } from "@/lib/landing";
 import { getViewer } from "@/lib/resources";
+import { siteJsonLd } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: { absolute: "AG Lab · Comunidad de IA aplicada a tu negocio" },
@@ -28,6 +30,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ b
   const data = await getLandingData();
   return (
     <PublicShell viewer={viewer}>
+      <JsonLd data={siteJsonLd()} />
       <Landing data={data} viewer={viewer} />
     </PublicShell>
   );

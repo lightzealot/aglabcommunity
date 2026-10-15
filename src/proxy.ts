@@ -1,7 +1,9 @@
 import { getSessionCookie } from "better-auth/cookies";
 import { NextResponse, type NextRequest } from "next/server";
 
-const PUBLIC = ["/login", "/registro", "/recuperar", "/restablecer", "/recursos", "/cursos"];
+const PUBLIC = ["/login", "/registro", "/recuperar", "/restablecer", "/recursos", "/cursos", "/noticias"];
+// Archivos para buscadores y agentes de IA: siempre abiertos.
+const OPEN_FILES = ["/feed.xml", "/llms.txt", "/llms-full.txt", "/indexnow.txt"];
 // La página de inicio ("/") la ve cualquiera; el propio componente decide si muestra feed o landing.
 
 // Solo verifica que exista la cookie de sesión; la validación real
@@ -9,7 +11,7 @@ const PUBLIC = ["/login", "/registro", "/recuperar", "/restablecer", "/recursos"
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const hasSession = !!getSessionCookie(request);
-  const isPublic = pathname === "/" || PUBLIC.some((p) => pathname === p || pathname.startsWith(p + "/"));
+  const isPublic = pathname === "/" || OPEN_FILES.includes(pathname) || PUBLIC.some((p) => pathname === p || pathname.startsWith(p + "/"));
 
   if (!hasSession && !isPublic) {
     return NextResponse.redirect(new URL("/login", request.url));

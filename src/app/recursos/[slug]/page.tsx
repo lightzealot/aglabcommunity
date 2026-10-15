@@ -2,10 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { LockIcon } from "@/components/icons";
+import { JsonLd } from "@/components/json-ld";
 import { JoinCta } from "@/components/join-cta";
 import { RichText } from "@/components/rich-text";
 import { SourceCookie } from "@/components/source-cookie";
+import { excerpt } from "@/lib/news-format";
 import { getResourceBySlug, getViewer } from "@/lib/resources";
+import { abs, orgRef, siteUrl } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }>; searchParams: Promise<{ welcome?: string }> };
 
@@ -13,16 +16,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const r = await getResourceBySlug(slug);
   if (!r) return { title: "Recurso no encontrado" };
-  const base = process.env.BETTER_AUTH_URL ?? "";
+  const description = r.summary || excerpt(r.body) || undefined;
   return {
     title: r.title,
-    description: r.summary || undefined,
+    description,
     openGraph: {
       title: r.title,
-      description: r.summary || undefined,
+      description,
       type: "article",
-      images: r.coverUrl ? [`${base}${r.coverUrl}`] : undefined,
+      publishedTime: r.createdAt.toISOString(),
+      section: "Recursos de IA",
+      locale: "es_ES",
+      images: r.coverUrl ? [abs(r.coverUrl)] : undefined,
     },
+    twitter: { card: "summary_large_image", title: r.title, description },
   };
 }
 
@@ -37,9 +44,40 @@ export default async function RecursoPage({ params, searchParams }: Props) {
   if (!r) notFound();
 
   const canDownload = viewer.kind !== "visitor";
+  const url = `${siteUrl()}/recursos/${r.slug}`;
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "@id": `${url}#article`,
+      mainEntityOfPage: url,
+      url,
+      headline: r.title,
+      description: r.summary || excerpt(r.body, 300),
+      articleBody: r.body || undefined,
+      image: r.coverUrl ? [abs(r.coverUrl)] : undefined,
+      datePublished: r.createdAt.toISOString(),
+      dateModified: r.createdAt.toISOString(),
+      inLanguage: "es",
+      isAccessibleForFree: true,
+      author: orgRef(),
+      publisher: orgRef(),
+      isPartOf: { "@id": `${siteUrl()}/#website` },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Inicio", item: abs("/") },
+        { "@type": "ListItem", position: 2, name: "Recursos", item: abs("/recursos") },
+        { "@type": "ListItem", position: 3, name: r.title, item: url },
+      ],
+    },
+  ];
 
   return (
     <article className="mx-auto max-w-3xl pb-16 md:pb-0">
+      {r.published && <JsonLd data={jsonLd} />}
       {viewer.kind === "visitor" && <SourceCookie slug={r.slug} />}
 
       <Link href="/recursos" className="text-sm text-ash hover:text-ink">
@@ -50,7 +88,7 @@ export default async function RecursoPage({ params, searchParams }: Props) {
 
       {r.coverUrl && (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={r.coverUrl} alt="" className="mt-4 aspect-[16/9] w-full rounded-lg border border-hairline object-cover" />
+        <img src={r.coverUrl} alt={r.title} className="mt-4 aspect-[16/9] w-full rounded-lg border border-hairline object-cover" />
       )}
 
       <h1 className="display mt-5 text-5xl sm:text-6xl">

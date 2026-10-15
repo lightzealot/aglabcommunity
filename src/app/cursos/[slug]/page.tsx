@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { LockIcon } from "@/components/icons";
+import { JsonLd } from "@/components/json-ld";
 import { getCoursePreview } from "@/lib/courses";
 import { getViewer } from "@/lib/resources";
+import { abs, orgRef, siteUrl } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -13,7 +15,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!data) return { title: "Curso no encontrado" };
   const { course } = data;
   const description = course.description.split("\n")[0] || undefined;
-  const base = process.env.BETTER_AUTH_URL ?? "";
   return {
     title: course.title,
     description,
@@ -21,8 +22,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: course.title,
       description,
       type: "website",
-      images: course.coverUrl ? [`${base}${course.coverUrl}`] : undefined,
+      locale: "es_ES",
+      images: course.coverUrl ? [abs(course.coverUrl)] : undefined,
     },
+    twitter: { card: "summary_large_image", title: course.title, description },
   };
 }
 
@@ -45,6 +48,23 @@ export default async function CursoPreviewPage({ params }: Props) {
 
   return (
     <article className="mx-auto max-w-3xl pb-24 md:pb-0">
+      {course.published && (
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "Course",
+            name: course.title,
+            description: course.description,
+            url: `${siteUrl()}/cursos/${slug}`,
+            image: course.coverUrl ? abs(course.coverUrl) : undefined,
+            inLanguage: "es",
+            provider: orgRef(),
+            isAccessibleForFree: !course.isPaid,
+            hasCourseInstance: { "@type": "CourseInstance", courseMode: "online" },
+            syllabusSections: outline.map((m) => ({ "@type": "Syllabus", name: m.title })),
+          }}
+        />
+      )}
       <Link href="/" className="text-sm text-ash hover:text-ink">← Inicio</Link>
 
       {isAdmin && (
@@ -56,7 +76,7 @@ export default async function CursoPreviewPage({ params }: Props) {
 
       {course.coverUrl && (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={course.coverUrl} alt="" className="mt-4 aspect-[16/9] w-full rounded-lg border border-hairline object-cover" />
+        <img src={course.coverUrl} alt={course.title} className="mt-4 aspect-[16/9] w-full rounded-lg border border-hairline object-cover" />
       )}
 
       <p className="label mt-6">{course.isPaid ? "Curso" : "Curso gratis"} · {outline.length} {outline.length === 1 ? "módulo" : "módulos"} · {total} lecciones</p>

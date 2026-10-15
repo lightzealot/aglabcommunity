@@ -1,5 +1,6 @@
-import { desc, eq } from "drizzle-orm";
+import { asc, desc, eq, gt, lt } from "drizzle-orm";
 import { db, schema } from "@/db";
+import { pingIndexNow } from "@/lib/indexnow";
 import { dateKey } from "@/lib/streak";
 
 /** Feeds en español sobre IA. Para añadir otra fuente basta con sumarla aquí. */
@@ -231,10 +232,35 @@ export async function ensureDailyNews(now = new Date()) {
     })
     .onConflictDoNothing()
     .returning({ id: schema.news.id });
-  if (inserted.length) console.log(`[news] ${day}: publicada (${best.source})`);
+  if (inserted.length) {
+    console.log(`[news] ${day}: publicada (${best.source})`);
+    void pingIndexNow([`/noticias/${day}`, "/noticias"]);
+  }
   return inserted.length > 0;
 }
 
-export async function listNews(limit = 31) {
+export async function listNews(limit = 60) {
   return db.select().from(schema.news).orderBy(desc(schema.news.day)).limit(limit);
+}
+
+export async function getNewsByDay(day: string) {
+  const [n] = await db.select().from(schema.news).where(eq(schema.news.day, day));
+  return n ?? null;
+}
+
+/** Día anterior y siguiente con noticia: para enlazar el archivo entre sí. */
+export async function getNewsNeighbours(day: string) {
+  const [prev] = await db
+    .select({ day: schema.news.day, title: schema.news.title })
+    .from(schema.news)
+    .where(lt(schema.news.day, day))
+    .orderBy(desc(schema.news.day))
+    .limit(1);
+  const [next] = await db
+    .select({ day: schema.news.day, title: schema.news.title })
+    .from(schema.news)
+    .where(gt(schema.news.day, day))
+    .orderBy(asc(schema.news.day))
+    .limit(1);
+  return { prev: prev ?? null, next: next ?? null };
 }

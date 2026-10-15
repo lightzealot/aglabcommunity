@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { db, schema } from "@/db";
 import { filesDir, saveLessonFile } from "@/lib/files";
+import { pingIndexNow } from "@/lib/indexnow";
 import { SLUG_RE, slugify } from "@/lib/resource-constants";
 import { requireAdmin } from "@/lib/session";
 import { saveImage } from "@/lib/uploads";
@@ -91,6 +92,7 @@ export async function saveResource(_prev: ResourceState, formData: FormData): Pr
 
   await db.update(schema.resource).set(patch).where(eq(schema.resource.id, id.data));
   refresh();
+  if (patch.published) void pingIndexNow([`/recursos/${parsed.data.slug}`, "/recursos"]);
   return { ok: true };
 }
 

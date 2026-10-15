@@ -15,6 +15,9 @@ export function PublicShell({ viewer, children }: { viewer: Viewer; children: Re
             </span>
           </Link>
           <nav className="ml-auto flex items-center gap-1 sm:gap-2">
+            <Link href="/noticias" className="btn hidden !px-3 !py-2 text-ash hover:text-ink sm:inline-flex">
+              Noticias
+            </Link>
             <Link href="/recursos" className="btn hidden !px-3 !py-2 text-ash hover:text-ink sm:inline-flex">
               Recursos
             </Link>

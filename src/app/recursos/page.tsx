@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { JsonLd } from "@/components/json-ld";
 import { getViewer, listPublishedResources } from "@/lib/resources";
+import { abs, orgRef, siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Recursos gratuitos",
@@ -11,8 +13,28 @@ export default async function RecursosPage() {
   const viewer = await getViewer();
   const resources = await listPublishedResources();
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Recursos gratuitos de IA",
+    url: `${siteUrl()}/recursos`,
+    inLanguage: "es",
+    isPartOf: { "@id": `${siteUrl()}/#website` },
+    publisher: orgRef(),
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: resources.map((r, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: abs(`/recursos/${r.slug}`),
+        name: r.title,
+      })),
+    },
+  };
+
   return (
     <>
+      <JsonLd data={jsonLd} />
       {viewer.kind === "visitor" ? (
         <section className="mx-auto max-w-3xl pb-8 text-center">
           <p className="label mb-2">Recursos gratuitos</p>
@@ -47,7 +69,7 @@ export default async function RecursosPage() {
               <div className="aspect-[16/9] bg-accent-soft">
                 {r.coverUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={r.coverUrl} alt="" className="h-full w-full object-cover" />
+                  <img src={r.coverUrl} alt={r.title} className="h-full w-full object-cover" />
                 ) : (
                   <div className="flex h-full items-center justify-center">
                     <span className="display text-6xl text-accent">{r.title.slice(0, 1)}</span>

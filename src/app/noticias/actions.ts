@@ -12,5 +12,6 @@ export async function removeNews(formData: FormData) {
   const id = z.uuid().safeParse(formData.get("id"));
   if (!id.success) return;
   await db.delete(schema.news).where(eq(schema.news.id, id.data));
-  revalidatePath("/noticias");
+  revalidatePath("/noticias", "layout");
+  revalidatePath("/sitemap.xml");
 }
