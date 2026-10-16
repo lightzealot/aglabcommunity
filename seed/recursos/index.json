@@ -103,5 +103,14 @@
     "position": 13,
     "cover": "/recursos/covers/skills-claude-guia.webp",
     "extra": true
+  },
+  {
+    "slug": "mods-claude-guia",
+    "title": "9 mods de Claude Code que debes probar: la guía en PDF",
+    "summary": "Nueve complementos que cambian cómo se ve y cómo trabaja Claude Code. Guía en español con instalación, avisos y dos prompts. Descarga gratis con tu cuenta.",
+    "position": 14,
+    "cover": "/recursos/covers/mods-claude-guia.webp",
+    "file": "guia-9-mods-claude.pdf",
+    "extra": true
   }
 ]

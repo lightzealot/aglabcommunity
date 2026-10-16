@@ -66,6 +66,19 @@ try {
         [it.slug, it.title, it.summary, body, it.cover],
       );
       console.log(`[seed] recurso ${it.slug}: ${ins.rowCount ? "creado" : "ya existía"}`);
+      // Archivo descargable (solo con cuenta): se copia a uploads y se enlaza al recurso nuevo.
+      if (ins.rowCount && it.file) {
+        const src = path.join(root, it.slug, it.file);
+        const stored = `${randomUUID()}${path.extname(it.file)}`;
+        mkdirSync(filesDir, { recursive: true });
+        copyFileSync(src, path.join(filesDir, stored));
+        copied.push(path.join(filesDir, stored));
+        const row = await client.query("select id from resource where slug = $1", [it.slug]);
+        await client.query(
+          "insert into resource_file (resource_id, name, stored_name, size) values ($1, $2, $3, $4)",
+          [row.rows[0].id, it.file, stored, statSync(src).size],
+        );
+      }
     }
     // Revisiones (r2, r3…): reescriben una sola vez el texto y la portada de un recurso ya cargado.
     for (let r = 2; r <= (it.revision ?? 1); r++) {
