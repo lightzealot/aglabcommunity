@@ -95,5 +95,13 @@
     "position": 12,
     "cover": "/recursos/covers/repositorio-github.webp",
     "extra": true
+  },
+  {
+    "slug": "skills-claude-guia",
+    "title": "5 recursos de skills para llevar Claude más allá del chat",
+    "summary": "Enlaces, requisitos y prompts para explorar prospectos, ventas, diseño web, miniaturas y agentes con Claude.",
+    "position": 13,
+    "cover": "/recursos/covers/skills-claude-guia.webp",
+    "extra": true
   }
 ]
