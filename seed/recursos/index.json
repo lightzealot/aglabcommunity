@@ -113,5 +113,13 @@
     "file": "guia-9-mods-claude.pdf",
     "extra": true,
     "revision": 2
+  },
+  {
+    "slug": "foto-escritorio-minijuego",
+    "title": "De la foto de tu escritorio a un minijuego",
+    "summary": "Guía práctica para intentarlo con Gemini 4 Argon: foto, prompt inicial, cinco comprobaciones y mejoras de una en una. Empieza en 2D.",
+    "position": 15,
+    "cover": "/recursos/covers/foto-escritorio-minijuego.webp",
+    "extra": true
   }
 ]
