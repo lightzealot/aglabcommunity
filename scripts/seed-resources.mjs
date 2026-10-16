@@ -2,7 +2,7 @@
 // Se ejecuta tras las migraciones. Un registro en job_log evita repetirlo, así que si luego
 // borras o editas un recurso desde el admin, no se vuelve a crear.
 import { randomUUID } from "node:crypto";
-import { copyFileSync, existsSync, mkdirSync, readFileSync, statSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, statSync } from "node:fs";
 import path from "node:path";
 import pg from "pg";
 
@@ -89,6 +89,20 @@ try {
         [it.slug, it.title, it.summary, body, it.cover],
       );
       console.log(`[seed] recurso ${it.slug}: revisión ${r} ${upd.rowCount ? "aplicada" : "(no existe, omitida)"}`);
+      // Si la revisión trae archivo, reemplaza el anterior del recurso.
+      if (upd.rowCount && it.file) {
+        const src = path.join(root, it.slug, it.file);
+        const stored = `${randomUUID()}${path.extname(it.file)}`;
+        copyFileSync(src, path.join(filesDir, stored));
+        copied.push(path.join(filesDir, stored));
+        const row = await client.query("select id from resource where slug = $1", [it.slug]);
+        const old = await client.query("delete from resource_file where resource_id = $1 returning stored_name", [row.rows[0].id]);
+        await client.query(
+          "insert into resource_file (resource_id, name, stored_name, size) values ($1, $2, $3, $4)",
+          [row.rows[0].id, it.file, stored, statSync(src).size],
+        );
+        for (const o of old.rows) rmSync(path.join(filesDir, o.stored_name), { force: true });
+      }
     }
   }
   await client.query("commit");

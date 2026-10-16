@@ -111,6 +111,7 @@
     "position": 14,
     "cover": "/recursos/covers/mods-claude-guia.webp",
     "file": "guia-9-mods-claude.pdf",
-    "extra": true
+    "extra": true,
+    "revision": 2
   }
 ]
