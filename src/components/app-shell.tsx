@@ -4,6 +4,7 @@ import { CommunityMascot } from "@/components/community-mascot";
 import { BellIcon, SearchIcon } from "@/components/icons";
 import { Logo } from "@/components/logo";
 import { NavTabs } from "@/components/nav-tabs";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { UserMenu } from "@/components/user-menu";
 import { db, schema } from "@/db";
 import { touchPresence } from "@/lib/community";
@@ -50,6 +51,8 @@ export async function AppShell({ user, children }: { user: ShellUser; children: 
               aria-label="Buscar en la comunidad"
             />
           </form>
+
+          <ThemeToggle className="shrink-0 rounded-full p-2 text-ash hover:bg-veil hover:text-ink" />
 
           <Link
             href="/notificaciones"

@@ -43,7 +43,7 @@ export async function FeedPage({ user, b }: { user: FeedUser; b?: string }) {
       href={id === "mine" ? "/" : `/?b=${id}`}
       className={`rounded-full border px-3.5 py-1.5 text-sm whitespace-nowrap transition-colors ${
         filter === id
-          ? "border-ink bg-ink text-white"
+          ? "border-ink bg-ink text-paper"
           : "border-hairline bg-paper text-ash hover:border-ink hover:text-ink"
       }`}
     >

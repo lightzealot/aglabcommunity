@@ -137,7 +137,7 @@ export default async function RankingPage({ searchParams }: { searchParams: Prom
                     key={x}
                     href={x === 30 ? "/ranking" : `/ranking?p=${x}`}
                     className={`rounded-full border px-3 py-1 text-sm ${
-                      x === period ? "border-ink bg-ink text-white" : "border-hairline text-ash hover:text-ink"
+                      x === period ? "border-ink bg-ink text-paper" : "border-hairline text-ash hover:text-ink"
                     }`}
                   >
                     {x} días

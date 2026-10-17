@@ -10,7 +10,7 @@ export function NewsCover({ day, label, compact = false }: { day: string; label:
 
   return (
     <div
-      className={`relative overflow-hidden bg-ink ${compact ? "aspect-[3/1]" : "aspect-[21/8]"}`}
+      className={`relative overflow-hidden bg-[#0d0d0d] ${compact ? "aspect-[3/1]" : "aspect-[21/8]"}`}
       style={{
         backgroundImage: [
           `radial-gradient(circle at ${x1}% ${y1}%, rgba(25,97,213,0.85), transparent 45%)`,

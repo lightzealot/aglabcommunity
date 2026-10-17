@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { MoonIcon, SunIcon } from "@/components/icons";
 
 const KEY = "aglab-theme";
 const EVENT = "aglab-theme-change";
@@ -26,8 +27,16 @@ export function ThemeToggle({ className }: { className?: string }) {
   }
 
   return (
-    <button type="button" role="switch" aria-checked={dark} onClick={toggle} className={className}>
-      {dark ? "Modo claro" : "Modo oscuro"}
+    <button
+      type="button"
+      role="switch"
+      aria-checked={dark}
+      aria-label="Modo oscuro"
+      title={dark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+      onClick={toggle}
+      className={className}
+    >
+      {dark ? <SunIcon size={22} /> : <MoonIcon size={22} />}
     </button>
   );
 }

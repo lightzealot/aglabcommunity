@@ -46,7 +46,7 @@ export default async function MiembrosPage({ searchParams }: { searchParams: Pro
       key={id}
       href={id === "all" ? "/miembros" : `/miembros?f=${id}`}
       className={`rounded-full border px-3.5 py-1.5 text-sm whitespace-nowrap ${
-        filter === id ? "border-ink bg-ink text-white" : "border-hairline bg-paper text-ash hover:border-ink hover:text-ink"
+        filter === id ? "border-ink bg-ink text-paper" : "border-hairline bg-paper text-ash hover:border-ink hover:text-ink"
       }`}
     >
       {label} {n}
