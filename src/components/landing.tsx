@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRightIcon, CalendarIcon, CommentIcon, FileIcon, UserIcon } from "@/components/icons";
+import { Figure } from "@/components/figure";
 import { LocalTime } from "@/components/local-time";
 import { SHOW_MEMBERS_FROM, type LandingData } from "@/lib/landing";
 import type { Viewer } from "@/lib/resources";
@@ -75,7 +76,8 @@ export function Landing({ data, viewer }: { data: LandingData; viewer: Viewer })
         </div>
 
         <div className="card p-5 shadow-sm sm:p-6">
-          <p className="label !text-ash">Cómo funciona · 3 pasos</p>
+          <Figure name="settle" width={230} play />
+          <p className="label mt-2 !text-ash">Cómo funciona · 3 pasos</p>
           <ol className="mt-4">
             {STEPS.map((s, i) => (
               <li key={s.title}>

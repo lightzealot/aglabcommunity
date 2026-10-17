@@ -8,6 +8,7 @@ import { TopRankingCard } from "@/components/top-ranking-card";
 import { db, schema } from "@/db";
 import { getCommunity } from "@/lib/community";
 import { listEvents } from "@/lib/events";
+import { EmptyState } from "@/components/figure";
 import { myBoardIds, queryPosts } from "@/lib/feed";
 import { getLeaderboards } from "@/lib/ranking";
 import { timeUntil } from "@/lib/time";
@@ -80,9 +81,7 @@ export async function FeedPage({ user, b }: { user: FeedUser; b?: string }) {
 
         <div className="space-y-4">
           {posts.length === 0 ? (
-            <p className="card p-8 text-center text-sm text-ash">
-              Aún no hay publicaciones aquí. ¡Sé el primero en escribir!
-            </p>
+            <EmptyState figure="drawer">Aún no hay publicaciones aquí. ¡Sé el primero en escribir!</EmptyState>
           ) : (
             posts.map((p) => <PostCard key={p.id} p={p} />)
           )}

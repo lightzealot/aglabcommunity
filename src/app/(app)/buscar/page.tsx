@@ -1,6 +1,7 @@
 import { and, eq, ilike, or } from "drizzle-orm";
 import Link from "next/link";
 import { Avatar } from "@/components/avatar";
+import { EmptyState } from "@/components/figure";
 import { PostCard } from "@/components/post-card";
 import { db, schema } from "@/db";
 import { queryPosts } from "@/lib/feed";
@@ -63,7 +64,7 @@ export default async function BuscarPage({ searchParams }: { searchParams: Promi
             {posts.map((p) => (
               <PostCard key={p.id} p={p} />
             ))}
-            {posts.length === 0 && <p className="card p-8 text-center text-sm text-ash">No encontramos publicaciones con ese texto.</p>}
+            {posts.length === 0 && <EmptyState figure="sieve">No encontramos publicaciones con ese texto.</EmptyState>}
           </div>
         </section>
       )}

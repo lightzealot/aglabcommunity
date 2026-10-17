@@ -14,6 +14,7 @@ export default async function PendientePage() {
 
   return (
     <AuthShell
+      figure={banned ? "padlock" : "vault"}
       title={banned ? "Sin acceso" : "En revisión"}
       subtitle={
         banned

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ChevronIcon, GridIcon, ListIcon } from "@/components/icons";
+import { EmptyState } from "@/components/figure";
 import { LocalTime } from "@/components/local-time";
 import { clock, monthGrid, parseMonth, shiftMonth, tzCity } from "@/lib/calendar";
 import { listEvents } from "@/lib/events";
@@ -53,7 +54,7 @@ export default async function CalendarioPage({
     <div className="space-y-6">
       <div className="space-y-3">
         {upcoming.map((e) => card(e))}
-        {upcoming.length === 0 && <p className="card p-8 text-center text-sm text-ash">No hay eventos programados por ahora.</p>}
+        {upcoming.length === 0 && <EmptyState figure="elevator">No hay eventos programados por ahora.</EmptyState>}
       </div>
       {past.length > 0 && (
         <div>

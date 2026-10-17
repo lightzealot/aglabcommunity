@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Avatar } from "@/components/avatar";
 import { CommunityCard } from "@/components/community-card";
 import { CopyInvite } from "@/components/copy-invite";
+import { Figure } from "@/components/figure";
 import { CalendarIcon, ClockIcon } from "@/components/icons";
 import { db, schema } from "@/db";
 import { getCommunity, onlineSince } from "@/lib/community";
@@ -107,7 +108,7 @@ export default async function MiembrosPage({ searchParams }: { searchParams: Pro
               </div>
             );
           })}
-          {members.length === 0 && <p className="p-8 text-center text-sm text-ash">No hay miembros con ese filtro.</p>}
+          {members.length === 0 && <div className="p-4"><Figure name="loupe" width={150} /><p className="text-center text-sm text-ash">No hay miembros con ese filtro.</p></div>}
         </div>
       </div>
 

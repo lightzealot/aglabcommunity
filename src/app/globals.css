@@ -39,6 +39,15 @@
   border-color: #7f2d2d;
 }
 
+/* Ilustraciones Hairline: usan los colores de la web, así siguen el modo oscuro. */
+.hairline-fig {
+  --hairline-plate: var(--paper);
+  --hairline-hi: var(--ink);
+  --hairline-edge: var(--hollow);
+  --hairline-mid: color-mix(in srgb, var(--ink) 30%, var(--paper));
+  --hairline-lo: color-mix(in srgb, var(--ink) 14%, var(--paper));
+}
+
 @theme inline {
   --color-paper: var(--paper);
   --color-tint: var(--tint);
