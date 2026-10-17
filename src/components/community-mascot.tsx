@@ -10,9 +10,9 @@ type Props = { startUrl?: string; resourcesUrl?: string; title?: string; message
 export function CommunityMascot({
   startUrl,
   resourcesUrl,
-  title = "¡Bienvenido a la comunidad!",
-  message = "Aquí aprendemos a usar la IA y a convertir ideas en proyectos. ¿Por dónde quieres empezar?",
-  storageKey = "aglab-community-welcome-v1",
+  title = "¡Hola, soy Mobi! Bienvenido a la comunidad",
+  message = "Te acompaño en tus primeros pasos. Aquí aprendemos a usar la IA y a convertir ideas en proyectos. ¿Por dónde quieres empezar?",
+  storageKey = "aglab-community-welcome-v2",
 }: Props) {
   useEffect(() => {
     let cancelled = false;

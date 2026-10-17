@@ -18,8 +18,8 @@ export default async function LoginPage({
     <>
       <LoginForm googleEnabled={isGoogleEnabled()} oauthError={!!error} next={safeNext} />
       <CommunityMascot
-        storageKey="aglab-login-welcome-v1"
-        title="¡Hola! Qué bueno verte"
+        storageKey="aglab-login-welcome-v2"
+        title="¡Hola, soy Mobi! Qué bueno verte"
         message="Inicia sesión para entrar a la comunidad. Si aún no tienes cuenta, créala gratis o mira los recursos abiertos."
         startUrl="/registro"
         resourcesUrl="/recursos"
