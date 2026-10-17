@@ -5,7 +5,15 @@ import { useEffect } from "react";
 type MascotElement = HTMLElement & { config?: Record<string, string> };
 
 /** Bienvenida con la mascota (Web Component de /public/mascota). Solo cliente, una instancia, sin servicios externos. */
-export function CommunityMascot({ startUrl, resourcesUrl }: { startUrl?: string; resourcesUrl?: string }) {
+type Props = { startUrl?: string; resourcesUrl?: string; title?: string; message?: string; storageKey?: string };
+
+export function CommunityMascot({
+  startUrl,
+  resourcesUrl,
+  title = "¡Bienvenido a la comunidad!",
+  message = "Aquí aprendemos a usar la IA y a convertir ideas en proyectos. ¿Por dónde quieres empezar?",
+  storageKey = "aglab-community-welcome-v1",
+}: Props) {
   useEffect(() => {
     let cancelled = false;
     let el: MascotElement | null = null;
@@ -20,9 +28,9 @@ export function CommunityMascot({ startUrl, resourcesUrl }: { startUrl?: string;
       el = document.createElement("community-mascot") as MascotElement;
       el.config = {
         assetBase: "/mascota/assets/",
-        storageKey: "aglab-community-welcome-v1",
-        title: "¡Bienvenido a la comunidad!",
-        message: "Aquí aprendemos a usar la IA y a convertir ideas en proyectos. ¿Por dónde quieres empezar?",
+        storageKey,
+        title,
+        message,
         ...(startUrl ? { startUrl } : {}),
         ...(resourcesUrl ? { resourcesUrl } : {}),
       };
@@ -32,6 +40,6 @@ export function CommunityMascot({ startUrl, resourcesUrl }: { startUrl?: string;
       cancelled = true;
       el?.remove();
     };
-  }, [startUrl, resourcesUrl]);
+  }, [startUrl, resourcesUrl, title, message, storageKey]);
   return null;
 }
