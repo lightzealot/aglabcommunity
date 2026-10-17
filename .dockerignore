@@ -8,3 +8,4 @@ seed/cursos/fondos
 .next/cache
 *.md
 !seed/**/*.md
+kits

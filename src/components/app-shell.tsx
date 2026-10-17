@@ -1,5 +1,6 @@
 import { and, eq, isNull, sql } from "drizzle-orm";
 import Link from "next/link";
+import { CommunityMascot } from "@/components/community-mascot";
 import { BellIcon, SearchIcon } from "@/components/icons";
 import { Logo } from "@/components/logo";
 import { NavTabs } from "@/components/nav-tabs";
@@ -77,6 +78,7 @@ export async function AppShell({ user, children }: { user: ShellUser; children: 
       </header>
 
       <main className="mx-auto w-full max-w-6xl px-4 py-6">{children}</main>
+      <CommunityMascot startUrl="/classroom" resourcesUrl="/recursos" />
     </div>
   );
 }
