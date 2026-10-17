@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { Avatar } from "@/components/avatar";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { authClient } from "@/lib/auth-client";
 
 type U = { name: string; email: string; image: string | null; points: number; role: string };
@@ -60,6 +61,7 @@ export function UserMenu({ user }: { user: U }) {
           </div>
         )}
         <div className="border-t border-hairline pt-1">
+          <ThemeToggle className={`${item} w-full text-left`} />
           <button
             className={`${item} w-full text-left`}
             onClick={async () => {

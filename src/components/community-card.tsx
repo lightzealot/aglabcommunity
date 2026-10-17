@@ -43,7 +43,7 @@ export function CommunityCard({ c, isAdmin }: { c: Community; isAdmin: boolean }
 
         <div className="mt-3 flex -space-x-2">
           {c.adminList.slice(0, 6).map((a) => (
-            <Link key={a.id} href={`/u/${a.id}`} title={a.name} className="rounded-full ring-2 ring-white">
+            <Link key={a.id} href={`/u/${a.id}`} title={a.name} className="rounded-full ring-2 ring-paper">
               <Avatar name={a.name} image={a.image} size={28} />
             </Link>
           ))}

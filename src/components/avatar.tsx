@@ -36,7 +36,7 @@ export function Avatar({
       )}
       {points !== undefined && (
         <span
-          className="absolute -right-0.5 -bottom-0.5 flex items-center justify-center rounded-full bg-accent font-semibold text-white ring-2 ring-white"
+          className="absolute -right-0.5 -bottom-0.5 flex items-center justify-center rounded-full bg-accent font-semibold text-white ring-2 ring-paper"
           style={{ width: badge, height: badge, fontSize: Math.max(8, badge * 0.55) }}
           title={`Nivel ${levelOf(points)}`}
         >

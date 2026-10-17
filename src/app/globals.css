@@ -15,6 +15,30 @@
   --radius: 10px;
 }
 
+/* Modo oscuro: opcional (se activa desde el menú de usuario); por defecto la web es clara. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #171a20;
+  --tint: #0f1115;
+  --sidebar: #1c2028;
+  --ink: #eceef2;
+  --ash: #a6adb9;
+  --hollow: #7d8592;
+  --hairline: rgba(255, 255, 255, 0.12);
+  --veil: rgba(255, 255, 255, 0.07);
+  --accent: #5b9bff;
+  --accent-soft: #1c2b47;
+}
+:root[data-theme="dark"] .btn-primary {
+  color: #0b1220;
+}
+:root[data-theme="dark"] .text-red-600 {
+  color: #f87171;
+}
+:root[data-theme="dark"] .border-red-300 {
+  border-color: #7f2d2d;
+}
+
 @theme inline {
   --color-paper: var(--paper);
   --color-tint: var(--tint);

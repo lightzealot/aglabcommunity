@@ -45,8 +45,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="es"
+      suppressHydrationWarning
       className={`${dmSans.variable} ${plexMono.variable} ${barlow.variable} h-full antialiased`}
     >
+      <head>
+        {/* Aplica el tema guardado antes de pintar, para evitar el parpadeo. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(localStorage.getItem("aglab-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

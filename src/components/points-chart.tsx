@@ -85,7 +85,7 @@ export function PointsChart({ days, series }: { days: string[]; series: Row[] })
                 <title>{`${s.name} · ${fmtDay(days[i], { day: "numeric", month: "long" })}: ${v} pts`}</title>
               </circle>
             ))}
-            <circle cx={x(n - 1)} cy={y(s.values[n - 1])} r={5} fill={color} stroke="#fff" strokeWidth={2} />
+            <circle cx={x(n - 1)} cy={y(s.values[n - 1])} r={5} fill={color} style={{ stroke: "var(--paper)" }} strokeWidth={2} />
           </g>
         );
       })}

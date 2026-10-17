@@ -107,7 +107,7 @@ export function PostCard({ p, full = false }: { p: FeedPost; full?: boolean }) {
         {p.commenters.length > 0 && (
           <span className="flex -space-x-1.5">
             {p.commenters.map((c) => (
-              <span key={c.id} className="rounded-full ring-2 ring-white" title={c.name}>
+              <span key={c.id} className="rounded-full ring-2 ring-paper" title={c.name}>
                 <Avatar name={c.name} image={c.image} size={24} />
               </span>
             ))}
