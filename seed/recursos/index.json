@@ -121,5 +121,14 @@
     "position": 15,
     "cover": "/recursos/covers/foto-escritorio-minijuego.webp",
     "extra": true
+  },
+  {
+    "slug": "toolkit-14-herramientas",
+    "title": "TOOLKIT: 14 herramientas de IA y la función de cada una",
+    "summary": "De guardar un enlace a distribuir un recurso: qué hace cada herramienta, entrada y salida, pasos de inicio, ejemplos, límites, plantilla de calendario y prompts. Descargas con tu cuenta.",
+    "position": 16,
+    "cover": "/recursos/covers/toolkit-14-herramientas.webp",
+    "files": ["TOOLKIT-14-herramientas.pdf", "TOOLKIT-14-herramientas.md", "calendario-contenido.csv", "prompts-toolkit.md"],
+    "extra": true
   }
 ]

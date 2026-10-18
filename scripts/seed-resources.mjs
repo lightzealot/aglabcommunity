@@ -17,6 +17,8 @@ if (!existsSync(path.join(root, "index.json"))) {
 }
 const all = JSON.parse(readFileSync(path.join(root, "index.json"), "utf8"));
 // Los primeros recursos van con la guarda "v1"; los marcados "extra" se cargan uno a uno (guarda por slug), sin archivo.
+// Un recurso extra puede traer `file` (uno) o `files` (varios) para descargar solo con cuenta.
+const fileNames = (it) => it.files ?? (it.file ? [it.file] : []);
 const items = all.filter((i) => !i.extra);
 const extras = all.filter((i) => i.extra);
 
@@ -67,17 +69,19 @@ try {
       );
       console.log(`[seed] recurso ${it.slug}: ${ins.rowCount ? "creado" : "ya existía"}`);
       // Archivo descargable (solo con cuenta): se copia a uploads y se enlaza al recurso nuevo.
-      if (ins.rowCount && it.file) {
-        const src = path.join(root, it.slug, it.file);
-        const stored = `${randomUUID()}${path.extname(it.file)}`;
+      if (ins.rowCount && fileNames(it).length) {
         mkdirSync(filesDir, { recursive: true });
-        copyFileSync(src, path.join(filesDir, stored));
-        copied.push(path.join(filesDir, stored));
         const row = await client.query("select id from resource where slug = $1", [it.slug]);
-        await client.query(
-          "insert into resource_file (resource_id, name, stored_name, size) values ($1, $2, $3, $4)",
-          [row.rows[0].id, it.file, stored, statSync(src).size],
-        );
+        for (const name of fileNames(it)) {
+          const src = path.join(root, it.slug, name);
+          const stored = `${randomUUID()}${path.extname(name)}`;
+          copyFileSync(src, path.join(filesDir, stored));
+          copied.push(path.join(filesDir, stored));
+          await client.query(
+            "insert into resource_file (resource_id, name, stored_name, size) values ($1, $2, $3, $4)",
+            [row.rows[0].id, name, stored, statSync(src).size],
+          );
+        }
       }
     }
     // Revisiones (r2, r3…): reescriben una sola vez el texto y la portada de un recurso ya cargado.
@@ -90,17 +94,20 @@ try {
       );
       console.log(`[seed] recurso ${it.slug}: revisión ${r} ${upd.rowCount ? "aplicada" : "(no existe, omitida)"}`);
       // Si la revisión trae archivo, reemplaza el anterior del recurso.
-      if (upd.rowCount && it.file) {
-        const src = path.join(root, it.slug, it.file);
-        const stored = `${randomUUID()}${path.extname(it.file)}`;
-        copyFileSync(src, path.join(filesDir, stored));
-        copied.push(path.join(filesDir, stored));
+      if (upd.rowCount && fileNames(it).length) {
+        mkdirSync(filesDir, { recursive: true });
         const row = await client.query("select id from resource where slug = $1", [it.slug]);
         const old = await client.query("delete from resource_file where resource_id = $1 returning stored_name", [row.rows[0].id]);
-        await client.query(
-          "insert into resource_file (resource_id, name, stored_name, size) values ($1, $2, $3, $4)",
-          [row.rows[0].id, it.file, stored, statSync(src).size],
-        );
+        for (const name of fileNames(it)) {
+          const src = path.join(root, it.slug, name);
+          const stored = `${randomUUID()}${path.extname(name)}`;
+          copyFileSync(src, path.join(filesDir, stored));
+          copied.push(path.join(filesDir, stored));
+          await client.query(
+            "insert into resource_file (resource_id, name, stored_name, size) values ($1, $2, $3, $4)",
+            [row.rows[0].id, name, stored, statSync(src).size],
+          );
+        }
         for (const o of old.rows) rmSync(path.join(filesDir, o.stored_name), { force: true });
       }
     }
