@@ -130,5 +130,14 @@
     "cover": "/recursos/covers/toolkit-14-herramientas.webp",
     "files": ["TOOLKIT-14-herramientas.pdf", "TOOLKIT-14-herramientas.md", "calendario-contenido.csv", "prompts-toolkit.md"],
     "extra": true
+  },
+  {
+    "slug": "contexto-claude",
+    "title": "CONTEXTO: organiza tus instrucciones para trabajar mejor con Claude",
+    "summary": "Cinco cambios con antes y después, mapa de componentes, checklist, plantilla de CLAUDE.md, prompt de auditoría en modo lectura y un método para comparar resultados. Descargas con tu cuenta.",
+    "position": 17,
+    "cover": "/recursos/covers/contexto-claude.webp",
+    "files": ["CONTEXTO-guia.pdf", "CONTEXTO-guia.md", "checklist-contexto.md", "prompt-auditoria-contexto.md"],
+    "extra": true
   }
 ]
