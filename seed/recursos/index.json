@@ -139,5 +139,14 @@
     "cover": "/recursos/covers/contexto-claude.webp",
     "files": ["CONTEXTO-guia.pdf", "CONTEXTO-guia.md", "checklist-contexto.md", "prompt-auditoria-contexto.md"],
     "extra": true
+  },
+  {
+    "slug": "mcp-agente-programacion",
+    "title": "4 MCP para ampliar tu agente de programación",
+    "summary": "Context7, Chrome DevTools, Supabase y Vercel: instalación para Claude Code y Codex, pruebas de comprobación, ocho prompts y un ejercicio completo. Descargas con tu cuenta.",
+    "position": 18,
+    "cover": "/recursos/covers/mcp-agente-programacion.webp",
+    "files": ["guia-4-mcp.pdf", "guia-4-mcp.md", "checklist-4-mcp.md", "prompts-4-mcp.md"],
+    "extra": true
   }
 ]
