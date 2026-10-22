@@ -21,7 +21,8 @@
     "summary": "De una idea a un MP4 con el skill video-pizarra: instalación, storyboard, animación, sonido y render. Sin suscripciones de edición; el uso del modelo puede tener costo.",
     "position": 3,
     "cover": "/recursos/covers/videos-animados-claude.webp",
-    "file": "videos-animados-claude.txt"
+    "file": "videos-animados-claude.txt",
+    "revision": 2
   },
   {
     "slug": "sistema-60-minutos-contenido-ia",
@@ -29,7 +30,8 @@
     "summary": "De una idea a Reels, carrusel, historias y un calendario semanal listo para producir.",
     "position": 4,
     "cover": "/recursos/covers/sistema-60-minutos-contenido-ia.webp",
-    "file": "sistema-60-minutos-contenido-ia.txt"
+    "file": "sistema-60-minutos-contenido-ia.txt",
+    "revision": 2
   },
   {
     "slug": "10-automatizaciones-chatgpt",
@@ -61,7 +63,8 @@
     "summary": "Explora treinta direcciones visuales para productos, escenas y personajes.",
     "position": 8,
     "cover": "/recursos/covers/30-atajos-imagenes-ia.webp",
-    "file": "30-atajos-imagenes-ia.txt"
+    "file": "30-atajos-imagenes-ia.txt",
+    "revision": 2
   },
   {
     "slug": "plantilla-google-flow",
@@ -77,7 +80,8 @@
     "summary": "Crea tu primer proyecto, trabaja con referencias y mejora tus imágenes y videos.",
     "position": 10,
     "cover": "/recursos/covers/google-flow-principiantes.webp",
-    "file": "google-flow-principiantes.txt"
+    "file": "google-flow-principiantes.txt",
+    "revision": 2
   },
   {
     "slug": "higgsfield-guia",
@@ -94,7 +98,8 @@
     "summary": "Entiende qué es un repositorio, para qué sirve y practica con seis ejercicios: crea el tuyo, haz commits, usa ramas y deshaz errores.",
     "position": 12,
     "cover": "/recursos/covers/repositorio-github.webp",
-    "extra": true
+    "extra": true,
+    "revision": 2
   },
   {
     "slug": "skills-claude-guia",
@@ -102,7 +107,8 @@
     "summary": "Enlaces, requisitos y prompts para explorar prospectos, ventas, diseño web, miniaturas y agentes con Claude.",
     "position": 13,
     "cover": "/recursos/covers/skills-claude-guia.webp",
-    "extra": true
+    "extra": true,
+    "revision": 2
   },
   {
     "slug": "mods-claude-guia",
@@ -120,7 +126,8 @@
     "summary": "Guía práctica para intentarlo con Gemini 4 Argon: foto, prompt inicial, cinco comprobaciones y mejoras de una en una. Empieza en 2D.",
     "position": 15,
     "cover": "/recursos/covers/foto-escritorio-minijuego.webp",
-    "extra": true
+    "extra": true,
+    "revision": 2
   },
   {
     "slug": "toolkit-14-herramientas",
@@ -128,8 +135,14 @@
     "summary": "De guardar un enlace a distribuir un recurso: qué hace cada herramienta, entrada y salida, pasos de inicio, ejemplos, límites, plantilla de calendario y prompts. Descargas con tu cuenta.",
     "position": 16,
     "cover": "/recursos/covers/toolkit-14-herramientas.webp",
-    "files": ["TOOLKIT-14-herramientas.pdf", "TOOLKIT-14-herramientas.md", "calendario-contenido.csv", "prompts-toolkit.md"],
-    "extra": true
+    "files": [
+      "TOOLKIT-14-herramientas.pdf",
+      "TOOLKIT-14-herramientas.md",
+      "calendario-contenido.csv",
+      "prompts-toolkit.md"
+    ],
+    "extra": true,
+    "revision": 2
   },
   {
     "slug": "contexto-claude",
@@ -137,8 +150,14 @@
     "summary": "Cinco cambios con antes y después, mapa de componentes, checklist, plantilla de CLAUDE.md, prompt de auditoría en modo lectura y un método para comparar resultados. Descargas con tu cuenta.",
     "position": 17,
     "cover": "/recursos/covers/contexto-claude.webp",
-    "files": ["CONTEXTO-guia.pdf", "CONTEXTO-guia.md", "checklist-contexto.md", "prompt-auditoria-contexto.md"],
-    "extra": true
+    "files": [
+      "CONTEXTO-guia.pdf",
+      "CONTEXTO-guia.md",
+      "checklist-contexto.md",
+      "prompt-auditoria-contexto.md"
+    ],
+    "extra": true,
+    "revision": 2
   },
   {
     "slug": "mcp-agente-programacion",
@@ -146,8 +165,14 @@
     "summary": "Context7, Chrome DevTools, Supabase y Vercel: instalación para Claude Code y Codex, pruebas de comprobación, ocho prompts y un ejercicio completo. Descargas con tu cuenta.",
     "position": 18,
     "cover": "/recursos/covers/mcp-agente-programacion.webp",
-    "files": ["guia-4-mcp.pdf", "guia-4-mcp.md", "checklist-4-mcp.md", "prompts-4-mcp.md"],
-    "extra": true
+    "files": [
+      "guia-4-mcp.pdf",
+      "guia-4-mcp.md",
+      "checklist-4-mcp.md",
+      "prompts-4-mcp.md"
+    ],
+    "extra": true,
+    "revision": 2
   },
   {
     "slug": "markitdown-claude",
@@ -155,7 +180,13 @@
     "summary": "Instala MarkItDown, convierte tu primer documento y trabaja con el resultado en Claude, con prompts, checklist y soluciones rápidas. Descargas con tu cuenta.",
     "position": 19,
     "cover": "/recursos/covers/markitdown-claude.webp",
-    "files": ["guia-markitdown-claude.pdf", "guia-markitdown-claude.md", "acta-de-ejemplo.docx", "acta-de-ejemplo.md"],
-    "extra": true
+    "files": [
+      "guia-markitdown-claude.pdf",
+      "guia-markitdown-claude.md",
+      "acta-de-ejemplo.docx",
+      "acta-de-ejemplo.md"
+    ],
+    "extra": true,
+    "revision": 2
   }
 ]

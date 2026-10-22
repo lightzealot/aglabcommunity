@@ -56,9 +56,12 @@ try {
     console.log(`[seed] ${created} recursos iniciales creados`);
   }
   await client.query("begin");
-  for (const it of extras) {
+  // Los recursos extra se crean aquí; los iniciales ya se cargaron arriba. Las revisiones (r2, r3…) aplican a todos.
+  for (const it of all) {
     const body = readFileSync(path.join(root, it.slug, "body.md"), "utf8");
-    const claimed = await client.query("insert into job_log (key) values ($1) on conflict do nothing returning key", [`seed:resource:${it.slug}`]);
+    const claimed = it.extra
+      ? await client.query("insert into job_log (key) values ($1) on conflict do nothing returning key", [`seed:resource:${it.slug}`])
+      : { rowCount: 0 };
     if (claimed.rowCount) {
       // Va de primero: los demás bajan un puesto.
       await client.query("update resource set position = position + 1");
