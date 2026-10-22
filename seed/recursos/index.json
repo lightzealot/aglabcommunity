@@ -148,5 +148,14 @@
     "cover": "/recursos/covers/mcp-agente-programacion.webp",
     "files": ["guia-4-mcp.pdf", "guia-4-mcp.md", "checklist-4-mcp.md", "prompts-4-mcp.md"],
     "extra": true
+  },
+  {
+    "slug": "markitdown-claude",
+    "title": "MarkItDown + Claude: convierte tus documentos a Markdown paso a paso",
+    "summary": "Instala MarkItDown, convierte tu primer documento y trabaja con el resultado en Claude, con prompts, checklist y soluciones rápidas. Descargas con tu cuenta.",
+    "position": 19,
+    "cover": "/recursos/covers/markitdown-claude.webp",
+    "files": ["guia-markitdown-claude.pdf", "guia-markitdown-claude.md", "acta-de-ejemplo.docx", "acta-de-ejemplo.md"],
+    "extra": true
   }
 ]
