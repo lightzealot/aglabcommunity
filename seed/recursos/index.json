@@ -188,5 +188,18 @@
     ],
     "extra": true,
     "revision": 2
+  },
+  {
+    "slug": "sistema-administracion",
+    "title": "SISTEMA: guía para empezar a automatizar la administración de tu negocio",
+    "summary": "Diagnóstico, matriz para elegir el primer proceso, flujos de cobranzas, proveedores y gastos con aprobación humana, resumen diario y piloto de 7 días. Descargas con tu cuenta.",
+    "position": 20,
+    "cover": "/recursos/covers/sistema-administracion.webp",
+    "files": [
+      "sistema-guia.pdf",
+      "sistema-guia.md",
+      "plantilla-diagnostico.csv"
+    ],
+    "extra": true
   }
 ]

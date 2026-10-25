@@ -1,0 +1,8 @@
+﻿Proceso,Responsable,Herramienta actual,Frecuencia,Volumen semanal,Minutos por tarea,Horas semanales,Error habitual,Datos necesarios,Prioridad,Aprobación requerida,Métrica inicial,Objetivo del piloto,Estado
+EJEMPLO FICTICIO: Cobranzas,Ana (ficticia),Hoja de cálculo y WhatsApp,Semanal,40,6,4.0,Cliente dice que pagó y no hay evidencia,"Factura, saldo, vencimiento, canal permitido, extracto bancario",13,Administradora aprueba cada recordatorio,4.0 horas por semana; 12 facturas vencidas,Preparar recordatorios con aprobación y vincular pagos con evidencia,En piloto
+EJEMPLO FICTICIO: Proveedores,Luis (ficticio),Correo y carpeta compartida,Semanal,25,8,3.3,Facturas recibidas dos veces,"Documento, orden de compra, historial del proveedor",12,Dueño autoriza todo pago,3.3 horas por semana; 2 duplicados al mes,Detectar duplicados y comparar con la orden de compra,Por diagnosticar
+EJEMPLO FICTICIO: Gastos,Marta (ficticia),Fotos por chat y hoja de cálculo,Diaria,30,4,2.0,Recibos ilegibles,"Foto del recibo, catálogo de categorías, reglas de aprobación",11,Administradora revisa los casos dudosos,2.0 horas por semana; 5 recibos ilegibles por semana,Registrar gastos con revisión de los dudosos,Por diagnosticar
+Cobranzas,,,,,,,,,,,,,Por diagnosticar
+Proveedores,,,,,,,,,,,,,Por diagnosticar
+Gastos,,,,,,,,,,,,,Por diagnosticar
+Resumen diario,,,,,,,,,,,,,Por diagnosticar
