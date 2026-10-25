@@ -202,5 +202,17 @@
     ],
     "extra": true,
     "revision": 2
+  },
+  {
+    "slug": "ag-finance",
+    "title": "AG Finance: controla tus finanzas personales con Claude, Gmail y Google Sheets",
+    "summary": "Un prompt que arma tu Sheet de gastos desde Gmail y un dashboard con vencimientos, cobros fijos y ojito de privacidad. Prompt y guía en PDF con tu cuenta.",
+    "position": 21,
+    "cover": "/recursos/covers/ag-finance.webp",
+    "files": [
+      "ag-finance-guia.pdf",
+      "ag-finance-prompt.md"
+    ],
+    "extra": true
   }
 ]
