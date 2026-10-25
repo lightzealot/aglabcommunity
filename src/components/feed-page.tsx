@@ -27,8 +27,8 @@ export async function FeedPage({ user, b }: { user: FeedUser; b?: string }) {
   ]);
   const boardIds = new Set(boards.map((x) => x.id));
 
-  // Por defecto: mis boards (si tengo); "todos" o un board concreto con ?b=
-  const filter = b && (b === "all" || boardIds.has(b)) ? b : mine.length ? "mine" : "all";
+  // Por defecto: todos; "mine" (mis boards) o un board concreto con ?b=
+  const filter = b && ((b === "mine" && mine.length > 0) || boardIds.has(b)) ? b : "all";
   const where =
     filter === "all"
       ? undefined
@@ -41,7 +41,7 @@ export async function FeedPage({ user, b }: { user: FeedUser; b?: string }) {
   const pill = (id: string, label: string) => (
     <Link
       key={id}
-      href={id === "mine" ? "/" : `/?b=${id}`}
+      href={id === "all" ? "/" : `/?b=${id}`}
       className={`rounded-full border px-3.5 py-1.5 text-sm whitespace-nowrap transition-colors ${
         filter === id
           ? "border-ink bg-ink text-paper"

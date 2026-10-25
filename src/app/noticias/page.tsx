@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
 import { NewsCover } from "@/components/news-cover";
-import { dayLabel, excerpt, paragraphs } from "@/lib/news-format";
+import { dayLabel, excerpt } from "@/lib/news-format";
 import { listNews } from "@/lib/news";
 import { abs, orgRef, siteUrl } from "@/lib/site";
 import { dateKey } from "@/lib/streak";
@@ -62,13 +62,9 @@ export default async function NoticiasPage() {
                   {featured.title}
                 </Link>
               </h2>
-              <div className="mt-4 space-y-3 text-ash">
-                {paragraphs(featured.summary).map((p, i) => (
-                  <p key={i}>{p}</p>
-                ))}
-              </div>
+              <p className="mt-3 max-w-prose leading-relaxed text-ash">{excerpt(featured.summary, 280)}</p>
               <Link href={`/noticias/${featured.day}`} className="mt-5 inline-block text-sm font-semibold text-accent">
-                Abrir esta noticia →
+                Leer la noticia →
               </Link>
             </div>
           </article>

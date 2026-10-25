@@ -5,7 +5,7 @@ export const dayLabel = (day: string) =>
 
 export const isDayKey = (s: string) => /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(Date.parse(`${s}T12:00:00Z`));
 
-/** Respeta los párrafos del texto; si viene todo seguido, lo parte cada 3 frases para que se lea mejor. */
+/** Respeta los párrafos del texto; si viene todo seguido, lo parte cada 2 frases para que se lea mejor. */
 export const paragraphs = (t: string) => {
   const blocks = t
     .split(/\n{2,}/)
@@ -14,7 +14,7 @@ export const paragraphs = (t: string) => {
   if (blocks.length > 1) return blocks;
   const sentences = t.match(/[^.!?]+[.!?]+(\s|$)|[^.!?]+$/g)?.map((x) => x.trim()) ?? [t];
   const out: string[] = [];
-  for (let i = 0; i < sentences.length; i += 3) out.push(sentences.slice(i, i + 3).join(" "));
+  for (let i = 0; i < sentences.length; i += 2) out.push(sentences.slice(i, i + 2).join(" "));
   return out;
 };
 

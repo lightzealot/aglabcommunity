@@ -32,6 +32,10 @@
 :root[data-theme="dark"] .btn-primary {
   color: #0b1220;
 }
+:root[data-theme="dark"] .logo-img {
+  filter: invert(1);
+  mix-blend-mode: screen;
+}
 :root[data-theme="dark"] .text-red-600 {
   color: #f87171;
 }

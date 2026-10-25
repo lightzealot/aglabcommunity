@@ -85,7 +85,7 @@ export default async function NoticiaPage({ params }: Props) {
             <time dateTime={n.day}>{dayLabel(n.day)}</time>
           </p>
           <h1 className="mt-2 text-2xl leading-snug font-bold sm:text-4xl">{n.title}</h1>
-          <div className="mt-4 space-y-3 text-ash">
+          <div className="mt-5 max-w-prose space-y-4 text-[17px] leading-8 text-ink">
             {paragraphs(n.summary).map((p, i) => (
               <p key={i}>{p}</p>
             ))}

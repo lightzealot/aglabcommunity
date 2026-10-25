@@ -21,7 +21,7 @@ export type ShellUser = {
 
 /** Cabecera (búsqueda, campanita, menú y pestañas) + contenido, para miembros aprobados. */
 export async function AppShell({ user, children }: { user: ShellUser; children: React.ReactNode }) {
-  await touchStreak(user.id);
+  const { daysAway } = await touchStreak(user.id);
 
   await touchPresence(user.id);
 
@@ -80,7 +80,15 @@ export async function AppShell({ user, children }: { user: ShellUser; children: 
         <NavTabs />
       </header>
 
-      <main className="mx-auto w-full max-w-6xl px-4 py-6">{children}</main>
+      <main className="mx-auto w-full max-w-6xl px-4 py-6">
+        {daysAway >= 3 && (
+          <p className="card mb-4 border-accent bg-accent-soft/40 px-4 py-3 text-sm">
+            <strong>¡Qué bueno verte de nuevo, {user.name.split(" ")[0]}!</strong>{" "}
+            <span className="text-ash">Llevabas {daysAway} días sin conectarte; esto es lo que te perdiste.</span>
+          </p>
+        )}
+        {children}
+      </main>
       <CommunityMascot startUrl="/classroom" resourcesUrl="/recursos" />
     </div>
   );
