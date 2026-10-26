@@ -214,5 +214,18 @@
       "ag-finance-prompt.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "cua-computador-agente",
+    "title": "Dale un computador a tu agente con CUA",
+    "summary": "Cómo instalar CUA, conectar Claude Code, Codex u otro agente a un escritorio y hacer una primera prueba verificable. Guía PDF y checklist con tu cuenta.",
+    "position": 22,
+    "cover": "/recursos/covers/cua-computador-agente.webp",
+    "files": [
+      "guia-cua.pdf",
+      "guia-cua.md",
+      "checklist-cua.md"
+    ],
+    "extra": true
   }
 ]
