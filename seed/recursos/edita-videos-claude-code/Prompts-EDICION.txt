@@ -1,0 +1,59 @@
+PROMPTS · EDITA VIDEOS CON CLAUDE CODE
+Andrés Gómez · @andresgomez.ia
+Pega cada prompt en Claude Code, dentro de la carpeta AI Video Editor. Completa lo que está entre corchetes.
+Los prompts no se probaron en un equipo concreto: el resultado depende de tu sistema y de tus herramientas.
+
+============================================================
+PROMPT 1: PREPARAR EL ENTORNO
+============================================================
+
+Voy a editar videos con ayuda de Claude Code y quiero preparar este proyecto. Estás en la carpeta "AI Video Editor". Trabaja por pasos y no instales nada sin mi aprobación.
+
+1. Revisa mi equipo en modo solo lectura: sistema operativo y versión, y si ya tengo Node.js, npm, Git, Python, FFmpeg, whisper.cpp (whisper-cli) y yt-dlp. Para cada una muestra el comando que usaste y la versión encontrada, o dime que no está.
+2. Consulta la documentación oficial de Remotion, HyperFrames, FFmpeg, whisper.cpp y yt-dlp: remotion.dev, hyperframes.heygen.com, ffmpeg.org/download, github.com/ggml-org/whisper.cpp y github.com/yt-dlp/yt-dlp. Si no puedes consultar la web, dilo y no completes los requisitos de memoria. Anota los requisitos y la licencia de cada una, con la fecha de consulta.
+3. Propón el conjunto mínimo para una primera edición de 10 a 15 segundos. No hace falta instalar todo: dime qué necesito de verdad (por ejemplo, FFmpeg para cortar y whisper.cpp para transcribir) y qué puedo dejar para después. Avisa si alguna herramienta tiene condiciones de licencia que deba conocer.
+4. Muéstrame una tabla con: herramienta, para qué sirve, si ya está, comando de instalación exacto, qué cambia en mi equipo y si pide permisos de administrador. Espera mi respuesta antes de instalar. Ejecuta los comandos de uno en uno y explica cada uno.
+5. Después de cada instalación, compruébala con su versión. Al final haz una prueba pequeña: crea en Exports un archivo de prueba de 3 segundos con FFmpeg a partir de un video de Raw footage (si hay uno) o con un tono generado (si no hay ninguno).
+6. No borres, muevas ni sobrescribas nada de Raw footage ni de References. Si un archivo ya existe, usa otro nombre.
+7. Si un comando falla: muéstrame el error completo, explícalo en palabras sencillas, propón una solución y espera mi aprobación. No repitas el mismo comando más de una vez.
+
+Al terminar dame: lo que quedó instalado con sus versiones, lo que dejaste pendiente y el comando para repetir la prueba.
+
+============================================================
+PROMPT 2: CONVERTIR REFERENCIAS EN UNA GUÍA DE ESTILO
+============================================================
+
+Quiero convertir mis videos de referencia en una guía de estilo concreta. Las referencias están en References/ (o te daré enlaces).
+Objetivo del video: [OBJETIVO]
+Plataforma y formato: [por ejemplo, Reels 9:16]
+Audiencia: [AUDIENCIA]
+
+Antes de analizar:
+1. Dime qué puedes hacer con un video directamente en esta sesión. Si no puedes verlo, comprueba si tengo FFmpeg para extraer fotogramas (uno por segundo y uno en cada corte) y whisper.cpp para transcribir el audio. Si falta algo, dime qué y pide mi aprobación antes de instalarlo. No inventes lo que no pudiste analizar: márcalo como "no analizado".
+2. Trabaja una referencia a la vez. Guarda los fotogramas en References/frames/[nombre]/ y no toques el video original.
+
+Para cada referencia mide y anota, con el tiempo en que lo viste:
+- Ritmo y cortes: duración típica de cada plano, cortes por cada 10 segundos y duración de las pausas.
+- Subtítulos: fuente (si puedes identificarla), tamaño aproximado en relación con la altura del video, color, contorno o fondo, posición, palabras por línea y si resaltan palabras.
+- Colores y encuadres: colores dominantes (en hexadecimal si puedes), tipo de plano y cambios de zoom.
+- Apoyos visuales: capturas, rótulos, íconos, flechas; cuándo aparecen y cuánto duran.
+- Música y efectos: si hay música, su volumen respecto a la voz, y los efectos de sonido.
+
+Después compara las referencias y entrégame la guía en formato STYLE.md (usa la estructura de mi STYLE.md si existe en la carpeta; si no, propón una). Cada regla debe tener: un valor concreto, un ejemplo con archivo y tiempo, y una excepción. No escribas reglas vagas como "edición dinámica" o "estilo profesional": conviértelas en números o en una acción que se pueda comprobar. Si las referencias se contradicen, dímelo y propón una opción. Al final lista lo que no pudiste verificar.
+
+============================================================
+PROMPT 3: PREPARAR LA PRIMERA EDICIÓN
+============================================================
+
+Vamos a preparar la primera edición.
+Archivo: Raw footage/[ARCHIVO]
+Estilo: lee STYLE.md completo antes de empezar y dime qué reglas vas a aplicar.
+
+Paso 1. Comprobaciones. Confirma que puedes abrir el video y que tiene audio. Con FFmpeg dime duración, resolución, fotogramas por segundo y códec de audio. Si algo falla, detente y dímelo.
+Paso 2. Transcripción. Transcribe el audio con marcas de tiempo y guárdala en Exports/transcripcion.txt. Marca las frases dudosas.
+Paso 3. Plan de cortes. Propón qué cortar (silencios largos, muletillas, repeticiones) con el tiempo exacto de cada corte. No cambies el sentido del mensaje, no cortes palabras a la mitad y conserva las pausas naturales que sirven para respirar o dar énfasis, según STYLE.md. Muéstralo en una tabla: tiempo inicial, tiempo final, qué se quita y por qué.
+Paso 4. Storyboard. Antes de renderizar, descríbeme el video escena por escena: tiempo, qué se ve, qué dice, subtítulos y apoyos visuales. Espera mi aprobación.
+Paso 5. Prueba. Con mi aprobación, genera solo 10 a 15 segundos (dime qué tramo) en Exports/prueba-v1.mp4. Dime qué reglas de STYLE.md cumple y cuáles no pudo cumplir.
+Paso 6. Correcciones. Aplica mis comentarios y genera prueba-v2.mp4. Renderiza el video completo solo después de que yo escriba "exporta el completo".
+
+Reglas: nunca modifiques ni sobrescribas nada de Raw footage. Guarda cada versión con un nombre nuevo en Exports (v1, v2, v3…). Si una herramienta no está instalada, pide mi aprobación antes de instalarla.

@@ -227,5 +227,19 @@
       "checklist-cua.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "edita-videos-claude-code",
+    "title": "Edita videos con Claude Code: guía, prompts y plantilla de estilo",
+    "summary": "Organiza tu proyecto, convierte referencias en reglas concretas y prepara tu primera edición con 3 prompts y una plantilla STYLE.md. Descargas con tu cuenta.",
+    "position": 23,
+    "cover": "/recursos/covers/edita-videos-claude-code.webp",
+    "files": [
+      "Guia-EDICION-Claude.pdf",
+      "Guia-EDICION-Claude.md",
+      "STYLE.md",
+      "Prompts-EDICION.txt"
+    ],
+    "extra": true
   }
 ]
