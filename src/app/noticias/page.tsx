@@ -13,10 +13,12 @@ export const metadata: Metadata = {
     "Una noticia de inteligencia artificial al día, explicada en español para que le saques provecho en tu trabajo y tu negocio.",
 };
 
-export default async function NoticiasPage() {
+export default async function NoticiasPage({ searchParams }: { searchParams: Promise<{ todas?: string }> }) {
+  const { todas } = await searchParams;
   const items = await listNews();
   const today = dateKey();
   const [featured, ...older] = items;
+  const shown = todas ? older : older.slice(0, 12);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -38,7 +40,7 @@ export default async function NoticiasPage() {
   };
 
   return (
-    <div className="mx-auto max-w-3xl">
+    <div className="mx-auto max-w-6xl">
       <JsonLd data={jsonLd} />
       <div className="mb-6">
         <h1 className="display text-5xl">
@@ -51,9 +53,9 @@ export default async function NoticiasPage() {
         <p className="card p-10 text-center text-sm text-ash">La primera noticia destacada aparecerá en unos minutos.</p>
       ) : (
         <>
-          <article className="card overflow-hidden">
-            <NewsCover day={featured.day} label={dayLabel(featured.day)} />
-            <div className="p-6">
+          <article className="card grid overflow-hidden lg:grid-cols-[1.15fr_1fr]">
+            <NewsCover day={featured.day} label={dayLabel(featured.day)} fill />
+            <div className="p-6 lg:p-8">
               <p className="label !text-ash">
                 {featured.day === today ? "Noticia destacada de hoy" : `Destacada · ${dayLabel(featured.day)}`}
               </p>
@@ -72,17 +74,26 @@ export default async function NoticiasPage() {
           {older.length > 0 && (
             <section className="mt-8">
               <h2 className="mb-3 text-sm font-semibold text-ash">Anteriores</h2>
-              <ul className="space-y-3">
-                {older.map((n) => (
+              <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {shown.map((n) => (
                   <li key={n.id}>
-                    <Link href={`/noticias/${n.day}`} className="card group block p-4 transition hover:shadow-md">
-                      <p className="label !text-ash">{dayLabel(n.day)}</p>
-                      <span className="mt-0.5 block text-lg leading-snug font-semibold group-hover:text-accent">{n.title}</span>
-                      <span className="mt-1 block text-sm text-ash">{excerpt(n.summary, 180)}</span>
+                    <Link href={`/noticias/${n.day}`} className="card group flex h-full flex-col overflow-hidden transition hover:shadow-md">
+                      <NewsCover day={n.day} label={dayLabel(n.day)} compact />
+                      <span className="flex flex-1 flex-col p-4">
+                        <span className="block text-lg leading-snug font-semibold group-hover:text-accent">{n.title}</span>
+                        <span className="mt-1 block text-sm text-ash">{excerpt(n.summary, 120)}</span>
+                      </span>
                     </Link>
                   </li>
                 ))}
               </ul>
+              {older.length > 12 && (
+                <p className="mt-5 text-center">
+                  <Link href={todas ? "/noticias" : "/noticias?todas=1"} className="btn btn-ghost">
+                    {todas ? "Ver menos" : `Ver todas (${older.length})`}
+                  </Link>
+                </p>
+              )}
             </section>
           )}
         </>
