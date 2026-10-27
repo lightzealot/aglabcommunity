@@ -1,0 +1,145 @@
+PROMPTS · DISEÑO: GUÍA PARA MEJORAR TUS WEBS CON CLAUDE
+Andrés Gómez · @andresgomez.ia
+Pega cada prompt en Claude Code, dentro de la carpeta de tu proyecto, en orden. Completa lo que está entre corchetes.
+Los prompts no se probaron en un proyecto concreto: el resultado depende de tu proyecto, tu equipo y tus herramientas.
+
+============================================================
+PROMPT 1: PROPONER UNA DIRECCIÓN VISUAL ANTES DE PROGRAMAR
+============================================================
+
+Quiero que propongas una dirección visual ANTES de programar. No modifiques ningún archivo del proyecto en este paso.
+
+DATOS QUE COMPLETO
+- Negocio y objetivo: ver BRIEF.md
+- Tema de la dirección visual (opcional): [ej.: cálida y artesanal / limpia y moderna / no tengo preferencia]
+- Cosas que no quiero: [ej.: fondo oscuro, demasiados colores]
+
+ARCHIVOS QUE DEBES CONSULTAR
+1. BRIEF.md (léelo completo).
+2. Las imágenes y el logo que menciona el brief, si existen en el proyecto.
+3. El archivo de la página principal y el de estilos, solo para entender la tecnología. No los cambies.
+
+HERRAMIENTAS
+- Si tienes disponible la skill de Taste (design-taste-frontend), úsala para esta propuesta. Si no está instalada, dímelo en una línea y haz la propuesta con tu criterio, sin fingir que la usaste.
+- Si el brief trae un enlace de Figma y tienes el MCP de Figma conectado, consulta ese diseño. Si no lo tienes, dímelo y continúa sin él.
+
+QUÉ DEBES ENTREGAR
+Tres direcciones visuales distintas entre sí. Para cada una:
+1. Nombre corto y una frase que la describa.
+2. Paleta: 5 colores con su valor hexadecimal y para qué se usa cada uno.
+3. Tipografías: una para títulos y otra para texto, con su fuente (Google Fonts u otra gratuita) y tamaños base para móvil y computador.
+4. Estructura de la página, sección por sección, y qué va en cada una.
+5. Cómo se ven el botón principal, las tarjetas y los formularios.
+6. Un riesgo o debilidad de esa dirección.
+Al final, recomienda UNA y explica por qué en tres frases, con base en mi público y mi objetivo. No uses estadísticas ni afirmaciones sin respaldo.
+
+CÓMO COMPROBARLO
+- Verifica el contraste del texto sobre cada fondo de la paleta recomendada (ratio mínimo 4.5:1 para texto normal) y escribe el resultado. Si no puedes calcularlo, dímelo.
+- Confirma que usas solo contenido e imágenes que existen en el brief; lo que falte, márcalo como "por definir".
+
+Detente al terminar y espera mi elección. No programes todavía.
+
+============================================================
+PROMPT 2: IMPLEMENTAR LA DIRECCIÓN ELEGIDA
+============================================================
+
+Implementa la dirección visual que elegí.
+
+DATOS QUE COMPLETO
+- Dirección elegida: [nombre de la dirección, ej.: "Dirección 2"]
+- Cambios que pido sobre ella: [ej.: usar el verde más oscuro / ninguno]
+- Páginas o secciones a construir: [ej.: inicio con 5 secciones]
+
+ARCHIVOS QUE DEBES CONSULTAR
+1. BRIEF.md (contenido, CTA, imágenes, tecnología, qué no tocar).
+2. La propuesta de dirección visual que acabas de hacer.
+3. Los archivos de la página y de estilos que indica el brief, antes de editar.
+
+REGLAS
+- Usa la tecnología que indica el brief. No añadas librerías nuevas sin preguntarme.
+- Usa solo el texto e imágenes del brief. No inventes precios, testimonios, cifras ni datos de contacto; deja un texto marcado como [POR COMPLETAR] donde falte.
+- Define colores, tamaños y espacios en un solo lugar (variables CSS o el sistema que ya use el proyecto), no repartidos por todo el código.
+- Diseña primero para móvil (375 px) y luego amplía a tablet y computador.
+- Los botones y enlaces deben tener estados visibles al pasar el cursor, al enfocarlos con teclado y al estar desactivados.
+- Si tienes disponible Impeccable, úsalo al terminar para revisar. Si no, dilo.
+- Antes de editar, dime en una lista qué archivos vas a crear o modificar.
+
+QUÉ DEBES ENTREGAR
+1. Los archivos modificados o creados.
+2. Un resumen de los cambios en máximo 10 líneas.
+3. Una lista de lo que quedó como [POR COMPLETAR].
+4. Cómo ejecutar el proyecto y en qué dirección verlo.
+
+CÓMO COMPROBARLO
+- Ejecuta el comando de compilación o de lint del proyecto, si existe, y muéstrame el resultado.
+- Si no puedes ejecutarlo, dímelo; no digas que funciona sin haberlo comprobado.
+- Dime qué NO pudiste comprobar (por ejemplo, cómo se ve en un navegador real).
+
+============================================================
+PROMPT 3: REVISAR Y CORREGIR EL DISEÑO EXISTENTE
+============================================================
+
+Revisa y corrige el diseño de la web que ya existe. Trabaja por fases y no rehagas lo que ya funciona.
+
+DATOS QUE COMPLETO
+- Qué me preocupa: [ej.: se ve genérica, el texto cuesta leerse en el móvil, los botones no destacan]
+- Páginas o archivos a revisar: [ej.: app/page.tsx y app/globals.css]
+- Qué NO se puede cambiar: [ej.: textos, logo, estructura de menú]
+
+ARCHIVOS QUE DEBES CONSULTAR
+1. BRIEF.md.
+2. Los archivos de página y de estilos indicados arriba.
+3. Cualquier archivo de variables, tema o componentes de botones que use el proyecto.
+
+HERRAMIENTAS
+- Si tienes disponible Impeccable, usa sus comandos de evaluación y refinamiento (por ejemplo critique, audit, typeset, layout, colorize, adapt, polish) según corresponda.
+- Si tienes la skill de Emil Kowalski, úsala solo para revisar animaciones y transiciones.
+- Si alguna no está instalada, dime cuál falta y haz la revisión manual, indicando qué parte no pudiste cubrir.
+
+PROCESO
+Fase 1. Diagnóstico: lista los problemas encontrados, agrupados en composición, tipografía, color, consistencia, móvil y detalles de interacción. Para cada uno indica el archivo y la línea. Ordénalos de mayor a menor impacto. Espera mi aprobación antes de cambiar nada.
+Fase 2. Correcciones: aplica solo las que aprobé, empezando por las de mayor impacto. Cambios pequeños y reversibles.
+Fase 3. Verificación: vuelve a revisar y confirma qué quedó resuelto y qué no.
+
+QUÉ DEBES ENTREGAR
+- Tabla: problema, archivo, corrección aplicada, estado (resuelto / pendiente / no pude comprobar).
+- Los archivos modificados.
+
+CÓMO COMPROBARLO
+- Revisa contraste de texto (mínimo 4.5:1), tamaño de texto en móvil, desbordamientos horizontales y consistencia de espacios, colores y botones.
+- No inventes mediciones. Si no puedes medir algo, escribe "no medido".
+
+============================================================
+PROMPT 4: PROBAR LA WEB EN NAVEGADOR Y CORREGIR PROBLEMAS
+============================================================
+
+Prueba la web en un navegador, encuentra problemas y corrígelos.
+
+DATOS QUE COMPLETO
+- Dirección donde corre la web: [ej.: http://localhost:3000]
+- Comando para iniciarla si no está corriendo: [ej.: npm run dev]
+- Páginas a probar: [ej.: / y /contacto]
+- Acciones a probar: [ej.: abrir el menú, tocar el botón de WhatsApp, enviar el formulario con datos de prueba]
+
+ARCHIVOS QUE DEBES CONSULTAR
+1. BRIEF.md (sección de requisitos de revisión).
+2. Los archivos de la página y de estilos que vayas a corregir.
+
+HERRAMIENTAS
+- Usa el MCP de Playwright para abrir la web, navegar, hacer clic y tomar capturas. Si no está conectado, dímelo ya, no continúes fingiendo. En ese caso, revisa solo el código y dime exactamente qué NO pudiste comprobar en un navegador.
+- No escribas datos personales reales ni contraseñas en ningún formulario. Usa datos de prueba.
+
+PROCESO
+1. Abre la web en tres anchos: 375 px (móvil), 768 px (tablet) y 1280 px (computador). Toma una captura de cada uno.
+2. En cada ancho revisa: texto legible, jerarquía clara, botones y enlaces visibles y tocables, formularios completos, imágenes que cargan, y que no haya desplazamiento horizontal ni elementos cortados.
+3. Prueba las acciones indicadas arriba y anota lo que ocurre.
+4. Lista los problemas con ancho, elemento y archivo probable. No corrijas todavía.
+5. Pídeme confirmación y luego corrige, empezando por los más graves.
+6. Vuelve a abrir la web en los tres anchos y confirma cada corrección con una captura nueva.
+
+QUÉ DEBES ENTREGAR
+- Tabla: problema, ancho donde ocurre, corrección, resultado de la nueva prueba.
+- Lista de lo que no pudiste probar y por qué.
+
+CÓMO COMPROBARLO
+- Una corrección cuenta como resuelta solo si la volviste a probar en el navegador. Si no la probaste, márcala como "sin comprobar".

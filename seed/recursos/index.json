@@ -241,5 +241,19 @@
       "Prompts-EDICION.txt"
     ],
     "extra": true
+  },
+  {
+    "slug": "diseno-mejora-webs-claude",
+    "title": "DISEÑO: guía para mejorar tus webs con Claude",
+    "summary": "Qué skill o MCP instalar primero, cómo configurarlo y cómo aplicarlo a un proyecto real, con BRIEF.md y cuatro prompts. Descargas con tu cuenta.",
+    "position": 24,
+    "cover": "/recursos/covers/diseno-mejora-webs-claude.webp",
+    "files": [
+      "Guia-DISENO-Claude.pdf",
+      "Guia-DISENO-Claude.md",
+      "BRIEF.md",
+      "Prompts-DISENO.txt"
+    ],
+    "extra": true
   }
 ]
