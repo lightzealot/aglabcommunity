@@ -1,4 +1,12 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import Image from "next/image";
+
+/** Ilustración propia de la noticia (public/noticias/img/AAAA-MM-DD.webp), si existe. */
+const illustration = (day: string) =>
+  /^\d{4}-\d{2}-\d{2}$/.test(day) && existsSync(path.join(process.cwd(), "public", "noticias", "img", `${day}.webp`))
+    ? `/noticias/img/${day}.webp`
+    : null;
 
 /** Portada de marca generada en código: mismo estilo siempre, con variación sutil por día. */
 export function NewsCover({ day, label, compact = false, fill = false }: { day: string; label: string; compact?: boolean; fill?: boolean }) {
@@ -7,6 +15,18 @@ export function NewsCover({ day, label, compact = false, fill = false }: { day: 
   const y1 = 20 + ((n >> 3) % 50);
   const x2 = 55 + ((n >> 6) % 35);
   const y2 = 30 + ((n >> 9) % 55);
+
+  const src = illustration(day);
+  if (src) {
+    return (
+      <div className={`relative overflow-hidden bg-[#0d0d0d] ${compact ? "aspect-[3/1]" : fill ? "aspect-[21/8] lg:aspect-auto lg:min-h-full" : "aspect-[21/8]"}`}>
+        <Image src={src} alt="" fill sizes={compact ? "(min-width: 1024px) 384px, 100vw" : "(min-width: 1024px) 700px, 100vw"} className="object-cover" />
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 pt-8 pb-2.5 text-right">
+          <span className="font-mono text-[11px] tracking-widest text-white/85 uppercase">{label}</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
