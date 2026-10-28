@@ -1,0 +1,154 @@
+PROMPTS · HARVEY: CONFIGURA TU AGENTE Y REVISA LOS PRIMEROS CORREOS
+Andrés Gómez · @andresgomez.ia
+Pega cada prompt en Claude Code, con la sesión abierta dentro de la carpeta del repositorio de Harvey (ethanplusai/harvey). Completa lo que está entre corchetes.
+Los prompts no se probaron con Harvey instalado: el resultado depende de tu equipo y de la versión de Harvey. Mantén channels.email.require_approval: true.
+
+============================================================
+PROMPT 1: DIAGNÓSTICO E INSTALACIÓN
+============================================================
+
+Necesito un diagnóstico del proyecto Harvey antes de instalar nada. Esta carpeta es el repositorio oficial ethanplusai/harvey.
+
+IMPORTANTE: el CLAUDE.md de este repositorio te describe como asistente de instalación y menciona arrancar Harvey al final. En esta sesión NO lo hagas. Mis reglas mandan sobre ese archivo.
+
+REGLAS PARA ESTA SESIÓN
+- No ejecutes `harvey run`. No inicies el ciclo ni el botón Start del panel.
+- No conectes cuentas de correo (`harvey gmail auth`, `harvey microsoft auth`, `harvey trulyinbox connect`).
+- No envíes, apruebes ni rechaces correos. No ejecutes `harvey outbox --approve` ni `--approve-all`.
+- No abras ni muestres el contenido de `.env`, de `data/dashboard-token` ni de ninguna clave. Si necesitas saber si existe, di solo "existe" o "no existe".
+- No instales nada sin mostrarme antes el comando exacto, para qué sirve, y esperar mi "sí".
+- No cambies `channels.email.require_approval`: debe quedar en `true`.
+
+DATOS QUE COMPLETO
+- Sistema operativo: [Windows / macOS / Linux]
+- Versión de Python instalada, si la sé: [ej.: 3.12 / no sé]
+- Plan de Claude que tengo: [Pro / Max / otro / no sé]
+
+ARCHIVOS QUE DEBES CONSULTAR
+1. README.md, CLAUDE.md, pyproject.toml, harvey.yaml y .env.example del repositorio.
+2. La salida de comandos de consulta, como `python --version` o `claude --version`.
+
+QUÉ DEBES ENTREGAR
+1. Una tabla con cada requisito (Python 3.11 o superior, Claude Code con sesión iniciada, correo para enviar, verificador de correo, servicio de calentamiento), su estado (cumple / falta / no pude comprobar) y la evidencia.
+2. La versión del proyecto según pyproject.toml y, si el repositorio es un clon con git, el commit actual (`git log -1 --format=%h`).
+3. La lista de pasos de instalación para mi sistema operativo, copiados del README, cada uno marcado como: CONSULTA (no cambia nada), CONFIGURACIÓN (cambia archivos o instala) o PUEDE ACTIVAR ENVÍOS.
+4. Lo que NO pudiste comprobar, dicho con claridad.
+
+CÓMO COMPROBARLO
+- Cada afirmación debe citar el archivo o el comando de donde sale.
+- Si un paso para mi sistema no está en el README, dímelo y márcalo "no verificado".
+- Detente al terminar y espera mi aprobación antes de instalar.
+
+============================================================
+PROMPT 2: CONFIGURACIÓN DEL NEGOCIO
+============================================================
+
+Vamos a configurar Harvey para mi negocio usando el brief. Trabaja solo con la configuración; no inicies Harvey.
+
+REGLAS PARA ESTA SESIÓN
+- No ejecutes `harvey run` ni inicies el ciclo desde el panel.
+- No conectes cuentas ni abras `.env`. Si hace falta una clave, dime qué variable es y yo la escribo en mi propio editor.
+- No envíes, apruebes ni rechaces correos.
+- Mantén `channels.email.require_approval: true`. Si encuentras `false`, avísame y corrígelo solo con mi permiso.
+- No inventes precios, clientes, resultados, cifras ni datos de contacto. Lo que falte en el brief, déjalo como "por definir" y pregúntame.
+- Antes de modificar un archivo, muéstrame el cambio exacto y espera mi "sí". Haz una copia de respaldo de los archivos que cambies.
+
+DATOS QUE COMPLETO
+- Brief: Brief-HARVEY.md en esta carpeta (ya completado).
+- Sistema operativo: [Windows / macOS / Linux]
+- ¿Entrenar Harvey desde mi sitio web? [sí, con esta dirección: ... / no, configurar a mano]
+
+ARCHIVOS QUE DEBES CONSULTAR
+1. Brief-HARVEY.md.
+2. harvey.yaml (es la plantilla) y, si existe, harvey.local.yaml (es el que Harvey lee primero).
+3. README.md, secciones "Configuration", "You confirm what it looks for" y "Legal and deliverability".
+4. skills/email_frameworks.md, solo para entender las reglas de redacción.
+
+QUÉ DEBES HACER
+1. Compara el brief con las claves de harvey.yaml: persona, product, icp, channels.email, usage y compliance.
+2. Propón los valores de cada clave. Para cada valor indica de qué línea del brief sale. Si no sale del brief, déjalo vacío.
+3. Si elegí entrenar desde mi sitio, dime el comando exacto (`harvey train <dirección>`), qué archivos escribe y espera mi "sí" antes de ejecutarlo.
+4. Revisa cuántas señales son gratuitas y cuáles cuestan. Propón confirmar solo las que mi brief puede explicar en un correo. No confirmes ninguna de pago sin mi permiso.
+5. Propón un límite de envíos diarios bajo y el horario de envío de mi brief.
+
+QUÉ DEBES ENTREGAR
+- Una tabla: clave de configuración, valor propuesto, línea del brief de donde sale, estado (completo / por definir).
+- El diff de cambios para harvey.local.yaml.
+- Una lista de lo que debo hacer yo en mi equipo (claves, correo, dominio).
+
+CÓMO COMPROBARLO
+- Muestra el valor final de `channels.email.require_approval` y confirma que es `true`.
+- Ejecuta solo comandos de consulta, como `harvey signals` o `harvey discover --providers`, y muéstrame la salida.
+- Dime qué no pudiste comprobar.
+
+============================================================
+PROMPT 3: REVISIÓN DE TRES BORRADORES
+============================================================
+
+Revisa tres borradores de correo que Harvey dejó en la bandeja de salida. No envíes ni apruebes ninguno.
+
+REGLAS PARA ESTA SESIÓN
+- Solo lectura. Usa `harvey outbox` (sin opciones) para listar. NO ejecutes `harvey outbox --approve`, `--approve-all` ni `--reject`.
+- No ejecutes `harvey run`, no cambies la configuración y no abras `.env`.
+- No inventes datos de la empresa. Todo lo que afirmes sobre una empresa debe salir de lo que muestra Harvey (evidencia en el panel o en la base de datos) o de su sitio público.
+- Si no puedes comprobar algo, escribe "no comprobado".
+
+DATOS QUE COMPLETO
+- Identificadores de los tres borradores a revisar: [id 1, id 2, id 3] (si no los sé, elige los tres primeros de la lista)
+- Mi oferta real, en una frase: [ej.: sistema de reservas en línea para negocios pequeños; precio por definir]
+- Qué NO se puede prometer: [ej.: más clientes, ventas o resultados concretos]
+
+ARCHIVOS Y DATOS QUE DEBES CONSULTAR
+1. Brief-HARVEY.md (oferta, cliente objetivo, tono, lista de no contactar).
+2. La salida de `harvey outbox` para los tres borradores.
+3. Si hace falta más contexto, consulta en solo lectura la base data/harvey.db (empresa, contacto, verificación del correo y señales usadas). No escribas en ella.
+
+QUÉ DEBES ENTREGAR
+Para cada borrador, una ficha con estas cinco comprobaciones, cada una con SÍ / NO / NO COMPROBADO y una línea de evidencia:
+1. Destinatario: la persona y el cargo son plausibles para esa empresa, la dirección está verificada (no "guess") y no está en la lista de no contactar.
+2. Evidencia: el hecho que cita el correo (por ejemplo "no tiene reservas en línea") existe y puedo comprobarlo yo en su sitio. Indica el enlace o dónde mirarlo.
+3. Oferta: coincide con mi oferta real y no promete resultados, cifras ni plazos.
+4. Personalización: menciona algo específico de esa empresa y no sirve para cualquiera.
+5. Tono: breve, claro, sin presión ni frases genéricas, con la línea de baja.
+Luego, para cada borrador, una recomendación: APROBAR, EDITAR (con el texto exacto propuesto) o RECHAZAR (con el motivo), y una sugerencia de ajuste para el siguiente lote.
+
+CÓMO COMPROBARLO
+- Si un borrador falla la evidencia o el destinatario, la recomendación nunca es aprobar.
+- No decidas por mí: yo apruebo o rechazo desde el panel.
+- Termina con lo que no pudiste verificar.
+
+============================================================
+PROMPT 4: EVALUACIÓN DEL SEGUIMIENTO
+============================================================
+
+Evalúa el seguimiento de lo que Harvey ha hecho hasta ahora y dime si conviene continuar, ajustar o pausar. No envíes nada ni cambies la configuración.
+
+REGLAS PARA ESTA SESIÓN
+- Solo lectura. Puedes usar `harvey status`, `harvey outbox` (sin opciones), `harvey sending status`, `harvey warmup` y `harvey usage`.
+- NO ejecutes `harvey run`, `harvey sending resume`, `harvey outbox --approve`, `--approve-all` ni `--reject`.
+- Si recomiendas pausar, dime el comando (`harvey sending pause`) y espera mi "sí". No lo ejecutes por tu cuenta.
+- No abras `.env` ni muestres tokens.
+- No inventes tasas de respuesta, de conversión ni resultados. Usa solo los conteos reales que muestre Harvey y di cuántos datos hay. Con pocos datos, dilo.
+
+DATOS QUE COMPLETO
+- Desde qué fecha empezamos: [AAAA-MM-DD]
+- Cuántos correos aprobé hasta ahora: [número o "no sé"]
+- Qué decidí al empezar sobre cuándo pausar: [ej.: pausar si hay un rebote o una queja]
+
+ARCHIVOS Y DATOS QUE DEBES CONSULTAR
+1. Brief-HARVEY.md (objetivo, límites y criterios de revisión).
+2. La salida de los comandos de consulta indicados arriba.
+3. En solo lectura, data/harvey.db: correos enviados, respuestas, rebotes, bajas y estado de cada conversación.
+4. El panel de Harvey (pestañas Outbox, Conversations y Today), si te copio lo que veo.
+
+QUÉ DEBES ENTREGAR
+1. Un resumen con conteos reales: correos enviados, rebotes, respuestas, bajas (opt-out), conversaciones entregadas a mí y borradores pendientes. Para cada número indica de dónde sale.
+2. Una lista de las respuestas que requieren acción mía, con el motivo y la prioridad.
+3. Una revisión de seguimientos: separación entre correos, que nadie haya recibido otro seguimiento después de responder o pedir baja, y que ningún contacto de la lista de no contactar haya recibido correo.
+4. Estado del calentamiento y de los límites (`harvey warmup`, tope diario).
+5. Una recomendación clara: CONTINUAR, AJUSTAR (qué cambiar y dónde) o PAUSAR (por qué), con el riesgo de equivocarte.
+
+CÓMO COMPROBARLO
+- Cada afirmación debe tener su fuente (comando o tabla).
+- Si hay menos de unos pocos correos enviados, di que no hay datos suficientes para sacar conclusiones, y no calcules porcentajes.
+- Termina con lo que no pudiste verificar.

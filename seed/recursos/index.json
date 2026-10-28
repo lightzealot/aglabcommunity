@@ -255,5 +255,19 @@
       "Prompts-DISENO.txt"
     ],
     "extra": true
+  },
+  {
+    "slug": "harvey-agente-correos",
+    "title": "HARVEY: configura tu agente y revisa los primeros correos",
+    "summary": "Configura Harvey para tu negocio con aprobación manual y revisa tres borradores antes de enviar: guía PDF, Brief y cuatro prompts. Descargas con tu cuenta.",
+    "position": 25,
+    "cover": "/recursos/covers/harvey-agente-correos.webp",
+    "files": [
+      "Guia-HARVEY.pdf",
+      "Guia-HARVEY.md",
+      "Brief-HARVEY.md",
+      "Prompts-HARVEY.txt"
+    ],
+    "extra": true
   }
 ]
