@@ -269,5 +269,17 @@
       "Prompts-HARVEY.txt"
     ],
     "extra": true
+  },
+  {
+    "slug": "fotos-chatgpt-prompts",
+    "title": "5 prompts para mejorar tus fotos con ChatGPT",
+    "summary": "Cinco prompts listos para copiar: acabado profesional, luz, fondo, color y encuadre. PDF para el celular y versión editable. Descargas con tu cuenta.",
+    "position": 26,
+    "cover": "/recursos/covers/fotos-chatgpt-prompts.webp",
+    "files": [
+      "5-prompts-mejorar-fotos-chatgpt.pdf",
+      "5-prompts-mejorar-fotos-chatgpt.md"
+    ],
+    "extra": true
   }
 ]
