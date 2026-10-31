@@ -281,5 +281,17 @@
       "5-prompts-mejorar-fotos-chatgpt.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "tres-repos-antes-de-pagar-web",
+    "title": "3 repositorios de GitHub para mirar antes de pagar tu próxima web",
+    "summary": "FreeDomain, Free for Dev y Awesome Selfhosted: qué ofrece cada uno, qué revisar y una checklist. PDF para el celular y versión editable. Descargas con tu cuenta.",
+    "position": 27,
+    "cover": "/recursos/covers/tres-repos-antes-de-pagar-web.webp",
+    "files": [
+      "3-repositorios-antes-de-pagar-web.pdf",
+      "3-repositorios-antes-de-pagar-web.md"
+    ],
+    "extra": true
   }
 ]
