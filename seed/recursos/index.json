@@ -293,5 +293,17 @@
       "3-repositorios-antes-de-pagar-web.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "teleprompter-studio-guia",
+    "title": "Cómo grabar tus videos con teleprompter gratis",
+    "summary": "Guía visual de Teleprompter Studio, la app web gratuita para grabarte leyendo tu guion desde el celular: preparar, grabar y guardar tu video. PDF y versión editable. Descargas con tu cuenta.",
+    "position": 28,
+    "cover": "/recursos/covers/teleprompter-studio-guia.webp",
+    "files": [
+      "Guia-Teleprompter-Studio.pdf",
+      "Guia-Teleprompter-Studio.md"
+    ],
+    "extra": true
   }
 ]
