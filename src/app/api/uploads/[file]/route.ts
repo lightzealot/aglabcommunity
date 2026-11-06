@@ -24,7 +24,12 @@ export async function GET(_req: Request, ctx: { params: Promise<{ file: string }
         .from(schema.course)
         .where(and(eq(schema.course.coverUrl, url), eq(schema.course.published, true)))
         .limit(1);
-  const publicCover = coverOfResource ?? coverOfCourse;
+  // Las fotos de perfil se ven en la tarjeta de miembro (también en la pública).
+  const [avatarOwner] =
+    coverOfResource || coverOfCourse
+      ? []
+      : await db.select({ id: schema.user.id }).from(schema.user).where(eq(schema.user.image, url)).limit(1);
+  const publicCover = coverOfResource ?? coverOfCourse ?? avatarOwner;
 
   if (!publicCover) {
     const session = await getSession();

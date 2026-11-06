@@ -34,6 +34,11 @@ export const user = pgTable("user", {
   businessType: text("business_type"),
   teamSize: text("team_size"),
   phone: text("phone"),
+  // Tarjeta de miembro (compartible)
+  handle: text("handle").unique(),
+  cardTheme: text("card_theme", { enum: ["dark", "light"] }).notNull().default("dark"),
+  country: text("country"),
+  socials: jsonb("socials").$type<Record<string, string>>(),
   // Racha diaria y preferencias de correo
   streak: integer("streak").notNull().default(0),
   lastActiveDate: date("last_active_date", { mode: "string" }),

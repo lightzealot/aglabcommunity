@@ -1,7 +1,7 @@
 import { getSessionCookie } from "better-auth/cookies";
 import { NextResponse, type NextRequest } from "next/server";
 
-const PUBLIC = ["/login", "/registro", "/recuperar", "/restablecer", "/recursos", "/cursos", "/noticias"];
+const PUBLIC = ["/login", "/registro", "/recuperar", "/restablecer", "/recursos", "/cursos", "/noticias", "/m"];
 // Archivos para buscadores y agentes de IA: siempre abiertos.
 const OPEN_FILES = ["/feed.xml", "/llms.txt", "/llms-full.txt", "/indexnow.txt"];
 // La página de inicio ("/") la ve cualquiera; el propio componente decide si muestra feed o landing.
