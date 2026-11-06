@@ -33,8 +33,8 @@ export function BottomNav({ items, right }: { items: Item[]; right: Right }) {
   return (
     <nav
       aria-label="Menú principal"
-      className="fixed bottom-3 left-3 right-3 z-40 flex items-center gap-2 md:hidden"
-      style={{ marginBottom: "env(safe-area-inset-bottom)" }}
+      className="fixed left-3 right-3 z-50 flex items-center gap-2 md:hidden"
+      style={{ bottom: "max(12px, env(safe-area-inset-bottom))", transform: "translateZ(0)", WebkitTransform: "translateZ(0)" }}
     >
       <Link
         href={home.href}

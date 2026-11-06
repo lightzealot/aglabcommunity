@@ -38,6 +38,13 @@ export async function FeedPage({ user, b }: { user: FeedUser; b?: string }) {
 
   const posts = await queryPosts({ me: user.id, where });
 
+  // Solo 3 boards a la vista (más el que estés viendo); el resto va en "Más boards".
+  const MAX_BOARDS = 3;
+  const visibleIds = new Set(boards.slice(0, MAX_BOARDS).map((x) => x.id));
+  if (filter !== "all" && filter !== "mine") visibleIds.add(filter);
+  const shownBoards = boards.filter((x) => visibleIds.has(x.id));
+  const moreBoards = boards.filter((x) => !visibleIds.has(x.id));
+
   const pill = (id: string, label: string) => (
     <Link
       key={id}
@@ -76,7 +83,17 @@ export async function FeedPage({ user, b }: { user: FeedUser; b?: string }) {
         <div className="flex flex-wrap gap-2">
           {pill("all", "Todos")}
           {mine.length > 0 && pill("mine", "Mis boards")}
-          {boards.map((x) => pill(x.id, x.name))}
+          {shownBoards.map((x) => pill(x.id, x.name))}
+          {moreBoards.length > 0 && (
+            <details key={filter} className="relative">
+              <summary className="cursor-pointer list-none rounded-full border border-dashed border-hairline bg-paper px-3.5 py-1.5 text-sm whitespace-nowrap text-ash hover:border-ink hover:text-ink [&::-webkit-details-marker]:hidden">
+                Más boards ({moreBoards.length}) ▾
+              </summary>
+              <div className="card absolute top-full left-0 z-10 mt-2 flex w-[min(20rem,calc(100vw-2rem))] flex-wrap gap-2 p-3 shadow-lg">
+                {moreBoards.map((x) => pill(x.id, x.name))}
+              </div>
+            </details>
+          )}
         </div>
 
         <div className="space-y-4">

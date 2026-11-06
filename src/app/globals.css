@@ -68,6 +68,13 @@
   --font-display: var(--font-barlow), sans-serif;
 }
 
+/* Con el menú inferior fijo, deja espacio al final para que no tape el contenido. */
+@media (max-width: 767px) {
+  body:has(nav[aria-label="Menú principal"]) {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+}
+
 body {
   overflow-x: clip;
   background: var(--tint);

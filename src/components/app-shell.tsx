@@ -81,7 +81,7 @@ export async function AppShell({ user, children }: { user: ShellUser; children: 
         <NavTabs />
       </header>
 
-      <main className="mx-auto w-full max-w-6xl px-4 py-6 pb-28 md:pb-6">
+      <main className="mx-auto w-full max-w-6xl px-4 py-6 md:pb-6">
         {daysAway >= 3 && (
           <p className="card mb-4 border-accent bg-accent-soft/40 px-4 py-3 text-sm">
             <strong>¡Qué bueno verte de nuevo, {user.name.split(" ")[0]}!</strong>{" "}

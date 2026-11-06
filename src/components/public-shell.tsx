@@ -41,7 +41,7 @@ export function PublicShell({ viewer, children }: { viewer: Viewer; children: Re
           </nav>
         </div>
       </header>
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 pb-28 md:pb-8">{children}</main>
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 md:pb-8">{children}</main>
       <BottomNav
         items={[
           { href: "/", label: "Inicio", icon: "home" },
@@ -55,7 +55,7 @@ export function PublicShell({ viewer, children }: { viewer: Viewer; children: Re
             : { href: viewer.user.onboarded ? "/gracias" : "/onboarding", label: viewer.user.onboarded ? "Mi tarjeta" : "Mi perfil" }
         }
       />
-      <footer className="border-t border-hairline py-6 pb-24 text-center text-xs text-hollow md:pb-6">
+      <footer className="border-t border-hairline py-6 text-center text-xs text-hollow">
         AG Lab · La comunidad de Andrés Gómez · comunidad.andresgomez.store
       </footer>
     </div>
