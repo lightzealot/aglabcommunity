@@ -44,5 +44,5 @@ export async function completeOnboarding(
     })
     .where(eq(schema.user.id, session.user.id));
 
-  redirect(session.user.status === "approved" ? "/" : "/pendiente");
+  redirect("/gracias");
 }

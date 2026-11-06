@@ -17,7 +17,7 @@ export default async function TarjetaPage() {
   if (!session.user.onboarded) redirect("/onboarding");
   const [u] = await db.select().from(schema.user).where(eq(schema.user.id, session.user.id));
   const number = await memberNumber(u.createdAt);
-  const back = u.status === "approved" ? "/" : "/pendiente";
+  const back = "/gracias";
 
   return (
     <main className="mx-auto w-full max-w-md px-4 py-10">
