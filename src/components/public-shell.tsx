@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { BottomNav } from "@/components/bottom-nav";
 import { Logo } from "@/components/logo";
 import type { Viewer } from "@/lib/resources";
 
@@ -42,19 +41,6 @@ export function PublicShell({ viewer, children }: { viewer: Viewer; children: Re
         </div>
       </header>
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 md:pb-8">{children}</main>
-      <BottomNav
-        items={[
-          { href: "/", label: "Inicio", icon: "home" },
-          { href: "/recursos", label: "Recursos", icon: "file" },
-          { href: "/noticias", label: "Noticias", icon: "news" },
-          { href: "/cursos", label: "Cursos", icon: "course" },
-        ]}
-        right={
-          viewer.kind === "visitor"
-            ? { href: "/login", label: "Entrar" }
-            : { href: viewer.user.onboarded ? "/gracias" : "/onboarding", label: viewer.user.onboarded ? "Mi tarjeta" : "Mi perfil" }
-        }
-      />
       <footer className="border-t border-hairline py-6 text-center text-xs text-hollow">
         AG Lab · La comunidad de Andrés Gómez · comunidad.andresgomez.store
       </footer>
