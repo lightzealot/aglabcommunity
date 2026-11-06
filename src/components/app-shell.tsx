@@ -1,6 +1,7 @@
 import { and, eq, isNull, sql } from "drizzle-orm";
 import Link from "next/link";
 import { CommunityMascot } from "@/components/community-mascot";
+import { BottomNav } from "@/components/bottom-nav";
 import { BellIcon, SearchIcon } from "@/components/icons";
 import { Logo } from "@/components/logo";
 import { NavTabs } from "@/components/nav-tabs";
@@ -80,7 +81,7 @@ export async function AppShell({ user, children }: { user: ShellUser; children: 
         <NavTabs />
       </header>
 
-      <main className="mx-auto w-full max-w-6xl px-4 py-6">
+      <main className="mx-auto w-full max-w-6xl px-4 py-6 pb-28 md:pb-6">
         {daysAway >= 3 && (
           <p className="card mb-4 border-accent bg-accent-soft/40 px-4 py-3 text-sm">
             <strong>¡Qué bueno verte de nuevo, {user.name.split(" ")[0]}!</strong>{" "}
@@ -89,6 +90,16 @@ export async function AppShell({ user, children }: { user: ShellUser; children: 
         )}
         {children}
       </main>
+      <BottomNav
+        items={[
+          { href: "/", label: "Comunidad", icon: "home", also: ["/post"] },
+          { href: "/classroom", label: "Cursos", icon: "course" },
+          { href: "/recursos", label: "Recursos", icon: "file" },
+          { href: "/noticias", label: "Noticias", icon: "news" },
+          { href: "/miembros", label: "Miembros", icon: "people", also: ["/u"] },
+        ]}
+        right={{ href: "/perfil", label: "Mi perfil", image: user.image ?? null }}
+      />
       <CommunityMascot startUrl="/classroom" resourcesUrl="/recursos" />
     </div>
   );

@@ -2,7 +2,7 @@
 
 import { authClient } from "@/lib/auth-client";
 
-export function GoogleButton({ callbackURL = "/" }: { callbackURL?: string }) {
+export function GoogleButton({ callbackURL = "/", divider = true }: { callbackURL?: string; divider?: boolean }) {
   return (
     <>
       <button
@@ -24,11 +24,13 @@ export function GoogleButton({ callbackURL = "/" }: { callbackURL?: string }) {
         </svg>
         Continuar con Google
       </button>
+      {divider && (
       <div className="my-4 flex items-center gap-3 text-xs text-hollow">
         <span className="h-px flex-1 bg-hairline" />
         o con tu correo
         <span className="h-px flex-1 bg-hairline" />
       </div>
+      )}
     </>
   );
 }

@@ -3,9 +3,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { LockIcon } from "@/components/icons";
 import { JsonLd } from "@/components/json-ld";
-import { JoinCta } from "@/components/join-cta";
+import { GoogleButton } from "@/components/google-button";
 import { RichText } from "@/components/rich-text";
 import { SourceCookie } from "@/components/source-cookie";
+import { isGoogleEnabled } from "@/lib/google";
+import { teaser } from "@/lib/resource-teaser";
 import { excerpt } from "@/lib/news-format";
 import { getResourceBySlug, getViewer } from "@/lib/resources";
 import { abs, orgRef, siteUrl } from "@/lib/site";
@@ -44,6 +46,8 @@ export default async function RecursoPage({ params, searchParams }: Props) {
   if (!r) notFound();
 
   const canDownload = viewer.kind !== "visitor";
+  const preview = viewer.kind === "visitor";
+  const shownBody = preview ? teaser(r.body) : r.body;
   const url = `${siteUrl()}/recursos/${r.slug}`;
   const jsonLd = [
     {
@@ -54,7 +58,7 @@ export default async function RecursoPage({ params, searchParams }: Props) {
       url,
       headline: r.title,
       description: r.summary || excerpt(r.body, 300),
-      articleBody: r.body || undefined,
+      articleBody: teaser(r.body) || undefined,
       image: r.coverUrl ? [abs(r.coverUrl)] : undefined,
       datePublished: r.createdAt.toISOString(),
       dateModified: r.createdAt.toISOString(),
@@ -110,13 +114,44 @@ export default async function RecursoPage({ params, searchParams }: Props) {
         </div>
       )}
 
-      {r.body && (
-        <div className="mt-8">
-          <RichText text={r.body} />
+      {shownBody && (
+        <div className={`relative mt-8 ${preview ? "max-h-72 overflow-hidden" : ""}`}>
+          <div className={preview ? "select-none blur-[3px]" : ""} aria-hidden={preview || undefined}>
+            <RichText text={shownBody} />
+          </div>
+          {preview && <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-paper/70 to-paper" />}
         </div>
       )}
 
-      {r.files.length > 0 && (
+      {preview && (
+        <section className="card relative z-10 -mt-10 p-6" id="unete">
+          <p className="label mb-3 inline-flex items-center gap-2 rounded-full bg-accent-soft px-3 py-1 !text-accent">
+            <LockIcon size={14} /> Guía gratis
+          </p>
+          <h2 className="display text-4xl">
+            Únete a la comunidad<span className="text-accent">.</span>
+          </h2>
+          <p className="mt-2 mb-5 text-sm text-ash">
+            Entra con tu cuenta de Google y la guía se abre aquí mismo. Te sirve para todas las guías.
+          </p>
+          {isGoogleEnabled() ? (
+            <>
+              <GoogleButton callbackURL={`/recursos/${r.slug}?welcome=1`} divider={false} />
+              <Link href={`/registro?from=${r.slug}`} className="mt-3 block text-center text-sm text-ash underline">
+                Prefiero registrarme con mi correo
+              </Link>
+            </>
+          ) : (
+            <Link href={`/registro?from=${r.slug}`} className="btn btn-primary w-full">Crear mi cuenta gratis</Link>
+          )}
+          <p className="mt-4 text-sm text-ash">
+            ¿Ya tienes cuenta?{" "}
+            <Link href={`/login?next=/recursos/${r.slug}`} className="font-semibold text-accent">Entrar</Link>
+          </p>
+        </section>
+      )}
+
+      {!preview && r.files.length > 0 && (
         <section className="card mt-8 p-5">
           <h2 className="font-semibold">Archivos para descargar</h2>
           <ul className="mt-3 divide-y divide-hairline">
@@ -143,11 +178,6 @@ export default async function RecursoPage({ params, searchParams }: Props) {
         </section>
       )}
 
-      {viewer.kind === "visitor" && (
-        <div className="mt-8">
-          <JoinCta slug={r.slug} />
-        </div>
-      )}
       {viewer.kind === "lead" && welcome !== "1" && (
         <div className="card mt-8 p-5 text-sm">
           <p className="font-semibold">Completa tu perfil para entrar a la comunidad</p>
@@ -157,14 +187,6 @@ export default async function RecursoPage({ params, searchParams }: Props) {
         </div>
       )}
 
-      {/* Barra fija en celular para visitantes */}
-      {viewer.kind === "visitor" && (
-        <div className="fixed inset-x-0 bottom-0 z-20 border-t border-hairline bg-paper p-3 md:hidden">
-          <Link href={`/registro?from=${r.slug}`} className="btn btn-primary w-full">
-            Crear cuenta gratis y descargar
-          </Link>
-        </div>
-      )}
     </article>
   );
 }
