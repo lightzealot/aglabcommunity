@@ -55,7 +55,7 @@ export function PublicShell({ viewer, children }: { viewer: Viewer; children: Re
             : { href: viewer.user.onboarded ? "/gracias" : "/onboarding", label: viewer.user.onboarded ? "Mi tarjeta" : "Mi perfil" }
         }
       />
-      <footer className="border-t border-hairline py-6 text-center text-xs text-hollow">
+      <footer className="border-t border-hairline py-6 pb-24 text-center text-xs text-hollow md:pb-6">
         AG Lab · La comunidad de Andrés Gómez · comunidad.andresgomez.store
       </footer>
     </div>

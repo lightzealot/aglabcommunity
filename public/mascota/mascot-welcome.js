@@ -24,7 +24,7 @@ class CommunityMascot extends HTMLElement {
       @keyframes present{0%,100%{transform:translateX(0)}45%{transform:translateX(-7px) rotate(-2deg)}}
       @keyframes celebrate{0%,100%{transform:translateY(0)}40%{transform:translateY(-12px)}70%{transform:translateY(2px)}}
       @media(max-width:480px){:host{left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));max-width:none;display:flex;justify-content:flex-end}.panel{width:100%;max-width:360px;padding-top:146px}.stage{width:180px;height:180px;top:-48px}.launcher{margin-left:auto}}
-      @media(max-width:767px){:host{bottom:calc(88px + env(safe-area-inset-bottom))}}@media(max-height:500px){.stage{display:none}.panel{padding-top:22px;max-height:calc(100dvh - 28px);overflow:auto}}
+      @media(max-width:767px){:host{bottom:calc(80px + env(safe-area-inset-bottom))}}@media(max-height:500px){.stage{display:none}.panel{padding-top:22px;max-height:calc(100dvh - 28px);overflow:auto}}
       @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
     </style><section class="panel" aria-label="Bienvenida a la comunidad"><div class="stage" data-state="welcome"><img class="pose" alt="" width="210" height="205" decoding="async"></div><button class="close" type="button" aria-label="Cerrar bienvenida">×</button><h2></h2><p></p><nav aria-label="Primeros pasos"><a class="start">Empieza aquí</a><a class="secondary resources">Explora los recursos</a></nav></section><button class="launcher" hidden type="button" aria-label="Abrir ayuda de bienvenida" aria-expanded="false"><img alt="" width="32" height="32"><span>¿Te ayudo?</span></button>`;
     this._panel=root.querySelector('.panel');this._launcher=root.querySelector('.launcher');

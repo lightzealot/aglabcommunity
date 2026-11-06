@@ -19,7 +19,7 @@ export function CommunityMascot({
     let el: MascotElement | null = null;
     (async () => {
       try {
-        const src = "/mascota/mascot-welcome.js"; // archivo estático de /public, no se empaqueta
+        const src = "/mascota/mascot-welcome.js?v=3"; // archivo estático de /public, no se empaqueta
         await import(/* webpackIgnore: true */ /* turbopackIgnore: true */ src);
       } catch {
         return; // sin la mascota la página funciona igual

@@ -5,13 +5,13 @@ import { usePathname } from "next/navigation";
 
 type IconName = "home" | "file" | "news" | "course" | "people";
 type Item = { href: string; label: string; icon: IconName; also?: string[] };
-type Right = { href: string; label: string; image?: string | null };
+type Right = { href: string; label: string; image?: string | null; name?: string };
 
 const S = { fill: "none", stroke: "currentColor", strokeWidth: 1.9, strokeLinecap: "round", strokeLinejoin: "round" } as const;
 
 function Icon({ name }: { name: IconName }) {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden {...S}>
+    <svg width="21" height="21" viewBox="0 0 24 24" aria-hidden {...S}>
       {name === "home" && <path d="M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10M10 19.5v-5h4v5" />}
       {name === "file" && <path d="M7 3h7l4 4v14H7zM14 3v4h4M10 12h5M10 16h5" />}
       {name === "news" && <path d="M5 4h11v16H7a2 2 0 0 1-2-2zM16 8h3v10a2 2 0 0 1-2 2M8 8h5M8 12h5M8 16h3" />}
@@ -33,18 +33,18 @@ export function BottomNav({ items, right }: { items: Item[]; right: Right }) {
   return (
     <nav
       aria-label="Menú principal"
-      className="fixed inset-x-3 bottom-3 z-40 flex items-center gap-2 md:hidden"
-      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+      className="fixed bottom-3 left-3 right-3 z-40 flex items-center gap-2 md:hidden"
+      style={{ marginBottom: "env(safe-area-inset-bottom)" }}
     >
       <Link
         href={home.href}
         aria-label={home.label}
-        className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-hairline bg-paper shadow-lg ${active(home) ? "text-accent" : "text-ash"}`}
+        className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-hairline bg-paper shadow-lg ${active(home) ? "text-accent" : "text-ash"}`}
       >
         <Icon name={home.icon} />
       </Link>
 
-      <div className="flex min-w-0 flex-1 items-center justify-around rounded-full border border-hairline bg-paper p-1.5 shadow-lg">
+      <div className="flex h-12 min-w-0 flex-1 items-center justify-around overflow-hidden rounded-full border border-hairline bg-paper px-1 shadow-lg">
         {rest.map((i) => {
           const on = active(i);
           return (
@@ -53,7 +53,7 @@ export function BottomNav({ items, right }: { items: Item[]; right: Right }) {
               href={i.href}
               aria-label={i.label}
               aria-current={on ? "page" : undefined}
-              className={`flex h-11 items-center gap-1.5 rounded-full px-3 text-sm font-semibold ${on ? "bg-veil text-ink" : "text-ash"}`}
+              className={`flex h-10 min-w-0 items-center gap-1 rounded-full px-2.5 text-[13px] font-semibold whitespace-nowrap ${on ? "bg-veil text-ink" : "text-ash"}`}
             >
               <Icon name={i.icon} />
               {on && <span>{i.label}</span>}
@@ -62,18 +62,32 @@ export function BottomNav({ items, right }: { items: Item[]; right: Right }) {
         })}
       </div>
 
-      <Link
-        href={right.href}
-        aria-label={right.label}
-        className="flex h-14 shrink-0 items-center justify-center overflow-hidden rounded-full border border-hairline bg-paper px-5 text-sm font-semibold shadow-lg"
-      >
-        {right.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={right.image} alt={right.label} className="-mx-5 h-14 w-14 object-cover" />
-        ) : (
-          right.label
-        )}
-      </Link>
+      {right.image ? (
+        <Link
+          href={right.href}
+          aria-label={right.label}
+          className="h-12 w-12 shrink-0 overflow-hidden rounded-full border border-hairline bg-paper shadow-lg"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={right.image} alt="" className="h-full w-full object-cover" />
+        </Link>
+      ) : right.name ? (
+        <Link
+          href={right.href}
+          aria-label={right.label}
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-hairline bg-accent-soft text-sm font-semibold text-accent shadow-lg"
+        >
+          {right.name.split(" ").filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join("")}
+        </Link>
+      ) : (
+        <Link
+          href={right.href}
+          aria-label={right.label}
+          className="flex h-12 shrink-0 items-center justify-center rounded-full border border-hairline bg-paper px-4 text-[13px] font-semibold whitespace-nowrap shadow-lg"
+        >
+          {right.label}
+        </Link>
+      )}
     </nav>
   );
 }

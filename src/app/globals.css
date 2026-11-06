@@ -69,6 +69,7 @@
 }
 
 body {
+  overflow-x: clip;
   background: var(--tint);
   color: var(--ink);
   font-family: var(--font-sans);

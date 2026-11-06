@@ -96,9 +96,8 @@ export async function AppShell({ user, children }: { user: ShellUser; children: 
           { href: "/classroom", label: "Cursos", icon: "course" },
           { href: "/recursos", label: "Recursos", icon: "file" },
           { href: "/noticias", label: "Noticias", icon: "news" },
-          { href: "/miembros", label: "Miembros", icon: "people", also: ["/u"] },
         ]}
-        right={{ href: "/perfil", label: "Mi perfil", image: user.image ?? null }}
+        right={{ href: "/perfil", label: "Mi perfil", image: user.image ?? null, name: user.name }}
       />
       <CommunityMascot startUrl="/classroom" resourcesUrl="/recursos" />
     </div>
