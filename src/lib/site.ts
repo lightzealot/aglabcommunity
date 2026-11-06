@@ -1,6 +1,6 @@
 export const SITE_NAME = "AG Lab";
 export const SITE_DESCRIPTION =
-  "Comunidad gratis en español de Andrés Gómez: automatización, agentes de IA y procesos para empresas de servicios, con guías, plantillas, cursos y una noticia de IA al día.";
+  "Comunidad gratis en español de Andrés Gómez: IA práctica para crear contenido, fotos y marca, con prompts listos para copiar, apps y automatizaciones, guías, plantillas, cursos y una noticia de IA al día.";
 export const FOUNDER = "Andrés Gómez";
 
 /** URL pública del sitio, sin barra final. En producción sale de BETTER_AUTH_URL. */

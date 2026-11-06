@@ -7,7 +7,7 @@ import type { Viewer } from "@/lib/resources";
 const STEPS = [
   { icon: UserIcon, title: "Te presentas", text: "Cuentas quién eres y en qué andas. Alguien de la comunidad te contesta." },
   { icon: CommentIcon, title: "Preguntas o compartes", text: "Lo que te trabó, o lo que te salió, en el board que toca." },
-  { icon: FileIcon, title: "Te llevas las guías", text: "Recursos, plantillas y cursos para aplicar la IA en tu trabajo." },
+  { icon: FileIcon, title: "Te llevas los prompts", text: "Prompts listos para copiar, guías, plantillas y cursos para crear con IA." },
 ];
 
 function SectionHead({ n, label, title, href, cta }: { n: string; label: string; title: string; href?: string; cta?: string }) {
@@ -58,11 +58,11 @@ export function Landing({ data, viewer }: { data: LandingData; viewer: Viewer })
         <div>
           <p className="label">Comunidad gratis · en español</p>
           <h1 className="display mt-3 text-6xl sm:text-7xl lg:text-[5.5rem]">
-            Aquí se aplica la IA a tu negocio<span className="text-accent">.</span>
+            IA práctica para crear contenido, fotos y marca<span className="text-accent">.</span>
           </h1>
           <p className="mt-5 max-w-xl text-lg text-ash">
-            Automatización, agentes de IA y procesos para empresas de servicios. Preguntas lo que te trabó, ves cómo lo
-            resuelven otros y te llevas guías, plantillas y cursos.
+            Prompts listos para copiar, apps y automatizaciones con IA. Preguntas lo que te trabó, ves cómo lo resuelven
+            otros y te llevas guías, plantillas y cursos.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <Link href={cta.href} className="btn btn-primary !px-5 !py-3">

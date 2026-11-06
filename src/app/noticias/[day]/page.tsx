@@ -123,10 +123,10 @@ export default async function NoticiaPage({ params }: Props) {
       {viewer.kind === "visitor" && (
         <section className="card mt-8 border-accent bg-accent-soft/40 p-6">
           <h2 className="display text-3xl">
-            Aprende a aplicarlo en tu negocio<span className="text-accent">.</span>
+            Aprende a usarlo en tu contenido y tu marca<span className="text-accent">.</span>
           </h2>
           <p className="mt-2 text-sm text-ash">
-            En AG Lab, la comunidad gratis de Andrés Gómez, convertimos estas novedades en automatizaciones y procesos reales.
+            En AG Lab, la comunidad gratis de Andrés Gómez, convertimos estas novedades en prompts, apps y automatizaciones que puedes copiar y usar.
           </p>
           <Link href="/registro" className="btn btn-primary mt-4">
             Crear mi cuenta gratis

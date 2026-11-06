@@ -26,7 +26,7 @@ export async function getCommunity() {
   return {
     name: "AG Lab",
     description:
-      description ?? "La comunidad de Andrés Gómez para implementar IA y automatización en tu negocio.",
+      description ?? "La comunidad de Andrés Gómez para usar IA de forma práctica: contenido, fotos, marca, apps y automatizaciones.",
     coverUrl,
     ...stats,
     adminList: admins,

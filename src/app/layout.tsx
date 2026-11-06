@@ -23,7 +23,7 @@ export function generateMetadata(): Metadata {
     applicationName: SITE_NAME,
     authors: [{ name: "Andrés Gómez" }],
     creator: "Andrés Gómez",
-    keywords: ["inteligencia artificial", "automatización", "agentes de IA", "IA para negocios", "n8n", "comunidad", "noticias de IA"],
+    keywords: ["inteligencia artificial", "prompts de IA", "IA para crear contenido", "IA para fotos", "automatización", "apps con IA", "comunidad", "noticias de IA"],
     // "./" = la URL de cada página sin parámetros: evita contenido duplicado por ?welcome=1, ?b=... etc.
     alternates: { canonical: "./", types: { "application/rss+xml": "/feed.xml" } },
     openGraph: {

@@ -6,7 +6,7 @@ import { abs, orgRef, siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Recursos gratuitos",
-  description: "Guías, prompts y plantillas gratis para usar la inteligencia artificial en tu trabajo y en tu negocio.",
+  description: "Guías, prompts y plantillas gratis para usar la inteligencia artificial y crear contenido, fotos y marca.",
 };
 
 export default async function RecursosPage() {

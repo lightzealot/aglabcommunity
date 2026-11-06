@@ -9,9 +9,9 @@ import { getViewer } from "@/lib/resources";
 import { siteJsonLd } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: { absolute: "AG Lab · Comunidad de IA aplicada a tu negocio" },
+  title: { absolute: "AG Lab · IA práctica para crear contenido, fotos y marca" },
   description:
-    "Comunidad gratis en español de Andrés Gómez: automatización, agentes de IA y procesos para empresas de servicios, con guías, plantillas y cursos.",
+    "Comunidad gratis en español de Andrés Gómez: IA práctica para crear contenido, fotos y marca, con prompts listos para copiar, apps, automatizaciones, guías y cursos.",
 };
 
 // "/" muestra el feed a los miembros y la página de inicio a todos los demás.

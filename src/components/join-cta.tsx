@@ -12,7 +12,7 @@ export function JoinCta({ slug, title = "Descárgalo gratis y únete a AG Lab" }
       </h2>
       <ul className="mt-3 space-y-1 text-sm text-ash">
         <li>✓ Descarga las plantillas y archivos de este recurso al instante</li>
-        <li>✓ Entra a una comunidad de gente implementando IA en su negocio</li>
+        <li>✓ Entra a una comunidad que usa la IA para crear contenido, fotos y marca</li>
         <li>✓ Cursos, eventos en vivo y más recursos nuevos cada semana</li>
       </ul>
       <div className="mt-5 flex flex-wrap items-center gap-3">

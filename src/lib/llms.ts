@@ -17,7 +17,7 @@ async function load() {
 }
 
 const intro = () =>
-  `# ${SITE_NAME}\n\n> ${SITE_DESCRIPTION}\n\n${SITE_NAME} es la comunidad de ${FOUNDER} (en español) para implementar inteligencia artificial y automatización en empresas de servicios. ` +
+  `# ${SITE_NAME}\n\n> ${SITE_DESCRIPTION}\n\n${SITE_NAME} es la comunidad de ${FOUNDER} (en español) para usar la inteligencia artificial de forma práctica: crear contenido, fotos y marca, con prompts listos para copiar, apps y automatizaciones. ` +
   `Todo el contenido de abajo es público y se puede citar enlazando a su página.`;
 
 /** /llms.txt: índice en Markdown para agentes de IA (estándar llmstxt.org). Se regenera con cada noticia o recurso nuevo. */
