@@ -68,7 +68,7 @@ export const auth = betterAuth({
               ...user,
               role: isAdmin ? "admin" : "member",
               status: approved ? "approved" : "pending",
-              onboarded: isAdmin, // el admin no pasa por el onboarding
+              onboarded: true, // ya no hay formulario de perfil: entra directo a su tarjeta
               ...(signupSource ? { signupSource } : {}),
             },
           };

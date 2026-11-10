@@ -1,4 +1,5 @@
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
+import { IntroForm } from "@/components/intro-form";
 import { db, schema } from "@/db";
 import { ProfileForm } from "@/components/profile-form";
 import { requireMember } from "@/lib/session";
@@ -15,6 +16,10 @@ export default async function PerfilPage() {
     })
     .from(schema.user)
     .where(eq(schema.user.id, user.id));
+  const [intro] = await db
+    .select({ body: schema.post.body })
+    .from(schema.post)
+    .where(and(eq(schema.post.authorId, user.id), eq(schema.post.kind, "intro")));
   return (
     <>
       <p className="label mb-2">Cuenta</p>
@@ -23,6 +28,9 @@ export default async function PerfilPage() {
       </h1>
       <p className="mt-2 mb-6 text-sm text-ash">{user.email} · {user.points} puntos · 🔥 racha de {streak} día{streak === 1 ? "" : "s"}</p>
       <ProfileForm name={user.name} bio={bio ?? ""} emailNotifications={emailNotifications} image={user.image ?? null} />
+      <div className="mt-6">
+        <IntroForm initial={intro?.body ?? ""} />
+      </div>
     </>
   );
 }

@@ -33,8 +33,8 @@ export function PublicShell({ viewer, children }: { viewer: Viewer; children: Re
               </>
             )}
             {viewer.kind === "lead" && (
-              <Link href={viewer.user.onboarded ? "/pendiente" : "/onboarding"} className="btn btn-primary !py-2">
-                {viewer.user.onboarded ? "Mi solicitud" : "Completar mi perfil"}
+              <Link href={"/gracias"} className="btn btn-primary !py-2">
+                Mi tarjeta
               </Link>
             )}
           </nav>

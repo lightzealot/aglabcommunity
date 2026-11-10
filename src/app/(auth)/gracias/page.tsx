@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { Logo } from "@/components/logo";
+import { IntroForm } from "@/components/intro-form";
 import { MemberCard } from "@/components/member-card";
 import { ShareButton } from "@/components/share-button";
 import { db, schema } from "@/db";
@@ -19,6 +20,10 @@ export default async function GraciasPage() {
 
   const [u] = await db.select().from(schema.user).where(eq(schema.user.id, session.user.id));
   const number = await memberNumber(u.createdAt);
+  const [intro] = await db
+    .select({ body: schema.post.body })
+    .from(schema.post)
+    .where(and(eq(schema.post.authorId, u.id), eq(schema.post.kind, "intro")));
   const first = u.name.split(" ")[0];
   const approved = u.status === "approved";
 
@@ -33,7 +38,10 @@ export default async function GraciasPage() {
       <div className="mt-8">
         <MemberCard name={u.name} handle={u.handle} theme={u.cardTheme} image={u.image} number={number} since={u.createdAt} />
       </div>
-      <div className="mt-8 space-y-3">
+      <div className="mt-8">
+        <IntroForm initial={intro?.body ?? ""} pending={!approved} />
+      </div>
+      <div className="mt-6 space-y-3">
         {approved ? (
           <Link href="/" className="btn btn-primary w-full">Entrar a la comunidad</Link>
         ) : (

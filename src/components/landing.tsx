@@ -33,7 +33,7 @@ export function Landing({ data, viewer }: { data: LandingData; viewer: Viewer })
   const { counts, boards, resources, courses, events } = data;
   const cta =
     viewer.kind === "lead"
-      ? { href: viewer.user.onboarded ? "/pendiente" : "/onboarding", label: viewer.user.onboarded ? "Ver mi solicitud" : "Completar mi perfil" }
+      ? { href: "/gracias", label: "Mi tarjeta" }
       : { href: "/registro", label: "Crear cuenta gratis" };
 
   const stats = [

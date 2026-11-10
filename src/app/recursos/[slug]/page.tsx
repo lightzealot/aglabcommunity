@@ -106,8 +106,8 @@ export default async function RecursoPage({ params, searchParams }: Props) {
           <p className="font-semibold">¡Listo, tu cuenta está creada!</p>
           <p className="mt-1 text-ash">
             Ya puedes descargar los archivos de abajo.{" "}
-            <Link href={viewer.user.onboarded ? "/pendiente" : "/onboarding"} className="font-semibold text-accent underline">
-              {viewer.user.onboarded ? "Ver el estado de tu solicitud" : "Completa tu perfil para entrar a la comunidad"}
+            <Link href={"/gracias"} className="font-semibold text-accent underline">
+              Crea tu tarjeta de miembro
             </Link>
             .
           </p>
@@ -180,9 +180,9 @@ export default async function RecursoPage({ params, searchParams }: Props) {
 
       {viewer.kind === "lead" && welcome !== "1" && (
         <div className="card mt-8 p-5 text-sm">
-          <p className="font-semibold">Completa tu perfil para entrar a la comunidad</p>
-          <Link href={viewer.user.onboarded ? "/pendiente" : "/onboarding"} className="btn btn-primary mt-3 !py-2">
-            {viewer.user.onboarded ? "Ver mi solicitud" : "Completar mi perfil"}
+          <p className="font-semibold">Crea tu tarjeta de miembro</p>
+          <Link href={"/gracias"} className="btn btn-primary mt-3 !py-2">
+            {"Mi tarjeta"}
           </Link>
         </div>
       )}

@@ -9,7 +9,7 @@ import { authClient } from "@/lib/auth-client";
 
 export function RegistroForm({ googleEnabled, from }: { googleEnabled: boolean; from?: string }) {
   // Si llega desde un recurso, vuelve a él (con la descarga ya desbloqueada).
-  const after = from ? `/recursos/${from}?welcome=1` : "/";
+  const after = from ? `/recursos/${from}?welcome=1` : "/gracias";
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
