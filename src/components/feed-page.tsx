@@ -2,6 +2,7 @@ import { asc, eq, inArray } from "drizzle-orm";
 import Link from "next/link";
 import { CalendarIcon } from "@/components/icons";
 import { Composer } from "@/components/composer";
+import { FeedWelcome } from "@/components/feed-welcome";
 import { CommunityCard } from "@/components/community-card";
 import { PostCard } from "@/components/post-card";
 import { TopRankingCard } from "@/components/top-ranking-card";
@@ -49,7 +50,7 @@ export async function FeedPage({ user, b }: { user: FeedUser; b?: string }) {
     <Link
       key={id}
       href={id === "all" ? "/" : `/?b=${id}`}
-      className={`rounded-full border px-3.5 py-1.5 text-sm whitespace-nowrap transition-colors ${
+      className={`rounded-full border px-3.5 py-1.5 text-sm whitespace-nowrap transition active:scale-95 ${
         filter === id
           ? "border-ink bg-ink text-paper"
           : "border-hairline bg-paper text-ash hover:border-ink hover:text-ink"
@@ -62,6 +63,7 @@ export async function FeedPage({ user, b }: { user: FeedUser; b?: string }) {
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
       <div className="min-w-0 space-y-4">
+        <FeedWelcome name={user.name} points={user.points} online={community.online} />
         <Composer
           boards={boards}
           defaultBoard={filter !== "all" && filter !== "mine" ? filter : (mine[0] ?? "general")}
@@ -71,7 +73,7 @@ export async function FeedPage({ user, b }: { user: FeedUser; b?: string }) {
         {nextEvent && (
           <Link
             href={`/calendario/${nextEvent.id}`}
-            className="flex items-center justify-center gap-2 py-1 text-sm text-ash hover:text-ink"
+            className="card flex items-center gap-3 border-accent bg-accent-soft/40 px-4 py-3 text-sm text-ash transition hover:shadow-md"
           >
             <CalendarIcon size={16} />
             <span>

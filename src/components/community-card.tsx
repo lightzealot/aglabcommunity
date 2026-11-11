@@ -31,7 +31,10 @@ export function CommunityCard({ c, isAdmin }: { c: Community; isAdmin: boolean }
           </div>
           <div>
             <dt className="sr-only">En línea</dt>
-            <dd className="text-lg font-semibold">{c.online}</dd>
+            <dd className="flex items-center justify-center gap-1.5 text-lg font-semibold">
+              {c.online > 0 && <span className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden />}
+              {c.online}
+            </dd>
             <p className="text-xs text-hollow">En línea</p>
           </div>
           <div>

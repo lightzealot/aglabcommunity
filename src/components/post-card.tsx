@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { togglePostLike } from "@/app/(app)/actions";
 import { Avatar } from "@/components/avatar";
-import { CommentIcon, PinIcon, ThumbIcon } from "@/components/icons";
+import { CommentIcon, PinIcon } from "@/components/icons";
+import { LikeButton, SharePost } from "@/components/like-button";
 import { PostBody } from "@/components/post-body";
 import { timeAgo, timeShort } from "@/lib/time";
 
@@ -25,21 +25,6 @@ export type FeedPost = {
   commenters: { id: string; name: string; image: string | null }[];
 };
 
-export function LikeButton({ postId, count, liked }: { postId: string; count: number; liked: boolean }) {
-  return (
-    <form action={togglePostLike}>
-      <input type="hidden" name="postId" value={postId} />
-      <button
-        className={`flex items-center gap-1.5 text-sm font-semibold ${liked ? "text-accent" : "text-ash hover:text-ink"}`}
-        aria-pressed={liked}
-        aria-label={liked ? "Quitar me gusta" : "Me gusta"}
-      >
-        <ThumbIcon filled={liked} /> {count}
-      </button>
-    </form>
-  );
-}
-
 /** "10h" si es reciente, "jun. 22" si es más viejo. */
 function when(d: Date) {
   const days = (Date.now() - d.getTime()) / 86_400_000;
@@ -49,7 +34,7 @@ function when(d: Date) {
 
 export function PostCard({ p, full = false }: { p: FeedPost; full?: boolean }) {
   return (
-    <article className={`card p-4 sm:p-5 ${p.pinned ? "!border-[#f2c14e] shadow-[0_0_0_1px_#f2c14e33]" : ""}`}>
+    <article className={`card feed-in p-4 transition-shadow hover:shadow-md sm:p-5 ${p.pinned ? "!border-[#f2c14e] shadow-[0_0_0_1px_#f2c14e33]" : ""}`}>
       <header className="flex items-center gap-3">
         <Avatar name={p.authorName} image={p.authorImage} points={p.authorPoints} size={40} />
         <div className="min-w-0 flex-1">
@@ -69,7 +54,7 @@ export function PostCard({ p, full = false }: { p: FeedPost; full?: boolean }) {
         {p.kind === "intro" && <span className="label !text-ash">Presentación</span>}
       </header>
 
-      <div className={`mt-3 flex gap-4 ${full ? "flex-col" : ""}`}>
+      <div className={`mt-3 flex gap-4 ${full ? "flex-col" : "flex-col sm:flex-row"}`}>
         <div className="min-w-0 flex-1">
           {p.title &&
             (full ? (
@@ -92,17 +77,17 @@ export function PostCard({ p, full = false }: { p: FeedPost; full?: boolean }) {
             // eslint-disable-next-line @next/next/no-img-element
             <img src={p.imageUrl} alt="" className="max-h-[28rem] rounded border border-hairline object-cover" />
           ) : (
-            <Link href={`/post/${p.id}`} className="hidden shrink-0 sm:block">
+            <Link href={`/post/${p.id}`} className="block shrink-0 overflow-hidden rounded-lg border border-hairline">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={p.imageUrl} alt="" className="h-24 w-32 rounded border border-hairline object-cover" />
+              <img src={p.imageUrl} alt="" className="aspect-[16/9] w-full object-cover transition-transform duration-300 hover:scale-[1.03] sm:aspect-auto sm:h-24 sm:w-32" />
             </Link>
           ))}
       </div>
 
-      <footer className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+      <footer className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-2 border-t border-hairline pt-3">
         <LikeButton postId={p.id} count={p.likes} liked={p.liked} />
-        <Link href={`/post/${p.id}`} className="flex items-center gap-1.5 text-sm font-semibold text-ash hover:text-ink">
-          <CommentIcon /> {p.comments}
+        <Link href={`/post/${p.id}`} className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-semibold text-ash transition-colors hover:bg-veil hover:text-ink">
+          <CommentIcon /> {p.comments > 0 ? p.comments : "Comentar"}
         </Link>
         {p.commenters.length > 0 && (
           <span className="flex -space-x-1.5">
@@ -118,6 +103,7 @@ export function PostCard({ p, full = false }: { p: FeedPost; full?: boolean }) {
             Nuevo comentario hace {timeShort(p.lastCommentAt)}
           </Link>
         )}
+        <SharePost postId={p.id} />
       </footer>
     </article>
   );

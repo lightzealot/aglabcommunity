@@ -147,3 +147,24 @@ body {
     box-shadow: 0 0 0 3px var(--accent-soft);
   }
 }
+
+/* Movimiento de la comunidad: entrada suave de las tarjetas, me gusta y barra de nivel. */
+@keyframes feed-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes like-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.45) rotate(-12deg); }
+  100% { transform: scale(1); }
+}
+@keyframes level-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.feed-in { animation: feed-in 0.35s ease-out both; }
+.like-pop { animation: like-pop 0.35s ease-out; }
+.level-bar { transform-origin: left; animation: level-grow 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+@media (prefers-reduced-motion: reduce) {
+  .feed-in, .like-pop, .level-bar { animation: none; }
+}

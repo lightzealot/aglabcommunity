@@ -24,7 +24,7 @@ export function TopRankingCard({ entries }: { entries: Entry[] }) {
       <h2 className="font-semibold">Clasificación (30 días)</h2>
       <ul className="mt-3 space-y-3">
         {entries.slice(0, 3).map((e, i) => (
-          <li key={e.id} className="flex items-center gap-3">
+          <li key={e.id} className="-mx-2 flex items-center gap-3 rounded-lg px-2 py-1 transition-colors hover:bg-veil">
             <Rank n={i + 1} />
             <Avatar name={e.name} image={e.image} size={32} />
             <Link href={`/u/${e.id}`} className="flex-1 truncate text-sm font-semibold hover:text-accent">
