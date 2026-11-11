@@ -9,7 +9,8 @@ import { SourceCookie } from "@/components/source-cookie";
 import { isGoogleEnabled } from "@/lib/google";
 import { teaser } from "@/lib/resource-teaser";
 import { excerpt } from "@/lib/news-format";
-import { getResourceBySlug, getViewer } from "@/lib/resources";
+import { getResourceBySlug, getViewer, listPublishedResources } from "@/lib/resources";
+import { headings, promptCount, readMinutes } from "@/lib/resource-meta";
 import { abs, orgRef, siteUrl } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }>; searchParams: Promise<{ welcome?: string }> };
@@ -48,6 +49,9 @@ export default async function RecursoPage({ params, searchParams }: Props) {
   const canDownload = viewer.kind !== "visitor";
   const preview = viewer.kind === "visitor";
   const shownBody = preview ? teaser(r.body) : r.body;
+  const toc = headings(r.body);
+  const prompts = promptCount(r.body);
+  const related = (await listPublishedResources()).filter((x) => x.slug !== r.slug).slice(0, 2);
   const url = `${siteUrl()}/recursos/${r.slug}`;
   const jsonLd = [
     {
@@ -85,21 +89,59 @@ export default async function RecursoPage({ params, searchParams }: Props) {
       {viewer.kind === "visitor" && <SourceCookie slug={r.slug} />}
 
       <Link href="/recursos" className="text-sm text-ash hover:text-ink">
-        ← Todos los recursos
+        ‹ Todos los recursos
       </Link>
 
       {!r.published && <p className="label mt-3 !text-ash">Borrador (solo lo ves tú)</p>}
 
-      {r.coverUrl && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={r.coverUrl} alt={r.title} className="mt-4 aspect-[16/9] w-full rounded-lg border border-hairline object-cover" />
-      )}
-
-      <h1 className="display mt-5 text-5xl sm:text-6xl">
+      <p className="label mt-5">Guía · prompts listos para copiar</p>
+      <h1 className="display mt-2 text-5xl sm:text-6xl">
         {r.title}
         <span className="text-accent">.</span>
       </h1>
       {r.summary && <p className="mt-3 text-lg text-ash">{r.summary}</p>}
+
+      <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-ash">
+        <span className="font-semibold text-ink">Andrés Gómez</span>
+        <span aria-hidden>·</span>
+        <span>{r.createdAt.toLocaleDateString("es", { day: "numeric", month: "short", year: "numeric" })}</span>
+        <span aria-hidden>·</span>
+        <span>{readMinutes(r.body)} min de lectura</span>
+      </div>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {prompts > 0 && (
+          <span className="rounded-full border border-hairline bg-accent-soft px-3 py-1 text-xs font-semibold text-accent">
+            {prompts} {prompts === 1 ? "prompt" : "prompts"}
+          </span>
+        )}
+        {r.files.length > 0 && (
+          <span className="rounded-full border border-hairline bg-veil px-3 py-1 text-xs font-semibold text-ash">
+            {r.files.length} {r.files.length === 1 ? "archivo" : "archivos"}
+          </span>
+        )}
+        <span className="rounded-full border border-hairline bg-veil px-3 py-1 text-xs font-semibold text-ash">Gratis</span>
+      </div>
+
+      {r.coverUrl && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={r.coverUrl} alt={r.title} className="mt-6 aspect-[16/9] w-full rounded-lg border border-hairline object-cover" />
+      )}
+
+      {!preview && toc.length > 1 && (
+        <nav aria-label="En esta guía" className="card mt-6 p-4">
+          <p className="label !text-ash">En esta guía</p>
+          <ol className="mt-2 space-y-1 text-sm">
+            {toc.map((h, i) => (
+              <li key={h.id}>
+                <a href={`#${h.id}`} className="flex gap-2 py-0.5 hover:text-accent">
+                  <span className="font-mono text-xs text-hollow">{String(i + 1).padStart(2, "0")}</span>
+                  <span>{h.text}</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
 
       {welcome === "1" && viewer.kind === "lead" && (
         <div className="card mt-5 border-accent bg-accent-soft/40 p-4 text-sm">
@@ -117,7 +159,7 @@ export default async function RecursoPage({ params, searchParams }: Props) {
       {shownBody && (
         <div className={`relative mt-8 ${preview ? "max-h-72 overflow-hidden" : ""}`}>
           <div className={preview ? "select-none blur-[3px]" : ""} aria-hidden={preview || undefined}>
-            <RichText text={shownBody} />
+            <RichText text={shownBody} numbered={!preview} />
           </div>
           {preview && <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-paper/70 to-paper" />}
         </div>
@@ -185,6 +227,42 @@ export default async function RecursoPage({ params, searchParams }: Props) {
             {"Mi tarjeta"}
           </Link>
         </div>
+      )}
+
+      {!preview && (
+        <section className="card mt-10 flex items-center gap-4 p-5">
+          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-accent font-mono text-lg font-semibold text-white">
+            AG
+          </span>
+          <div className="min-w-0">
+            <p className="font-semibold">Andrés Gómez</p>
+            <p className="text-sm text-ash">
+              IA práctica para crear contenido, fotos y marca.{" "}
+              <a href="https://instagram.com/andresgomez.ia" target="_blank" rel="noopener noreferrer" className="font-semibold text-accent">
+                @andresgomez.ia
+              </a>
+            </p>
+          </div>
+        </section>
+      )}
+
+      {related.length > 0 && (
+        <section className="mt-10">
+          <p className="label">Sigue con</p>
+          <div className="mt-3 grid gap-4 sm:grid-cols-2">
+            {related.map((x) => (
+              <Link key={x.slug} href={`/recursos/${x.slug}`} className="card group flex flex-col overflow-hidden transition hover:shadow-md">
+                <div className="aspect-[16/9] bg-accent-soft">
+                  {x.coverUrl && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={x.coverUrl} alt="" className="h-full w-full object-cover" />
+                  )}
+                </div>
+                <p className="p-3 leading-snug font-bold group-hover:text-accent">{x.title}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
       )}
 
     </article>

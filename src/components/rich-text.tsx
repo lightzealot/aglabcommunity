@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { CodeBlock } from "@/components/code-block";
+import { headingId } from "@/lib/resource-meta";
 
 /**
  * Markdown básico para guías: ##/### títulos, listas (- y 1.), citas (>), bloques de código (```),
@@ -126,16 +127,23 @@ function parse(src: string): Block[] {
   return blocks;
 }
 
-export function RichText({ text }: { text: string }) {
+export function RichText({ text, numbered = false }: { text: string; numbered?: boolean }) {
   const blocks = parse(text.trim());
+  let step = 0;
   return (
     <div className="space-y-4 text-[0.9375rem] leading-relaxed">
       {blocks.map((b, i) => {
         switch (b.t) {
           case "h":
+            if (b.level === 2) step++;
             return b.level === 2 ? (
-              <h2 key={i} className="display pt-4 text-3xl">
-                {inline(b.text)}
+              <h2 key={i} id={headingId(b.text.replace(/[*`]/g, ""))} className="display flex scroll-mt-20 items-center gap-3 border-t border-hairline pt-6 text-3xl">
+                {numbered && (
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent font-mono text-sm text-white">
+                    {step}
+                  </span>
+                )}
+                <span className="min-w-0">{inline(b.text)}</span>
               </h2>
             ) : (
               <h3 key={i} className="pt-2 text-lg font-bold">
