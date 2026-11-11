@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useState } from "react";
+import { CardTilt } from "@/components/card-tilt";
 import { MemberCard } from "@/components/member-card";
 import { SOCIALS } from "@/lib/card";
 import { updateCard, type CardState } from "./actions";
@@ -29,14 +30,14 @@ export function CardForm(p: Props) {
 
   return (
     <form action={action} className="space-y-5">
-      <MemberCard
+      <CardTilt><MemberCard
         name={name.trim() || "Tu nombre"}
         handle={handle.trim().replace(/^@/, "").toLowerCase() || null}
         theme={theme}
         image={preview}
         number={p.number}
         since={p.since}
-      />
+      /></CardTilt>
 
       <div>
         <label htmlFor="avatar" className="block text-sm font-semibold">Foto</label>

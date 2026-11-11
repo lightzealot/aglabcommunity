@@ -168,3 +168,53 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .feed-in, .like-pop, .level-bar { animation: none; }
 }
+
+/* Tarjeta de miembro en 3D: se inclina con el dedo o el cursor y brilla. */
+.card-scene { perspective: 900px; }
+.card-3d {
+  --rx: 0deg; --ry: 0deg; --gx: 50%; --gy: 20%;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: card-enter 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both, card-sway 7s ease-in-out 0.9s infinite;
+  border-radius: 26px;
+  box-shadow: 0 30px 50px -22px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+.card-3d.is-active { animation: none; transition: transform 0.08s linear; }
+.card-glare {
+  transform: translateZ(40px);
+  background:
+    radial-gradient(circle at var(--gx) var(--gy), rgba(255, 255, 255, 0.42), transparent 45%),
+    linear-gradient(115deg, transparent 30%, rgba(255, 214, 102, 0.22) 45%, rgba(120, 190, 255, 0.2) 55%, transparent 70%);
+  background-size: 100% 100%, 220% 220%;
+  background-position: 0 0, var(--gx) var(--gy);
+  opacity: 0.55;
+}
+.card-floor { background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.28), transparent 70%); }
+@keyframes card-enter {
+  from { opacity: 0; transform: translateY(24px) rotateY(-70deg) rotateX(12deg) scale(0.9); }
+  to { opacity: 1; transform: rotateX(0) rotateY(0); }
+}
+@keyframes card-sway {
+  0%, 100% { transform: rotateX(0) rotateY(0); }
+  25% { transform: rotateX(3deg) rotateY(-10deg); }
+  75% { transform: rotateX(-2deg) rotateY(10deg); }
+}
+
+/* Presentaciones de nuevos miembros */
+.intro-band {
+  background:
+    radial-gradient(circle at 15% 120%, rgba(245, 200, 75, 0.9), transparent 55%),
+    radial-gradient(circle at 85% -20%, rgba(25, 97, 213, 0.9), transparent 60%),
+    #14161c;
+}
+.intro-avatar { background: linear-gradient(135deg, #f5c84b, #fff3c4, #c98f1a); }
+@keyframes wave {
+  0%, 60%, 100% { transform: rotate(0); }
+  10%, 30% { transform: rotate(16deg); }
+  20%, 40% { transform: rotate(-10deg); }
+}
+.wave { transform-origin: 70% 70%; animation: wave 2.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .card-3d, .wave { animation: none; }
+}

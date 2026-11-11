@@ -17,6 +17,9 @@ export type FeedPost = {
   authorName: string;
   authorImage: string | null;
   authorPoints: number;
+  authorHandle?: string | null;
+  authorCountry?: string | null;
+  authorSince?: Date | null;
   boardName: string;
   likes: number;
   comments: number;
@@ -32,7 +35,70 @@ function when(d: Date) {
   return new Intl.DateTimeFormat("es", { month: "short", day: "numeric" }).format(d);
 }
 
+function IntroCard({ p }: { p: FeedPost }) {
+  const first = p.authorName.split(" ")[0];
+  const since = p.authorSince
+    ? new Date(p.authorSince).toLocaleDateString("es", { month: "long", year: "numeric" })
+    : null;
+  return (
+    <article className="card feed-in overflow-hidden transition-shadow hover:shadow-md">
+      <div className="intro-band relative h-16" aria-hidden>
+        <span className="absolute top-3 right-4 rounded-full bg-black/30 px-2.5 py-1 font-mono text-[10px] tracking-widest text-white uppercase backdrop-blur">
+          Nuevo miembro
+        </span>
+      </div>
+      <div className="px-4 pb-4 sm:px-5 sm:pb-5">
+        <div className="-mt-9 flex items-end gap-3">
+          <Link href={`/u/${p.authorId}`} className="intro-avatar shrink-0 rounded-full p-[3px]">
+            <span className="block rounded-full ring-4 ring-paper">
+              <Avatar name={p.authorName} image={p.authorImage} size={68} />
+            </span>
+          </Link>
+          <div className="min-w-0 flex-1 pb-1">
+            <Link href={`/u/${p.authorId}`} className="block truncate text-lg leading-tight font-bold hover:text-accent">
+              {p.authorName}
+            </Link>
+            <p className="truncate text-xs text-hollow">
+              {[p.authorHandle ? `@${p.authorHandle}` : null, p.authorCountry, since ? `desde ${since}` : null]
+                .filter(Boolean)
+                .join(" · ")}
+            </p>
+          </div>
+        </div>
+
+        <p className="mt-4 text-sm font-semibold">
+          <span className="wave inline-block">👋</span> {first} se unió y le dejó unas palabras a la comunidad
+        </p>
+        <blockquote className="mt-2 rounded-lg border-l-4 border-[#e0aa2c] bg-veil px-4 py-3">
+          <PostBody text={p.body} />
+        </blockquote>
+
+        <footer className="mt-4 flex flex-wrap items-center gap-2">
+          <Link href={`/post/${p.id}`} className="btn btn-primary !rounded-full !py-2">
+            Darle la bienvenida
+          </Link>
+          <LikeButton postId={p.id} count={p.likes} liked={p.liked} />
+          <Link href={`/post/${p.id}`} className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-semibold text-ash transition-colors hover:bg-veil hover:text-ink">
+            <CommentIcon /> {p.comments}
+          </Link>
+          {p.commenters.length > 0 && (
+            <span className="flex -space-x-1.5">
+              {p.commenters.map((c) => (
+                <span key={c.id} className="rounded-full ring-2 ring-paper" title={c.name}>
+                  <Avatar name={c.name} image={c.image} size={24} />
+                </span>
+              ))}
+            </span>
+          )}
+          <span className="ml-auto text-xs text-hollow">{when(p.createdAt)}</span>
+        </footer>
+      </div>
+    </article>
+  );
+}
+
 export function PostCard({ p, full = false }: { p: FeedPost; full?: boolean }) {
+  if (p.kind === "intro" && !full && !p.pinned) return <IntroCard p={p} />;
   return (
     <article className={`card feed-in p-4 transition-shadow hover:shadow-md sm:p-5 ${p.pinned ? "!border-[#f2c14e] shadow-[0_0_0_1px_#f2c14e33]" : ""}`}>
       <header className="flex items-center gap-3">

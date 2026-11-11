@@ -2,6 +2,7 @@ import Link from "next/link";
 import { eq, or } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { Logo } from "@/components/logo";
+import { CardTilt } from "@/components/card-tilt";
 import { MemberCard } from "@/components/member-card";
 import { db, schema } from "@/db";
 import { SOCIALS, socialUrl } from "@/lib/card";
@@ -37,7 +38,7 @@ export default async function PublicCard({ params }: Ctx) {
   return (
     <main className="mx-auto w-full max-w-md px-4 py-10">
       <div className="mb-6 flex justify-center"><Logo /></div>
-      <MemberCard name={u.name} handle={u.handle} theme={u.cardTheme} image={u.image} number={number} since={u.createdAt} />
+      <CardTilt><MemberCard name={u.name} handle={u.handle} theme={u.cardTheme} image={u.image} number={number} since={u.createdAt} /></CardTilt>
       <div className="mt-6 text-center">
         <p className="font-semibold">{u.name}{u.country ? ` · ${u.country}` : ""}</p>
         {u.bio && <p className="mt-1 text-sm text-ash">{u.bio}</p>}

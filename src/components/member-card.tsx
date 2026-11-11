@@ -17,9 +17,9 @@ export function MemberCard({
   const light = theme === "light";
   const date = new Date(since).toLocaleDateString("es", { month: "short", year: "numeric" }).replace(".", "");
   return (
-    <div className="mx-auto w-full max-w-[300px] rounded-[26px] bg-gradient-to-br from-[#f5c84b] via-[#e8e8ea] to-[#f5c84b] p-[7px] shadow-xl">
-      <div className={`rounded-[20px] p-3 ${light ? "bg-[#faf7f0] text-[#1c1917]" : "bg-[#1c1917] text-white"}`}>
-        <div className="relative aspect-square overflow-hidden rounded-xl bg-gradient-to-b from-[#4a3a26] to-[#1c1917]">
+    <div className="mx-auto w-full max-w-[300px] rounded-[26px] bg-gradient-to-br from-[#f5c84b] via-[#fff3c4] to-[#c98f1a] p-[7px] shadow-xl [transform-style:preserve-3d]">
+      <div className={`rounded-[20px] p-3 [transform-style:preserve-3d] ${light ? "bg-[#faf7f0] text-[#1c1917]" : "bg-[#1c1917] text-white"}`}>
+        <div className="relative aspect-square overflow-hidden rounded-xl bg-gradient-to-b from-[#4a3a26] to-[#1c1917] shadow-lg [transform:translateZ(22px)]">
           {image ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={image} alt="" className="h-full w-full object-cover" />
@@ -36,11 +36,11 @@ export function MemberCard({
             </svg>
           )}
         </div>
-        <p className="mt-3 truncate text-xl font-bold">{handle ? `@${handle}` : name}</p>
-        <p className="mt-0.5 text-[11px] font-bold tracking-[.18em] text-[#f59e42]">
+        <p className="mt-3 truncate text-xl font-bold [transform:translateZ(34px)]">{handle ? `@${handle}` : name}</p>
+        <p className="mt-0.5 text-[11px] font-bold tracking-[.18em] text-[#f59e42] [transform:translateZ(28px)]">
           MIEMBRO · #{number.toLocaleString("es")}
         </p>
-        <p className={`mt-2 inline-block rounded-full border ${light ? "border-black/20 text-black/60" : "border-white/20 text-white/70"} px-3 py-1 text-xs`}>
+        <p className={`mt-2 inline-block rounded-full border ${light ? "border-black/20 text-black/60" : "border-white/20 text-white/70"} px-3 py-1 text-xs [transform:translateZ(18px)]`}>
           Miembro desde {date}
         </p>
         <div className={`mt-3 flex items-center justify-between border-t ${light ? "border-black/15" : "border-white/15"} pt-2 text-xs`}>

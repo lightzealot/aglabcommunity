@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { AuthShell } from "@/components/auth-shell";
 import { Logo } from "@/components/logo";
+import { CardTilt } from "@/components/card-tilt";
 import { MemberCard } from "@/components/member-card";
 import { ShareButton } from "@/components/share-button";
 import { SignOutButton } from "@/components/sign-out-button";
@@ -46,14 +47,14 @@ export default async function PendientePage() {
         Gracias, {first}<span className="text-accent">.</span>
       </h1>
       <div className="mt-8">
-        <MemberCard
+        <CardTilt><MemberCard
           name={u.name}
           handle={u.handle}
           theme={u.cardTheme}
           image={u.image}
           number={number}
           since={u.createdAt}
-        />
+        /></CardTilt>
       </div>
       <div className="mt-8 space-y-3">
         <ShareButton path={cardPath(u)} text="Mira mi tarjeta de miembro de AG LAB" className="btn btn-primary w-full" />

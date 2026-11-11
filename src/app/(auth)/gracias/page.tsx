@@ -3,6 +3,7 @@ import { and, eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { Logo } from "@/components/logo";
 import { IntroForm } from "@/components/intro-form";
+import { CardTilt } from "@/components/card-tilt";
 import { MemberCard } from "@/components/member-card";
 import { ShareButton } from "@/components/share-button";
 import { db, schema } from "@/db";
@@ -36,7 +37,7 @@ export default async function GraciasPage() {
         Gracias, {first}<span className="text-accent">.</span>
       </h1>
       <div className="mt-8">
-        <MemberCard name={u.name} handle={u.handle} theme={u.cardTheme} image={u.image} number={number} since={u.createdAt} />
+        <CardTilt><MemberCard name={u.name} handle={u.handle} theme={u.cardTheme} image={u.image} number={number} since={u.createdAt} /></CardTilt>
       </div>
       <div className="mt-8">
         <IntroForm initial={intro?.body ?? ""} pending={!approved} />
