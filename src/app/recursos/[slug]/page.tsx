@@ -7,7 +7,6 @@ import { GoogleButton } from "@/components/google-button";
 import { RichText } from "@/components/rich-text";
 import { SourceCookie } from "@/components/source-cookie";
 import { isGoogleEnabled } from "@/lib/google";
-import { teaser } from "@/lib/resource-teaser";
 import { excerpt } from "@/lib/news-format";
 import { getResourceBySlug, getViewer, listPublishedResources } from "@/lib/resources";
 import { headings, promptCount, readMinutes } from "@/lib/resource-meta";
@@ -46,9 +45,8 @@ export default async function RecursoPage({ params, searchParams }: Props) {
   const r = await getResourceBySlug(slug, isAdmin);
   if (!r) notFound();
 
-  const canDownload = viewer.kind !== "visitor";
-  const preview = viewer.kind === "visitor";
-  const shownBody = preview ? teaser(r.body) : r.body;
+  // La guía se lee completa sin cuenta; solo la descarga de archivos pide registrarse (opcional, con beneficios).
+  const visitor = viewer.kind === "visitor";
   const toc = headings(r.body);
   const prompts = promptCount(r.body);
   const related = (await listPublishedResources()).filter((x) => x.slug !== r.slug).slice(0, 2);
@@ -62,7 +60,7 @@ export default async function RecursoPage({ params, searchParams }: Props) {
       url,
       headline: r.title,
       description: r.summary || excerpt(r.body, 300),
-      articleBody: teaser(r.body) || undefined,
+      articleBody: excerpt(r.body, 5000) || undefined,
       image: r.coverUrl ? [abs(r.coverUrl)] : undefined,
       datePublished: r.createdAt.toISOString(),
       dateModified: r.createdAt.toISOString(),
@@ -86,7 +84,7 @@ export default async function RecursoPage({ params, searchParams }: Props) {
   return (
     <article className="mx-auto max-w-3xl pb-16 md:pb-0">
       {r.published && <JsonLd data={jsonLd} />}
-      {viewer.kind === "visitor" && <SourceCookie slug={r.slug} />}
+      {visitor && <SourceCookie slug={r.slug} />}
 
       <Link href="/recursos" className="text-sm text-ash hover:text-ink">
         ‹ Todos los recursos
@@ -127,7 +125,7 @@ export default async function RecursoPage({ params, searchParams }: Props) {
         <img src={r.coverUrl} alt={r.title} className="mt-6 aspect-[16/9] w-full rounded-lg border border-hairline object-cover" />
       )}
 
-      {!preview && toc.length > 1 && (
+      {toc.length > 1 && (
         <nav aria-label="En esta guía" className="card mt-6 p-4">
           <p className="label !text-ash">En esta guía</p>
           <ol className="mt-2 space-y-1 text-sm">
@@ -156,36 +154,67 @@ export default async function RecursoPage({ params, searchParams }: Props) {
         </div>
       )}
 
-      {shownBody && (
-        <div className={`relative mt-8 ${preview ? "max-h-72 overflow-hidden" : ""}`}>
-          <div className={preview ? "select-none blur-[3px]" : ""} aria-hidden={preview || undefined}>
-            <RichText text={shownBody} numbered={!preview} />
-          </div>
-          {preview && <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-paper/70 to-paper" />}
+      {r.body && (
+        <div className="mt-8">
+          <RichText text={r.body} numbered />
         </div>
       )}
 
-      {preview && (
-        <section className="card relative z-10 -mt-10 p-6" id="unete">
+      {visitor && (
+        <section className="card mt-10 p-6" id="unete">
           <p className="label mb-3 inline-flex items-center gap-2 rounded-full bg-accent-soft px-3 py-1 !text-accent">
-            <LockIcon size={14} /> Guía gratis
+            <LockIcon size={14} /> {r.files.length > 0 ? "Descarga opcional" : "Comunidad gratis"}
           </p>
           <h2 className="display text-4xl">
-            Únete a la comunidad<span className="text-accent">.</span>
+            {r.files.length > 0 ? "¿Quieres llevártela?" : "Únete a la comunidad"}
+            <span className="text-accent">.</span>
           </h2>
-          <p className="mt-2 mb-5 text-sm text-ash">
-            Entra con tu cuenta de Google y la guía se abre aquí mismo. Te sirve para todas las guías.
+          <p className="mt-2 text-sm text-ash">
+            {r.files.length > 0
+              ? "Ya leíste la guía completa, sin cuenta. Si quieres los archivos para tenerlos en tu computador, crea tu cuenta gratis: toma menos de un minuto."
+              : "Crea tu cuenta gratis: toma menos de un minuto y no pide tarjeta."}
           </p>
-          {isGoogleEnabled() ? (
-            <>
-              <GoogleButton callbackURL={`/recursos/${r.slug}?welcome=1`} divider={false} />
-              <Link href={`/registro?from=${r.slug}`} className="mt-3 block text-center text-sm text-ash underline">
-                Prefiero registrarme con mi correo
-              </Link>
-            </>
-          ) : (
-            <Link href={`/registro?from=${r.slug}`} className="btn btn-primary w-full">Crear mi cuenta gratis</Link>
+          {r.files.length > 0 && (
+            <ul className="mt-4 divide-y divide-hairline rounded-lg border border-hairline">
+              {r.files.map((f) => (
+                <li key={f.id} className="flex items-center gap-3 px-3 py-2.5 text-sm">
+                  <span className="flex flex-1 items-center gap-2 truncate text-ash">
+                    <LockIcon size={15} /> {f.name}
+                  </span>
+                  <span className="shrink-0 text-xs text-hollow">{mb(f.size)}</span>
+                </li>
+              ))}
+            </ul>
           )}
+          <p className="label mt-5 !text-ash">Con tu cuenta gratis también tienes</p>
+          <ul className="mt-2 space-y-2 text-sm">
+            {[
+              ["Descargas en todos los recursos", "Los archivos de cada guía, hoy y los que vayan saliendo, sin volver a pedirlos."],
+              ["Cursos gratis", "Aprende paso a paso con lecciones en video y lleva tu progreso."],
+              ["Comunidad en español", "Pregunta, comparte lo que haces y recibe respuestas de otros que usan IA como tú."],
+              ["Eventos en vivo", "Te avisamos antes de cada uno para que no se te pasen."],
+              ["Tarjeta de miembro, puntos y ranking", "Sumas puntos por participar y aprender, y subes en el ranking."],
+            ].map(([t, d]) => (
+              <li key={t} className="flex gap-2">
+                <span className="mt-0.5 text-accent" aria-hidden>✓</span>
+                <span>
+                  <span className="font-semibold">{t}.</span> <span className="text-ash">{d}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-5">
+            {isGoogleEnabled() ? (
+              <>
+                <GoogleButton callbackURL={`/recursos/${r.slug}?welcome=1`} divider={false} />
+                <Link href={`/registro?from=${r.slug}`} className="mt-3 block text-center text-sm text-ash underline">
+                  Prefiero registrarme con mi correo
+                </Link>
+              </>
+            ) : (
+              <Link href={`/registro?from=${r.slug}`} className="btn btn-primary w-full">Crear mi cuenta gratis</Link>
+            )}
+          </div>
           <p className="mt-4 text-sm text-ash">
             ¿Ya tienes cuenta?{" "}
             <Link href={`/login?next=/recursos/${r.slug}`} className="font-semibold text-accent">Entrar</Link>
@@ -193,30 +222,19 @@ export default async function RecursoPage({ params, searchParams }: Props) {
         </section>
       )}
 
-      {!preview && r.files.length > 0 && (
+      {!visitor && r.files.length > 0 && (
         <section className="card mt-8 p-5">
           <h2 className="font-semibold">Archivos para descargar</h2>
           <ul className="mt-3 divide-y divide-hairline">
             {r.files.map((f) => (
               <li key={f.id} className="flex items-center gap-3 py-2.5 text-sm">
-                {canDownload ? (
-                  <a href={`/api/resource-files/${f.id}`} className="flex-1 truncate font-semibold text-accent underline">
-                    ⬇ {f.name}
-                  </a>
-                ) : (
-                  <span className="flex flex-1 items-center gap-2 truncate text-ash">
-                    <LockIcon size={15} /> {f.name}
-                  </span>
-                )}
+                <a href={`/api/resource-files/${f.id}`} className="flex-1 truncate font-semibold text-accent underline">
+                  ⬇ {f.name}
+                </a>
                 <span className="shrink-0 text-xs text-hollow">{mb(f.size)}</span>
               </li>
             ))}
           </ul>
-          {!canDownload && (
-            <p className="mt-3 text-sm text-ash">
-              Para descargar estos archivos crea tu cuenta gratis: toma menos de un minuto.
-            </p>
-          )}
         </section>
       )}
 
@@ -229,7 +247,7 @@ export default async function RecursoPage({ params, searchParams }: Props) {
         </div>
       )}
 
-      {!preview && (
+      {(
         <section className="card mt-10 flex items-center gap-4 p-5">
           <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-accent font-mono text-lg font-semibold text-white">
             AG

@@ -305,5 +305,17 @@
       "Guia-Teleprompter-Studio.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "photocraft-photoshop-gratis",
+    "title": "PhotoCraft: el Photoshop gratis y de código abierto que Claude puede manejar",
+    "summary": "Qué es PhotoCraft, cómo descargarlo para Windows, Mac o Linux, abrir tus PSD y conectarlo a Claude por MCP. Guía completa para leer aquí; los archivos se descargan con tu cuenta gratis.",
+    "position": 29,
+    "cover": "/recursos/covers/photocraft-photoshop-gratis.webp",
+    "files": [
+      "PhotoCraft-guia.pdf",
+      "prompt-photocraft-claude.md"
+    ],
+    "extra": true
   }
 ]
