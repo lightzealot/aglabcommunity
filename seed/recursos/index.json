@@ -317,5 +317,17 @@
       "prompt-photocraft-claude.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "ai-job-search-claude-code",
+    "title": "AI Job Search: el framework gratis que convierte Claude Code en tu asistente para conseguir trabajo",
+    "summary": "Cómo instalar AI Job Search y usar /setup, /scrape, /apply e /interview para postular con CV y carta a medida revisados por un segundo agente. Guía completa para leer aquí; los archivos se descargan con tu cuenta gratis.",
+    "position": 30,
+    "cover": "/recursos/covers/ai-job-search-claude-code.webp",
+    "files": [
+      "AIJobSearch-guia.pdf",
+      "prompt-ai-job-search.md"
+    ],
+    "extra": true
   }
 ]
