@@ -353,5 +353,17 @@
       "prompt-wifi-claude.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "github-trucos-url",
+    "title": "4 trucos si no entiendes nada de GitHub: cambia una palabra en la URL",
+    "summary": "Siete trucos para entender cualquier repositorio sin leer el código: gitreverse, gitdiagram, gitingest, gitmcp, DeepWiki, la tecla punto y .patch. Guía completa para leer aquí; los archivos se descargan con tu cuenta gratis.",
+    "position": 33,
+    "cover": "/recursos/covers/github-trucos-url.webp",
+    "files": [
+      "GitHub-trucos-guia.pdf",
+      "prompt-github-ingest.md"
+    ],
+    "extra": true
   }
 ]
