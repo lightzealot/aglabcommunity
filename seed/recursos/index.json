@@ -329,5 +329,17 @@
       "prompt-ai-job-search.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "find-skills-claude-code",
+    "title": "find-skills: la skill nº 1 de skills.sh que busca e instala la skill que le falta a Claude Code",
+    "summary": "Cómo instalar find-skills, pedirle la skill que necesitas, revisarla antes de instalar y las 10 skills más instaladas del directorio. Guía completa para leer aquí; los archivos se descargan con tu cuenta gratis.",
+    "position": 31,
+    "cover": "/recursos/covers/find-skills-claude-code.webp",
+    "files": [
+      "FindSkills-guia.pdf",
+      "prompt-find-skills.md"
+    ],
+    "extra": true
   }
 ]
