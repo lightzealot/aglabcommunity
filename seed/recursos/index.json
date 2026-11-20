@@ -341,5 +341,17 @@
       "prompt-find-skills.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "wifi-lento-claude",
+    "title": "¿Pagas 300 megas y te llegan 90? El prompt para que Claude revise tu wifi y los 3 ajustes del router",
+    "summary": "El prompt exacto para pedirle a Claude que revise tu wifi y cómo revisar tú mismo el canal, WMM y la banda de 5 GHz. Guía completa para leer aquí; los archivos se descargan con tu cuenta gratis.",
+    "position": 32,
+    "cover": "/recursos/covers/wifi-lento-claude.webp",
+    "files": [
+      "WifiClaude-guia.pdf",
+      "prompt-wifi-claude.md"
+    ],
+    "extra": true
   }
 ]
