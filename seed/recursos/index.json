@@ -377,5 +377,17 @@
       "prompt-llm-council.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "moneyprinterturbo-videos",
+    "title": "¿Pasas horas editando cada video? MoneyPrinterTurbo los hace solo",
+    "summary": "Cómo instalar y configurar MoneyPrinterTurbo, la herramienta gratis y de código abierto que de un solo tema saca el guion, los clips, la voz, los subtítulos y la música, y hasta publica el video. Guía completa para leer aquí; los archivos se descargan con tu cuenta gratis.",
+    "position": 35,
+    "cover": "/recursos/covers/moneyprinterturbo-videos.webp",
+    "files": [
+      "MoneyPrinterTurbo-guia.pdf",
+      "prompt-moneyprinterturbo.md"
+    ],
+    "extra": true
   }
 ]
