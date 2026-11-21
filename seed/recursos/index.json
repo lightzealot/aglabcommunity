@@ -413,5 +413,17 @@
       "prompts-estilo-gta.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "claude-solidcraft-cad",
+    "title": "Claude diseña tus piezas 3D con SolidCraft",
+    "summary": "Configuración paso a paso para conectar Claude Code con SolidCraft, la app de CAD gratis y de código abierto, y 3 prompts para tu primera pieza (soporte para el celular, caja con tapa y gancho). Guía completa para leer aquí; el PDF y los prompts editables se descargan con tu cuenta gratis.",
+    "position": 38,
+    "cover": "/recursos/covers/claude-solidcraft-cad.webp",
+    "files": [
+      "SolidCraft-Claude-guia.pdf",
+      "prompts-solidcraft.md"
+    ],
+    "extra": true
   }
 ]
