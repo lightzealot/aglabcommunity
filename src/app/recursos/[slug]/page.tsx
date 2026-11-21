@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { LockIcon } from "@/components/icons";
 import { JsonLd } from "@/components/json-ld";
+import { LangSwitch } from "@/components/lang-switch";
 import { GoogleButton } from "@/components/google-button";
 import { RichText } from "@/components/rich-text";
 import { SourceCookie } from "@/components/source-cookie";
@@ -10,25 +11,33 @@ import { isGoogleEnabled } from "@/lib/google";
 import { excerpt } from "@/lib/news-format";
 import { getResourceBySlug, getViewer, listPublishedResources } from "@/lib/resources";
 import { headings, promptCount, readMinutes } from "@/lib/resource-meta";
+import { getResourceEn, langOf, UI } from "@/lib/resource-i18n";
 import { abs, orgRef, siteUrl } from "@/lib/site";
 
-type Props = { params: Promise<{ slug: string }>; searchParams: Promise<{ welcome?: string }> };
+type Props = { params: Promise<{ slug: string }>; searchParams: Promise<{ welcome?: string; lang?: string }> };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const r = await getResourceBySlug(slug);
-  if (!r) return { title: "Recurso no encontrado" };
+  const base = await getResourceBySlug(slug);
+  if (!base) return { title: "Recurso no encontrado" };
+  const en = getResourceEn(slug);
+  const lang = en ? langOf((await searchParams).lang) : "es";
+  const r = lang === "en" && en ? { ...base, ...en } : base;
   const description = r.summary || excerpt(r.body) || undefined;
+  const path = `/recursos/${slug}`;
   return {
     title: r.title,
     description,
+    alternates: en
+      ? { canonical: lang === "en" ? `${path}?lang=en` : path, languages: { es: path, en: `${path}?lang=en`, "x-default": path } }
+      : undefined,
     openGraph: {
       title: r.title,
       description,
       type: "article",
       publishedTime: r.createdAt.toISOString(),
-      section: "Recursos de IA",
-      locale: "es_ES",
+      section: lang === "en" ? "AI resources" : "Recursos de IA",
+      locale: lang === "en" ? "en_US" : "es_ES",
       images: r.coverUrl ? [abs(r.coverUrl)] : undefined,
     },
     twitter: { card: "summary_large_image", title: r.title, description },
@@ -39,18 +48,26 @@ const mb = (n: number) => (n < 1024 * 1024 ? `${Math.max(1, Math.round(n / 1024)
 
 export default async function RecursoPage({ params, searchParams }: Props) {
   const { slug } = await params;
-  const { welcome } = await searchParams;
+  const { welcome, lang: langParam } = await searchParams;
   const viewer = await getViewer();
   const isAdmin = viewer.kind === "member" && viewer.user.role === "admin";
-  const r = await getResourceBySlug(slug, isAdmin);
-  if (!r) notFound();
+  const base = await getResourceBySlug(slug, isAdmin);
+  if (!base) notFound();
+  const en = getResourceEn(slug);
+  const lang = en ? langOf(langParam) : "es";
+  const r = lang === "en" && en ? { ...base, ...en } : base;
+  const t = UI[lang];
+  const q = lang === "en" ? "?lang=en" : "";
 
   // La guía se lee completa sin cuenta; solo la descarga de archivos pide registrarse (opcional, con beneficios).
   const visitor = viewer.kind === "visitor";
   const toc = headings(r.body);
   const prompts = promptCount(r.body);
-  const related = (await listPublishedResources()).filter((x) => x.slug !== r.slug).slice(0, 2);
-  const url = `${siteUrl()}/recursos/${r.slug}`;
+  const related = (await listPublishedResources())
+    .filter((x) => x.slug !== r.slug)
+    .slice(0, 2)
+    .map((x) => (lang === "en" ? { ...x, title: getResourceEn(x.slug)?.title ?? x.title } : x));
+  const url = `${siteUrl()}/recursos/${r.slug}${q}`;
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -64,7 +81,7 @@ export default async function RecursoPage({ params, searchParams }: Props) {
       image: r.coverUrl ? [abs(r.coverUrl)] : undefined,
       datePublished: r.createdAt.toISOString(),
       dateModified: r.createdAt.toISOString(),
-      inLanguage: "es",
+      inLanguage: lang,
       isAccessibleForFree: true,
       author: orgRef(),
       publisher: orgRef(),
@@ -74,25 +91,28 @@ export default async function RecursoPage({ params, searchParams }: Props) {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Inicio", item: abs("/") },
-        { "@type": "ListItem", position: 2, name: "Recursos", item: abs("/recursos") },
+        { "@type": "ListItem", position: 1, name: lang === "en" ? "Home" : "Inicio", item: abs("/") },
+        { "@type": "ListItem", position: 2, name: lang === "en" ? "Resources" : "Recursos", item: abs(`/recursos${q}`) },
         { "@type": "ListItem", position: 3, name: r.title, item: url },
       ],
     },
   ];
 
   return (
-    <article className="mx-auto max-w-3xl pb-16 md:pb-0">
+    <article lang={lang} className="mx-auto max-w-3xl pb-16 md:pb-0">
       {r.published && <JsonLd data={jsonLd} />}
       {visitor && <SourceCookie slug={r.slug} />}
 
-      <Link href="/recursos" className="text-sm text-ash hover:text-ink">
-        ‹ Todos los recursos
-      </Link>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <Link href={`/recursos${q}`} className="text-sm text-ash hover:text-ink">
+          {t.back}
+        </Link>
+        {en && <LangSwitch lang={lang} href={`/recursos/${r.slug}`} />}
+      </div>
 
-      {!r.published && <p className="label mt-3 !text-ash">Borrador (solo lo ves tú)</p>}
+      {!r.published && <p className="label mt-3 !text-ash">{t.draft}</p>}
 
-      <p className="label mt-5">Guía · prompts listos para copiar</p>
+      <p className="label mt-5">{t.kicker}</p>
       <h1 className="display mt-2 text-5xl sm:text-6xl">
         {r.title}
         <span className="text-accent">.</span>
@@ -102,22 +122,22 @@ export default async function RecursoPage({ params, searchParams }: Props) {
       <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-ash">
         <span className="font-semibold text-ink">Andrés Gómez</span>
         <span aria-hidden>·</span>
-        <span>{r.createdAt.toLocaleDateString("es", { day: "numeric", month: "short", year: "numeric" })}</span>
+        <span>{r.createdAt.toLocaleDateString(t.dateLocale, { day: "numeric", month: "short", year: "numeric" })}</span>
         <span aria-hidden>·</span>
-        <span>{readMinutes(r.body)} min de lectura</span>
+        <span>{readMinutes(r.body)} {t.readMin}</span>
       </div>
       <div className="mt-3 flex flex-wrap gap-2">
         {prompts > 0 && (
           <span className="rounded-full border border-hairline bg-accent-soft px-3 py-1 text-xs font-semibold text-accent">
-            {prompts} {prompts === 1 ? "prompt" : "prompts"}
+            {prompts} {t.prompt(prompts)}
           </span>
         )}
         {r.files.length > 0 && (
           <span className="rounded-full border border-hairline bg-veil px-3 py-1 text-xs font-semibold text-ash">
-            {r.files.length} {r.files.length === 1 ? "archivo" : "archivos"}
+            {r.files.length} {t.file(r.files.length)}
           </span>
         )}
-        <span className="rounded-full border border-hairline bg-veil px-3 py-1 text-xs font-semibold text-ash">Gratis</span>
+        <span className="rounded-full border border-hairline bg-veil px-3 py-1 text-xs font-semibold text-ash">{t.free}</span>
       </div>
 
       {r.coverUrl && (
@@ -126,8 +146,8 @@ export default async function RecursoPage({ params, searchParams }: Props) {
       )}
 
       {toc.length > 1 && (
-        <nav aria-label="En esta guía" className="card mt-6 p-4">
-          <p className="label !text-ash">En esta guía</p>
+        <nav aria-label={t.toc} className="card mt-6 p-4">
+          <p className="label !text-ash">{t.toc}</p>
           <ol className="mt-2 space-y-1 text-sm">
             {toc.map((h, i) => (
               <li key={h.id}>
@@ -143,11 +163,11 @@ export default async function RecursoPage({ params, searchParams }: Props) {
 
       {welcome === "1" && viewer.kind === "lead" && (
         <div className="card mt-5 border-accent bg-accent-soft/40 p-4 text-sm">
-          <p className="font-semibold">¡Listo, tu cuenta está creada!</p>
+          <p className="font-semibold">{t.welcomeTitle}</p>
           <p className="mt-1 text-ash">
-            Ya puedes descargar los archivos de abajo.{" "}
+            {t.welcomeBody}{" "}
             <Link href={"/gracias"} className="font-semibold text-accent underline">
-              Crea tu tarjeta de miembro
+              {t.welcomeCard}
             </Link>
             .
           </p>
@@ -156,23 +176,21 @@ export default async function RecursoPage({ params, searchParams }: Props) {
 
       {r.body && (
         <div className="mt-8">
-          <RichText text={r.body} numbered />
+          <RichText text={r.body} numbered copyLabels={{ copy: t.copy, copied: t.copied, fallback: t.copyFallback }} />
         </div>
       )}
 
       {visitor && (
         <section className="card mt-10 p-6" id="unete">
           <p className="label mb-3 inline-flex items-center gap-2 rounded-full bg-accent-soft px-3 py-1 !text-accent">
-            <LockIcon size={14} /> {r.files.length > 0 ? "Descarga opcional" : "Comunidad gratis"}
+            <LockIcon size={14} /> {r.files.length > 0 ? t.optional : t.freeCommunity}
           </p>
           <h2 className="display text-4xl">
-            {r.files.length > 0 ? "¿Quieres llevártela?" : "Únete a la comunidad"}
+            {r.files.length > 0 ? t.takeIt : t.join}
             <span className="text-accent">.</span>
           </h2>
           <p className="mt-2 text-sm text-ash">
-            {r.files.length > 0
-              ? "Ya leíste la guía completa, sin cuenta. Si quieres los archivos para tenerlos en tu computador, crea tu cuenta gratis: toma menos de un minuto."
-              : "Crea tu cuenta gratis: toma menos de un minuto y no pide tarjeta."}
+            {r.files.length > 0 ? t.takeItBody : t.joinBody}
           </p>
           {r.files.length > 0 && (
             <ul className="mt-4 divide-y divide-hairline rounded-lg border border-hairline">
@@ -186,19 +204,13 @@ export default async function RecursoPage({ params, searchParams }: Props) {
               ))}
             </ul>
           )}
-          <p className="label mt-5 !text-ash">Con tu cuenta gratis también tienes</p>
+          <p className="label mt-5 !text-ash">{t.withAccount}</p>
           <ul className="mt-2 space-y-2 text-sm">
-            {[
-              ["Descargas en todos los recursos", "Los archivos de cada guía, hoy y los que vayan saliendo, sin volver a pedirlos."],
-              ["Cursos gratis", "Aprende paso a paso con lecciones en video y lleva tu progreso."],
-              ["Comunidad en español", "Pregunta, comparte lo que haces y recibe respuestas de otros que usan IA como tú."],
-              ["Eventos en vivo", "Te avisamos antes de cada uno para que no se te pasen."],
-              ["Tarjeta de miembro, puntos y ranking", "Sumas puntos por participar y aprender, y subes en el ranking."],
-            ].map(([t, d]) => (
-              <li key={t} className="flex gap-2">
+            {t.perks.map(([pt, d]) => (
+              <li key={pt} className="flex gap-2">
                 <span className="mt-0.5 text-accent" aria-hidden>✓</span>
                 <span>
-                  <span className="font-semibold">{t}.</span> <span className="text-ash">{d}</span>
+                  <span className="font-semibold">{pt}.</span> <span className="text-ash">{d}</span>
                 </span>
               </li>
             ))}
@@ -206,25 +218,25 @@ export default async function RecursoPage({ params, searchParams }: Props) {
           <div className="mt-5">
             {isGoogleEnabled() ? (
               <>
-                <GoogleButton callbackURL={`/recursos/${r.slug}?welcome=1`} divider={false} />
+                <GoogleButton callbackURL={`/recursos/${r.slug}?welcome=1${lang === "en" ? "&lang=en" : ""}`} divider={false} />
                 <Link href={`/registro?from=${r.slug}`} className="mt-3 block text-center text-sm text-ash underline">
-                  Prefiero registrarme con mi correo
+                  {t.byEmail}
                 </Link>
               </>
             ) : (
-              <Link href={`/registro?from=${r.slug}`} className="btn btn-primary w-full">Crear mi cuenta gratis</Link>
+              <Link href={`/registro?from=${r.slug}`} className="btn btn-primary w-full">{t.create}</Link>
             )}
           </div>
           <p className="mt-4 text-sm text-ash">
-            ¿Ya tienes cuenta?{" "}
-            <Link href={`/login?next=/recursos/${r.slug}`} className="font-semibold text-accent">Entrar</Link>
+            {t.haveAccount}{" "}
+            <Link href={`/login?next=/recursos/${r.slug}`} className="font-semibold text-accent">{t.login}</Link>
           </p>
         </section>
       )}
 
       {!visitor && r.files.length > 0 && (
         <section className="card mt-8 p-5">
-          <h2 className="font-semibold">Archivos para descargar</h2>
+          <h2 className="font-semibold">{t.downloads}</h2>
           <ul className="mt-3 divide-y divide-hairline">
             {r.files.map((f) => (
               <li key={f.id} className="flex items-center gap-3 py-2.5 text-sm">
@@ -240,9 +252,9 @@ export default async function RecursoPage({ params, searchParams }: Props) {
 
       {viewer.kind === "lead" && welcome !== "1" && (
         <div className="card mt-8 p-5 text-sm">
-          <p className="font-semibold">Crea tu tarjeta de miembro</p>
+          <p className="font-semibold">{t.welcomeCard}</p>
           <Link href={"/gracias"} className="btn btn-primary mt-3 !py-2">
-            {"Mi tarjeta"}
+            {t.myCard}
           </Link>
         </div>
       )}
@@ -255,7 +267,7 @@ export default async function RecursoPage({ params, searchParams }: Props) {
           <div className="min-w-0">
             <p className="font-semibold">Andrés Gómez</p>
             <p className="text-sm text-ash">
-              IA práctica para crear contenido, fotos y marca.{" "}
+              {t.bio}{" "}
               <a href="https://instagram.com/andresgomez.ia" target="_blank" rel="noopener noreferrer" className="font-semibold text-accent">
                 @andresgomez.ia
               </a>
@@ -266,10 +278,10 @@ export default async function RecursoPage({ params, searchParams }: Props) {
 
       {related.length > 0 && (
         <section className="mt-10">
-          <p className="label">Sigue con</p>
+          <p className="label">{t.next}</p>
           <div className="mt-3 grid gap-4 sm:grid-cols-2">
             {related.map((x) => (
-              <Link key={x.slug} href={`/recursos/${x.slug}`} className="card group flex flex-col overflow-hidden transition hover:shadow-md">
+              <Link key={x.slug} href={`/recursos/${x.slug}${q}`} className="card group flex flex-col overflow-hidden transition hover:shadow-md">
                 <div className="aspect-[16/9] bg-accent-soft">
                   {x.coverUrl && (
                     // eslint-disable-next-line @next/next/no-img-element

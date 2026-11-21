@@ -3,7 +3,10 @@
 import { useState } from "react";
 
 /** Bloque de código/prompt con botón para copiarlo. */
-export function CodeBlock({ code }: { code: string }) {
+type Labels = { copy: string; copied: string; fallback: string };
+const ES: Labels = { copy: "Copiar prompt", copied: "¡Copiado ✓", fallback: "Copia el texto:" };
+
+export function CodeBlock({ code, labels = ES }: { code: string; labels?: Labels }) {
   const [copied, setCopied] = useState(false);
   return (
     <div className="overflow-hidden rounded-lg border border-hairline bg-[#0d0d0d]">
@@ -17,12 +20,12 @@ export function CodeBlock({ code }: { code: string }) {
               setCopied(true);
               setTimeout(() => setCopied(false), 1800);
             } catch {
-              window.prompt("Copia el texto:", code);
+              window.prompt(labels.fallback, code);
             }
           }}
           className="rounded-full bg-accent px-3.5 py-1.5 text-xs font-semibold text-white hover:opacity-90"
         >
-          {copied ? "¡Copiado ✓" : "Copiar prompt"}
+          {copied ? labels.copied : labels.copy}
         </button>
       </div>
       <pre className="overflow-x-auto p-4 text-[0.8125rem] leading-relaxed whitespace-pre-wrap text-white">

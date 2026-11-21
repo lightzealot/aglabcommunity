@@ -127,7 +127,15 @@ function parse(src: string): Block[] {
   return blocks;
 }
 
-export function RichText({ text, numbered = false }: { text: string; numbered?: boolean }) {
+export function RichText({
+  text,
+  numbered = false,
+  copyLabels,
+}: {
+  text: string;
+  numbered?: boolean;
+  copyLabels?: { copy: string; copied: string; fallback: string };
+}) {
   const blocks = parse(text.trim());
   let step = 0;
   return (
@@ -157,7 +165,7 @@ export function RichText({ text, numbered = false }: { text: string; numbered?: 
               </a>
             );
           case "code":
-            return <CodeBlock key={i} code={b.text} />;
+            return <CodeBlock key={i} code={b.text} labels={copyLabels} />;
           case "quote":
             return (
               <blockquote key={i} className="border-l-4 border-accent bg-accent-soft/40 py-2 pr-3 pl-4 whitespace-pre-line">

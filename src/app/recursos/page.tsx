@@ -1,24 +1,40 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
+import { LangSwitch } from "@/components/lang-switch";
 import { getViewer, listPublishedResources } from "@/lib/resources";
+import { getResourceEn, langOf, UI } from "@/lib/resource-i18n";
 import { abs, orgRef, siteUrl } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Recursos gratuitos",
-  description: "Guías, prompts y plantillas gratis para usar la inteligencia artificial y crear contenido, fotos y marca.",
-};
+type Props = { searchParams: Promise<{ lang?: string }> };
 
-export default async function RecursosPage() {
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+  const en = langOf((await searchParams).lang) === "en";
+  return {
+    title: en ? "Free AI resources" : "Recursos gratuitos",
+    description: en
+      ? "Free guides, prompts and templates to use artificial intelligence to create content, photos and brand."
+      : "Guías, prompts y plantillas gratis para usar la inteligencia artificial y crear contenido, fotos y marca.",
+    alternates: { canonical: en ? "/recursos?lang=en" : "/recursos", languages: { es: "/recursos", en: "/recursos?lang=en", "x-default": "/recursos" } },
+  };
+}
+
+export default async function RecursosPage({ searchParams }: Props) {
+  const lang = langOf((await searchParams).lang);
+  const t = UI[lang];
+  const q = lang === "en" ? "?lang=en" : "";
   const viewer = await getViewer();
-  const resources = await listPublishedResources();
+  const resources = (await listPublishedResources()).map((r) => {
+    const en = lang === "en" ? getResourceEn(r.slug) : null;
+    return en ? { ...r, title: en.title, summary: en.summary || r.summary } : r;
+  });
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "Recursos gratuitos de IA",
-    url: `${siteUrl()}/recursos`,
-    inLanguage: "es",
+    name: lang === "en" ? "Free AI resources" : "Recursos gratuitos de IA",
+    url: `${siteUrl()}/recursos${q}`,
+    inLanguage: lang,
     isPartOf: { "@id": `${siteUrl()}/#website` },
     publisher: orgRef(),
     mainEntity: {
@@ -26,7 +42,7 @@ export default async function RecursosPage() {
       itemListElement: resources.map((r, i) => ({
         "@type": "ListItem",
         position: i + 1,
-        url: abs(`/recursos/${r.slug}`),
+        url: abs(`/recursos/${r.slug}${q}`),
         name: r.title,
       })),
     },
@@ -35,35 +51,41 @@ export default async function RecursosPage() {
   return (
     <>
       <JsonLd data={jsonLd} />
+      <div className="mb-4 flex justify-end">
+        <LangSwitch lang={lang} href="/recursos" />
+      </div>
       {viewer.kind === "visitor" ? (
         <section className="mx-auto max-w-3xl pb-8 text-center">
-          <p className="label mb-2">Recursos gratuitos</p>
+          <p className="label mb-2">{lang === "en" ? "Free resources" : "Recursos gratuitos"}</p>
           <h1 className="display text-6xl sm:text-7xl">
-            Guías y plantillas para usar IA en tu trabajo<span className="text-accent">.</span>
+            {lang === "en" ? "Guides and templates to use AI in your work" : "Guías y plantillas para usar IA en tu trabajo"}
+            <span className="text-accent">.</span>
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-ash">
-            Lee todas las guías gratis. Para descargar los archivos, crea tu cuenta y entra a la comunidad de AG Lab.
+            {lang === "en"
+              ? "Read every guide for free. To download the files, create your account and join the AG Lab community."
+              : "Lee todas las guías gratis. Para descargar los archivos, crea tu cuenta y entra a la comunidad de AG Lab."}
           </p>
           <Link href="/registro" className="btn btn-primary mt-6">
-            Crear mi cuenta gratis
+            {t.create}
           </Link>
         </section>
       ) : (
         <div className="mb-6">
           <h1 className="display text-5xl">
-            Recursos<span className="text-accent">.</span>
+            {lang === "en" ? "Resources" : "Recursos"}<span className="text-accent">.</span>
           </h1>
         </div>
       )}
 
       {resources.length === 0 ? (
-        <p className="card p-10 text-center text-sm text-ash">Pronto publicaremos los primeros recursos.</p>
+        <p className="card p-10 text-center text-sm text-ash">{lang === "en" ? "The first resources are coming soon." : "Pronto publicaremos los primeros recursos."}</p>
       ) : (
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {resources.map((r) => (
             <Link
               key={r.id}
-              href={`/recursos/${r.slug}`}
+              href={`/recursos/${r.slug}${q}`}
               className="card group flex flex-col overflow-hidden transition hover:shadow-md"
             >
               <div className="aspect-[16/9] bg-accent-soft">
@@ -80,7 +102,7 @@ export default async function RecursosPage() {
                 <h2 className="text-lg leading-snug font-bold group-hover:text-accent">{r.title}</h2>
                 <p className="mt-1 line-clamp-3 text-sm text-ash">{r.summary}</p>
                 <p className="mt-auto pt-3 text-xs font-semibold text-accent">
-                  {r.files > 0 ? `${r.files} archivo${r.files === 1 ? "" : "s"} para descargar` : "Guía"}
+                  {r.files > 0 ? t.filesForDownload(r.files) : t.guide}
                 </p>
               </div>
             </Link>
