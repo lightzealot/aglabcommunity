@@ -81,6 +81,11 @@ export default async function MiembrosPage({ searchParams }: { searchParams: Pro
                     </Link>
                     {m.role === "admin" && <span className="label">Admin</span>}
                     {m.id === me.id && <span className="label !text-hollow">Tú</span>}
+                    {m.id !== me.id && (
+                      <Link href={`/mensajes/${m.id}`} className="ml-auto rounded-full border border-hairline px-3 py-1 text-xs font-semibold text-ash transition hover:border-accent hover:text-accent">
+                        Mensaje
+                      </Link>
+                    )}
                   </p>
                   {m.bio && <p className="mt-0.5 line-clamp-2 text-sm text-ash">{m.bio}</p>}
                   <div className="mt-2 space-y-1 text-xs text-hollow">

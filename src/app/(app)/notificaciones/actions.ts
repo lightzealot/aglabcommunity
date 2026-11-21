@@ -5,6 +5,15 @@ import { revalidatePath } from "next/cache";
 import { db, schema } from "@/db";
 import { requireMember } from "@/lib/session";
 
+/** Archiva en silencio lo que ya se vio (sin recargar la página que se está leyendo). */
+export async function archiveSeen() {
+  const { user } = await requireMember();
+  await db
+    .update(schema.notification)
+    .set({ readAt: new Date() })
+    .where(and(eq(schema.notification.userId, user.id), isNull(schema.notification.readAt)));
+}
+
 export async function markAllRead() {
   const { user } = await requireMember();
   await db

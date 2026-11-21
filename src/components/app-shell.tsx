@@ -8,6 +8,7 @@ import { NavTabs } from "@/components/nav-tabs";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { UserMenu } from "@/components/user-menu";
 import { db, schema } from "@/db";
+import { unreadChatCount } from "@/lib/chat";
 import { touchPresence } from "@/lib/community";
 import { touchStreak } from "@/lib/streak";
 
@@ -30,6 +31,8 @@ export async function AppShell({ user, children }: { user: ShellUser; children: 
     .select({ unread: sql<number>`count(*)::int` })
     .from(schema.notification)
     .where(and(eq(schema.notification.userId, user.id), isNull(schema.notification.readAt)));
+
+  const chatUnread = await unreadChatCount(user.id);
 
   return (
     <div className="min-h-screen">
@@ -54,6 +57,21 @@ export async function AppShell({ user, children }: { user: ShellUser; children: 
           </form>
 
           <ThemeToggle className="shrink-0 rounded-full p-2 text-ash hover:bg-veil hover:text-ink" />
+
+          <Link
+            href="/mensajes"
+            className="relative shrink-0 rounded-full p-2 text-ash hover:bg-veil hover:text-ink"
+            aria-label={chatUnread > 0 ? `${chatUnread} mensajes sin leer` : "Mensajes"}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M4 5h16v11H9l-5 4z" />
+            </svg>
+            {chatUnread > 0 && (
+              <span className="absolute top-0 right-0 min-w-5 rounded-full bg-accent px-1 text-center text-[11px] font-semibold text-white">
+                {chatUnread > 99 ? "99+" : chatUnread}
+              </span>
+            )}
+          </Link>
 
           <Link
             href="/notificaciones"

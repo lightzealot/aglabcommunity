@@ -44,8 +44,12 @@ export default async function UserPage({ params }: { params: Promise<{ id: strin
           <p className="label">Puntos</p>
         </div>
       </div>
-      {me.id === u.id && (
+      {me.id === u.id ? (
         <Link href="/perfil" className="btn btn-ghost mt-3 !py-1.5">Editar perfil</Link>
+      ) : (
+        <Link href={`/mensajes/${u.id}`} className="btn btn-primary mt-3 !rounded-full !py-2">
+          Enviar mensaje
+        </Link>
       )}
       <h2 className="display mt-8 mb-3 text-3xl">Publicaciones<span className="text-accent">.</span></h2>
       <div className="space-y-4">

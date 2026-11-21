@@ -389,3 +389,24 @@ export const news = pgTable("news", {
   publishedAt: timestamp("published_at").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
+
+// ---- Chat interno (mensajes directos entre miembros) ----
+export const chatMessage = pgTable(
+  "chat_message",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    senderId: text("sender_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    recipientId: text("recipient_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    body: text("body").notNull(),
+    readAt: timestamp("read_at"),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (t) => [
+    index("chat_recipient_idx").on(t.recipientId, t.readAt),
+    index("chat_pair_idx").on(t.senderId, t.recipientId, t.createdAt),
+  ],
+);

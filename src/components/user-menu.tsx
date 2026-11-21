@@ -9,6 +9,7 @@ import { authClient } from "@/lib/auth-client";
 type U = { name: string; email: string; image: string | null; points: number; role: string };
 
 const ADMIN_LINKS = [
+  { href: "/admin/anuncios", label: "Avisos a todos" },
   { href: "/admin/usuarios", label: "Usuarios" },
   { href: "/admin/cursos", label: "Cursos" },
   { href: "/admin/recursos", label: "Recursos" },
@@ -49,6 +50,7 @@ export function UserMenu({ user }: { user: U }) {
         </div>
         <div className="py-1">
           <Link href="/perfil" className={item}>Mi perfil</Link>
+          <Link href="/mensajes" className={item}>Mensajes</Link>
           <Link href="/notificaciones" className={item}>Notificaciones</Link>
         </div>
         {user.role === "admin" && (
