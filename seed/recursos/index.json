@@ -401,5 +401,17 @@
       "prompt-youdash.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "prompts-estilo-gta",
+    "title": "5 prompts estilo GTA con tu propia foto",
+    "summary": "Los 5 prompts del carrusel para convertir tu foto en personaje estilo GTA (pantalla de carga, yate, póster, muscle car y cinco viñetas) más el ajuste para conservar tu rostro. Guía completa para leer aquí; el PDF y los prompts editables se descargan con tu cuenta gratis.",
+    "position": 37,
+    "cover": "/recursos/covers/prompts-estilo-gta.webp",
+    "files": [
+      "GTA-prompts-guia.pdf",
+      "prompts-estilo-gta.md"
+    ],
+    "extra": true
   }
 ]
