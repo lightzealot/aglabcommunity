@@ -389,5 +389,17 @@
       "prompt-moneyprinterturbo.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "youdash-youtube-carplay",
+    "title": "¿Tu carro no tiene YouTube? YouDash lo pone en tu CarPlay",
+    "summary": "Qué es YouDash, el proyecto gratis y de código abierto que pone la app de YouTube de verdad en la pantalla de CarPlay, con teclado y sin anuncios. Explicado para principiantes: qué necesitas para instalarlo y cómo empezar. Guía completa para leer aquí; los archivos se descargan con tu cuenta gratis.",
+    "position": 36,
+    "cover": "/recursos/covers/youdash-youtube-carplay.webp",
+    "files": [
+      "YouDash-guia.pdf",
+      "prompt-youdash.md"
+    ],
+    "extra": true
   }
 ]
