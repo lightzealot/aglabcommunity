@@ -365,5 +365,17 @@
       "prompt-github-ingest.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "llm-council-claude",
+    "title": "¿Claude te da la razón en todo? LLM Council: 5 asesores y un veredicto",
+    "summary": "Cómo instalar y usar LLM Council, la skill gratis que pasa tu decisión por 5 asesores de IA que se revisan entre sí y te dan un veredicto con un paso claro. Guía completa para leer aquí; los archivos se descargan con tu cuenta gratis.",
+    "position": 34,
+    "cover": "/recursos/covers/llm-council-claude.webp",
+    "files": [
+      "LLMCouncil-guia.pdf",
+      "prompt-llm-council.md"
+    ],
+    "extra": true
   }
 ]
