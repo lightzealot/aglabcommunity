@@ -44,14 +44,14 @@ function IntroCard({ p }: { p: FeedPost }) {
   const isNew = !!p.authorSince && Date.now() - new Date(p.authorSince).getTime() < 14 * 86_400_000;
   return (
     <article className="card feed-in overflow-hidden transition-shadow hover:shadow-md">
-      <div className="intro-band relative h-16" aria-hidden>
+      <div className={`intro-band ${isNew ? "" : "intro-band-old"} relative h-16`} aria-hidden>
         <span className="absolute top-3 right-4 rounded-full bg-black/30 px-2.5 py-1 font-mono text-[10px] tracking-widest text-white uppercase backdrop-blur">
           {isNew ? "Nuevo miembro" : "Presentación"}
         </span>
       </div>
       <div className="px-4 pb-4 sm:px-5 sm:pb-5">
         <div className="-mt-9 flex items-end gap-3">
-          <Link href={`/u/${p.authorId}`} className="intro-avatar shrink-0 rounded-full p-[3px]">
+          <Link href={`/u/${p.authorId}`} className={`intro-avatar ${isNew ? "" : "intro-avatar-old"} shrink-0 rounded-full p-[3px]`}>
             <span className="block rounded-full ring-4 ring-paper">
               <Avatar name={p.authorName} image={p.authorImage} size={68} />
             </span>
@@ -72,12 +72,12 @@ function IntroCard({ p }: { p: FeedPost }) {
           <span className="wave inline-block">👋</span>{" "}
           {isNew ? `${first} se unió y le dejó unas palabras a la comunidad` : `${first} se presentó a la comunidad`}
         </p>
-        <blockquote className="mt-2 rounded-lg border-l-4 border-[#e0aa2c] bg-veil px-4 py-3">
+        <blockquote className={`mt-2 rounded-lg border-l-4 ${isNew ? "border-[#e0aa2c]" : "border-[#7c5cff]"} bg-veil px-4 py-3`}>
           <PostBody text={p.body} />
         </blockquote>
 
         <footer className="mt-4 flex flex-wrap items-center gap-2">
-          <Link href={`/post/${p.id}`} className="btn btn-primary !rounded-full !py-2">
+          <Link href={`/post/${p.id}`} className={`btn ${isNew ? "btn-primary" : "btn-ghost"} !rounded-full !py-2`}>
             {isNew ? "Darle la bienvenida" : "Responder"}
           </Link>
           <LikeButton postId={p.id} count={p.likes} liked={p.liked} />

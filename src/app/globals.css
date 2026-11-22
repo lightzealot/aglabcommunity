@@ -208,7 +208,14 @@ body {
     radial-gradient(circle at 85% -20%, rgba(25, 97, 213, 0.9), transparent 60%),
     #14161c;
 }
+.intro-band-old {
+  background:
+    radial-gradient(circle at 15% 120%, rgba(124, 92, 255, 0.9), transparent 55%),
+    radial-gradient(circle at 85% -20%, rgba(34, 197, 190, 0.85), transparent 60%),
+    #14161c;
+}
 .intro-avatar { background: linear-gradient(135deg, #f5c84b, #fff3c4, #c98f1a); }
+.intro-avatar-old { background: linear-gradient(135deg, #7c5cff, #c4b5ff, #22c5be); }
 @keyframes wave {
   0%, 60%, 100% { transform: rotate(0); }
   10%, 30% { transform: rotate(16deg); }
