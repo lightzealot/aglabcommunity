@@ -425,5 +425,17 @@
       "prompts-solidcraft.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "11-certificados-gratis",
+    "title": "11 certificados gratis para tu currículum",
+    "summary": "Deloitte, Mastercard, BCG, Tata, J.P. Morgan, Kaggle y más: el enlace oficial, el tiempo y qué te da cada uno, unas 30 horas en total. Guía completa para leer aquí; el PDF y la lista de enlaces se descargan con tu cuenta gratis.",
+    "position": 39,
+    "cover": "/recursos/covers/11-certificados-gratis.webp",
+    "files": [
+      "11-certificados-gratis-guia.pdf",
+      "enlaces-certificados.md"
+    ],
+    "extra": true
   }
 ]
