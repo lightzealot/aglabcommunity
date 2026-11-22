@@ -40,11 +40,13 @@ function IntroCard({ p }: { p: FeedPost }) {
   const since = p.authorSince
     ? new Date(p.authorSince).toLocaleDateString("es", { month: "long", year: "numeric" })
     : null;
+  // "Nuevo" solo durante las primeras 2 semanas desde que se unió; después es una presentación a secas.
+  const isNew = !!p.authorSince && Date.now() - new Date(p.authorSince).getTime() < 14 * 86_400_000;
   return (
     <article className="card feed-in overflow-hidden transition-shadow hover:shadow-md">
       <div className="intro-band relative h-16" aria-hidden>
         <span className="absolute top-3 right-4 rounded-full bg-black/30 px-2.5 py-1 font-mono text-[10px] tracking-widest text-white uppercase backdrop-blur">
-          Nuevo miembro
+          {isNew ? "Nuevo miembro" : "Presentación"}
         </span>
       </div>
       <div className="px-4 pb-4 sm:px-5 sm:pb-5">
@@ -67,7 +69,8 @@ function IntroCard({ p }: { p: FeedPost }) {
         </div>
 
         <p className="mt-4 text-sm font-semibold">
-          <span className="wave inline-block">👋</span> {first} se unió y le dejó unas palabras a la comunidad
+          <span className="wave inline-block">👋</span>{" "}
+          {isNew ? `${first} se unió y le dejó unas palabras a la comunidad` : `${first} se presentó a la comunidad`}
         </p>
         <blockquote className="mt-2 rounded-lg border-l-4 border-[#e0aa2c] bg-veil px-4 py-3">
           <PostBody text={p.body} />
@@ -75,7 +78,7 @@ function IntroCard({ p }: { p: FeedPost }) {
 
         <footer className="mt-4 flex flex-wrap items-center gap-2">
           <Link href={`/post/${p.id}`} className="btn btn-primary !rounded-full !py-2">
-            Darle la bienvenida
+            {isNew ? "Darle la bienvenida" : "Responder"}
           </Link>
           <LikeButton postId={p.id} count={p.likes} liked={p.liked} />
           <Link href={`/post/${p.id}`} className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-semibold text-ash transition-colors hover:bg-veil hover:text-ink">
