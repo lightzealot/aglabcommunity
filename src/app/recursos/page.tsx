@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
 import { LangSwitch } from "@/components/lang-switch";
+import { EyeCount } from "@/components/eye-count";
+import { viewCounts } from "@/lib/resource-views";
 import { getViewer, listPublishedResources } from "@/lib/resources";
 import { getResourceEn, langOf, UI } from "@/lib/resource-i18n";
 import { abs, orgRef, siteUrl } from "@/lib/site";
@@ -24,6 +26,7 @@ export default async function RecursosPage({ searchParams }: Props) {
   const t = UI[lang];
   const q = lang === "en" ? "?lang=en" : "";
   const viewer = await getViewer();
+  const views = await viewCounts();
   const resources = (await listPublishedResources()).map((r) => {
     const en = lang === "en" ? getResourceEn(r.slug) : null;
     return en ? { ...r, title: en.title, summary: en.summary || r.summary } : r;
@@ -101,9 +104,10 @@ export default async function RecursosPage({ searchParams }: Props) {
               <div className="flex flex-1 flex-col p-4">
                 <h2 className="text-lg leading-snug font-bold group-hover:text-accent">{r.title}</h2>
                 <p className="mt-1 line-clamp-3 text-sm text-ash">{r.summary}</p>
-                <p className="mt-auto pt-3 text-xs font-semibold text-accent">
-                  {r.files > 0 ? t.filesForDownload(r.files) : t.guide}
-                </p>
+                <div className="mt-auto flex items-center justify-between pt-3 text-xs">
+                  <span className="font-semibold text-accent">{r.files > 0 ? t.filesForDownload(r.files) : t.guide}</span>
+                  <EyeCount n={views.get(r.id) ?? 0} className="text-hollow" />
+                </div>
               </div>
             </Link>
           ))}

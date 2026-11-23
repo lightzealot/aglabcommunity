@@ -410,3 +410,20 @@ export const chatMessage = pgTable(
     index("chat_pair_idx").on(t.senderId, t.recipientId, t.createdAt),
   ],
 );
+
+// ---- Visitas a recursos: una fila por persona y día (para contar personas, no recargas) ----
+export const resourceView = pgTable(
+  "resource_view",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    resourceId: uuid("resource_id")
+      .notNull()
+      .references(() => resource.id, { onDelete: "cascade" }),
+    // Miembro: su id. Visitante: huella anónima (hash de IP + navegador), nunca la IP en claro.
+    viewer: text("viewer").notNull(),
+    kind: text("kind").notNull(), // "member" | "visitor"
+    day: text("day").notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (t) => [unique("resource_view_unique").on(t.resourceId, t.viewer, t.day), index("resource_view_day_idx").on(t.resourceId, t.day)],
+);

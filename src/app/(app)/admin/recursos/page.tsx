@@ -1,6 +1,7 @@
 import { asc, sql } from "drizzle-orm";
 import Link from "next/link";
 import { db, schema } from "@/db";
+import { viewStats } from "@/lib/resource-views";
 import { requireAdmin } from "@/lib/session";
 import { createResource } from "./actions";
 
@@ -19,6 +20,8 @@ export default async function AdminRecursosPage() {
     })
     .from(schema.resource)
     .orderBy(asc(schema.resource.position), asc(schema.resource.createdAt));
+  const stats = await viewStats();
+  const totalViews = [...stats.values()].reduce((n, s) => n + s.total, 0);
   const totalLeads = rows.reduce((n, r) => n + r.leads, 0);
 
   return (
@@ -29,7 +32,7 @@ export default async function AdminRecursosPage() {
       </h1>
       <p className="mt-2 text-sm text-ash">
         Páginas públicas que se ven sin cuenta; los archivos se descargan al crear una cuenta. “Leads” = personas que se
-        registraron después de ver ese recurso ({totalLeads} en total).
+        registraron después de ver ese recurso ({totalLeads} en total). El ojito cuenta personas distintas (miembros y visitantes, sin robots ni recargas): {totalViews} en total.
       </p>
 
       <form action={createResource} className="card mt-6 flex gap-2 p-4">
@@ -43,6 +46,9 @@ export default async function AdminRecursosPage() {
             <span className="min-w-0 flex-1">
               <span className="block truncate font-semibold">{r.title}</span>
               <span className="block truncate text-xs text-hollow">/recursos/{r.slug}</span>
+            </span>
+            <span className="text-xs text-ash" title="Personas distintas · hoy · últimos 7 días">
+              👁 {stats.get(r.id)?.total ?? 0} · hoy {stats.get(r.id)?.today ?? 0} · 7d {stats.get(r.id)?.week ?? 0}
             </span>
             <span className="text-xs text-ash">{r.files} archivos</span>
             <span className="text-xs font-semibold text-accent">{r.leads} leads</span>

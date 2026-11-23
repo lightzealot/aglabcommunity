@@ -9,6 +9,8 @@ import { RichText } from "@/components/rich-text";
 import { SourceCookie } from "@/components/source-cookie";
 import { isGoogleEnabled } from "@/lib/google";
 import { excerpt } from "@/lib/news-format";
+import { EyeCount } from "@/components/eye-count";
+import { recordResourceView, viewCounts } from "@/lib/resource-views";
 import { getResourceBySlug, getViewer, listPublishedResources } from "@/lib/resources";
 import { headings, promptCount, readMinutes } from "@/lib/resource-meta";
 import { getResourceEn, langOf, UI } from "@/lib/resource-i18n";
@@ -53,6 +55,8 @@ export default async function RecursoPage({ params, searchParams }: Props) {
   const isAdmin = viewer.kind === "member" && viewer.user.role === "admin";
   const base = await getResourceBySlug(slug, isAdmin);
   if (!base) notFound();
+  await recordResourceView(base.id, viewer.kind === "member" ? viewer.user.id : undefined);
+  const views = (await viewCounts()).get(base.id) ?? 0;
   const en = getResourceEn(slug);
   const lang = en ? langOf(langParam) : "es";
   const r = lang === "en" && en ? { ...base, ...en } : base;
@@ -125,6 +129,12 @@ export default async function RecursoPage({ params, searchParams }: Props) {
         <span>{r.createdAt.toLocaleDateString(t.dateLocale, { day: "numeric", month: "short", year: "numeric" })}</span>
         <span aria-hidden>·</span>
         <span>{readMinutes(r.body)} {t.readMin}</span>
+        {views > 0 && (
+          <>
+            <span aria-hidden>·</span>
+            <EyeCount n={views} />
+          </>
+        )}
       </div>
       <div className="mt-3 flex flex-wrap gap-2">
         {prompts > 0 && (

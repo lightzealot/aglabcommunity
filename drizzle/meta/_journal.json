@@ -92,6 +92,13 @@
       "when": 1795294263548,
       "tag": "0012_chat",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1795394577728,
+      "tag": "0013_resource_views",
+      "breakpoints": true
     }
   ]
 }
