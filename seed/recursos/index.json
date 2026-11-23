@@ -437,5 +437,17 @@
       "enlaces-certificados.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "ruta-estudio-2027",
+    "title": "Qué estudiar en 2027 antes de que la IA te gane",
+    "summary": "La ruta que yo seguiría en datos, IA y machine learning, y ciberseguridad: los datos que lo respaldan con su fuente, cursos gratis en orden y un proyecto de portafolio para cada carrera. Guía completa para leer aquí; el PDF y el prompt se descargan con tu cuenta gratis.",
+    "position": 40,
+    "cover": "/recursos/covers/ruta-estudio-2027.webp",
+    "files": [
+      "ruta-estudio-2027-guia.pdf",
+      "prompt-ruta-estudio.md"
+    ],
+    "extra": true
   }
 ]
