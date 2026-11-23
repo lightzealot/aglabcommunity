@@ -449,5 +449,17 @@
       "prompt-ruta-estudio.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "reanimate-copia-animaciones",
+    "title": "Reanimate: copia cualquier animación con Claude Code",
+    "summary": "Qué es Reanimate, la skill gratis y de código abierto para Claude Code que graba una animación, la reconstruye en tu código y la compara fotograma por fotograma hasta que se mueve igual. Cómo instalarla, los prompts para usarla y sus límites. Guía completa para leer aquí; el PDF y el prompt se descargan con tu cuenta gratis.",
+    "position": 41,
+    "cover": "/recursos/covers/reanimate-copia-animaciones.webp",
+    "files": [
+      "reanimate-guia.pdf",
+      "prompt-reanimate.md"
+    ],
+    "extra": true
   }
 ]
