@@ -5,37 +5,43 @@ import { LangSwitch } from "@/components/lang-switch";
 import { EyeCount } from "@/components/eye-count";
 import { viewCounts } from "@/lib/resource-views";
 import { getViewer, listPublishedResources } from "@/lib/resources";
-import { getResourceEn, langOf, UI } from "@/lib/resource-i18n";
+import { getResourceTr, LANGS, langOf, langQuery, UI } from "@/lib/resource-i18n";
 import { abs, orgRef, siteUrl } from "@/lib/site";
 
 type Props = { searchParams: Promise<{ lang?: string }> };
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
-  const en = langOf((await searchParams).lang) === "en";
+  const lang = langOf((await searchParams).lang);
   return {
-    title: en ? "Free AI resources" : "Recursos gratuitos",
-    description: en
-      ? "Free guides, prompts and templates to use artificial intelligence to create content, photos and brand."
-      : "Guías, prompts y plantillas gratis para usar la inteligencia artificial y crear contenido, fotos y marca.",
-    alternates: { canonical: en ? "/recursos?lang=en" : "/recursos", languages: { es: "/recursos", en: "/recursos?lang=en", "x-default": "/recursos" } },
+    title: { es: "Recursos gratuitos", en: "Free AI resources", pt: "Recursos gratuitos de IA" }[lang],
+    description: {
+      es: "Guías, prompts y plantillas gratis para usar la inteligencia artificial y crear contenido, fotos y marca.",
+      en: "Free guides, prompts and templates to use artificial intelligence to create content, photos and brand.",
+      pt: "Guias, prompts e modelos grátis para usar inteligência artificial e criar conteúdo, fotos e marca.",
+    }[lang],
+    alternates: {
+      canonical: `/recursos${langQuery(lang)}`,
+      languages: { ...Object.fromEntries(LANGS.map((l) => [l, `/recursos${langQuery(l)}`])), "x-default": "/recursos" },
+    },
   };
 }
 
 export default async function RecursosPage({ searchParams }: Props) {
   const lang = langOf((await searchParams).lang);
   const t = UI[lang];
-  const q = lang === "en" ? "?lang=en" : "";
+  const q = langQuery(lang);
+  const pick = <T,>(o: { es: T; en: T; pt: T }) => o[lang];
   const viewer = await getViewer();
   const views = await viewCounts();
   const resources = (await listPublishedResources()).map((r) => {
-    const en = lang === "en" ? getResourceEn(r.slug) : null;
-    return en ? { ...r, title: en.title, summary: en.summary || r.summary } : r;
+    const tr = getResourceTr(r.slug, lang);
+    return tr ? { ...r, title: tr.title, summary: tr.summary || r.summary } : r;
   });
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: lang === "en" ? "Free AI resources" : "Recursos gratuitos de IA",
+    name: pick({ es: "Recursos gratuitos de IA", en: "Free AI resources", pt: "Recursos gratuitos de IA" }),
     url: `${siteUrl()}/recursos${q}`,
     inLanguage: lang,
     isPartOf: { "@id": `${siteUrl()}/#website` },
@@ -55,19 +61,21 @@ export default async function RecursosPage({ searchParams }: Props) {
     <>
       <JsonLd data={jsonLd} />
       <div className="mb-4 flex justify-end">
-        <LangSwitch lang={lang} href="/recursos" />
+        <LangSwitch lang={lang} href="/recursos" langs={LANGS} />
       </div>
       {viewer.kind === "visitor" ? (
         <section className="mx-auto max-w-3xl pb-8 text-center">
-          <p className="label mb-2">{lang === "en" ? "Free resources" : "Recursos gratuitos"}</p>
+          <p className="label mb-2">{pick({ es: "Recursos gratuitos", en: "Free resources", pt: "Recursos gratuitos" })}</p>
           <h1 className="display text-6xl sm:text-7xl">
-            {lang === "en" ? "Guides and templates to use AI in your work" : "Guías y plantillas para usar IA en tu trabajo"}
+            {pick({ es: "Guías y plantillas para usar IA en tu trabajo", en: "Guides and templates to use AI in your work", pt: "Guias e modelos para usar IA no seu trabalho" })}
             <span className="text-accent">.</span>
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-ash">
-            {lang === "en"
-              ? "Read every guide for free. To download the files, create your account and join the AG Lab community."
-              : "Lee todas las guías gratis. Para descargar los archivos, crea tu cuenta y entra a la comunidad de AG Lab."}
+            {pick({
+              es: "Lee todas las guías gratis. Para descargar los archivos, crea tu cuenta y entra a la comunidad de AG Lab.",
+              en: "Read every guide for free. To download the files, create your account and join the AG Lab community.",
+              pt: "Leia todos os guias grátis. Para baixar os arquivos, crie sua conta e entre para a comunidade AG Lab.",
+            })}
           </p>
           <Link href="/registro" className="btn btn-primary mt-6">
             {t.create}
@@ -76,13 +84,13 @@ export default async function RecursosPage({ searchParams }: Props) {
       ) : (
         <div className="mb-6">
           <h1 className="display text-5xl">
-            {lang === "en" ? "Resources" : "Recursos"}<span className="text-accent">.</span>
+            {pick({ es: "Recursos", en: "Resources", pt: "Recursos" })}<span className="text-accent">.</span>
           </h1>
         </div>
       )}
 
       {resources.length === 0 ? (
-        <p className="card p-10 text-center text-sm text-ash">{lang === "en" ? "The first resources are coming soon." : "Pronto publicaremos los primeros recursos."}</p>
+        <p className="card p-10 text-center text-sm text-ash">{pick({ es: "Pronto publicaremos los primeros recursos.", en: "The first resources are coming soon.", pt: "Em breve publicaremos os primeiros recursos." })}</p>
       ) : (
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {resources.map((r) => (

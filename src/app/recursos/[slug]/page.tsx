@@ -13,7 +13,7 @@ import { EyeCount } from "@/components/eye-count";
 import { recordResourceView, viewCounts } from "@/lib/resource-views";
 import { getResourceBySlug, getViewer, listPublishedResources } from "@/lib/resources";
 import { headings, promptCount, readMinutes } from "@/lib/resource-meta";
-import { getResourceEn, langOf, UI } from "@/lib/resource-i18n";
+import { availableLangs, getResourceTr, langOf, langQuery, UI, type Lang } from "@/lib/resource-i18n";
 import { abs, orgRef, siteUrl } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }>; searchParams: Promise<{ welcome?: string; lang?: string }> };
@@ -22,24 +22,30 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const { slug } = await params;
   const base = await getResourceBySlug(slug);
   if (!base) return { title: "Recurso no encontrado" };
-  const en = getResourceEn(slug);
-  const lang = en ? langOf((await searchParams).lang) : "es";
-  const r = lang === "en" && en ? { ...base, ...en } : base;
+  const langs = availableLangs(slug);
+  const asked = langOf((await searchParams).lang);
+  const tr = getResourceTr(slug, asked);
+  const lang: Lang = tr ? asked : "es";
+  const r = tr ? { ...base, ...tr } : base;
   const description = r.summary || excerpt(r.body) || undefined;
   const path = `/recursos/${slug}`;
   return {
     title: r.title,
     description,
-    alternates: en
-      ? { canonical: lang === "en" ? `${path}?lang=en` : path, languages: { es: path, en: `${path}?lang=en`, "x-default": path } }
-      : undefined,
+    alternates:
+      langs.length > 1
+        ? {
+            canonical: `${path}${langQuery(lang)}`,
+            languages: { ...Object.fromEntries(langs.map((l) => [l, `${path}${langQuery(l)}`])), "x-default": path },
+          }
+        : undefined,
     openGraph: {
       title: r.title,
       description,
       type: "article",
       publishedTime: r.createdAt.toISOString(),
-      section: lang === "en" ? "AI resources" : "Recursos de IA",
-      locale: lang === "en" ? "en_US" : "es_ES",
+      section: { es: "Recursos de IA", en: "AI resources", pt: "Recursos de IA" }[lang],
+      locale: { es: "es_ES", en: "en_US", pt: "pt_BR" }[lang],
       images: r.coverUrl ? [abs(r.coverUrl)] : undefined,
     },
     twitter: { card: "summary_large_image", title: r.title, description },
@@ -57,11 +63,13 @@ export default async function RecursoPage({ params, searchParams }: Props) {
   if (!base) notFound();
   await recordResourceView(base.id, viewer.kind === "member" ? viewer.user.id : undefined);
   const views = (await viewCounts()).get(base.id) ?? 0;
-  const en = getResourceEn(slug);
-  const lang = en ? langOf(langParam) : "es";
-  const r = lang === "en" && en ? { ...base, ...en } : base;
+  const langs = availableLangs(slug);
+  const asked = langOf(langParam);
+  const tr = getResourceTr(slug, asked);
+  const lang: Lang = tr ? asked : "es";
+  const r = tr ? { ...base, ...tr } : base;
   const t = UI[lang];
-  const q = lang === "en" ? "?lang=en" : "";
+  const q = langQuery(lang);
 
   // La guía se lee completa sin cuenta; solo la descarga de archivos pide registrarse (opcional, con beneficios).
   const visitor = viewer.kind === "visitor";
@@ -70,7 +78,7 @@ export default async function RecursoPage({ params, searchParams }: Props) {
   const related = (await listPublishedResources())
     .filter((x) => x.slug !== r.slug)
     .slice(0, 2)
-    .map((x) => (lang === "en" ? { ...x, title: getResourceEn(x.slug)?.title ?? x.title } : x));
+    .map((x) => ({ ...x, title: getResourceTr(x.slug, lang)?.title ?? x.title }));
   const url = `${siteUrl()}/recursos/${r.slug}${q}`;
   const jsonLd = [
     {
@@ -95,8 +103,8 @@ export default async function RecursoPage({ params, searchParams }: Props) {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: lang === "en" ? "Home" : "Inicio", item: abs("/") },
-        { "@type": "ListItem", position: 2, name: lang === "en" ? "Resources" : "Recursos", item: abs(`/recursos${q}`) },
+        { "@type": "ListItem", position: 1, name: { es: "Inicio", en: "Home", pt: "Início" }[lang], item: abs("/") },
+        { "@type": "ListItem", position: 2, name: { es: "Recursos", en: "Resources", pt: "Recursos" }[lang], item: abs(`/recursos${q}`) },
         { "@type": "ListItem", position: 3, name: r.title, item: url },
       ],
     },
@@ -111,7 +119,7 @@ export default async function RecursoPage({ params, searchParams }: Props) {
         <Link href={`/recursos${q}`} className="text-sm text-ash hover:text-ink">
           {t.back}
         </Link>
-        {en && <LangSwitch lang={lang} href={`/recursos/${r.slug}`} />}
+        <LangSwitch lang={lang} href={`/recursos/${r.slug}`} langs={langs} />
       </div>
 
       {!r.published && <p className="label mt-3 !text-ash">{t.draft}</p>}
@@ -228,7 +236,7 @@ export default async function RecursoPage({ params, searchParams }: Props) {
           <div className="mt-5">
             {isGoogleEnabled() ? (
               <>
-                <GoogleButton callbackURL={`/recursos/${r.slug}?welcome=1${lang === "en" ? "&lang=en" : ""}`} divider={false} />
+                <GoogleButton callbackURL={`/recursos/${r.slug}?welcome=1${lang === "es" ? "" : `&lang=${lang}`}`} divider={false} />
                 <Link href={`/registro?from=${r.slug}`} className="mt-3 block text-center text-sm text-ash underline">
                   {t.byEmail}
                 </Link>

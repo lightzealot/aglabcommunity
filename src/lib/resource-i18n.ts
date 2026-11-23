@@ -2,23 +2,31 @@ import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 
 /**
- * Versión en inglés de los recursos. Vive junto a cada guía en `seed/recursos/<slug>/en.md`
+ * Versiones en inglés y portugués de los recursos. Viven junto a cada guía en `seed/recursos/<slug>/en.md` y `pt.md`
  * (cabecera con title y summary + cuerpo) y se lee en tiempo de ejecución, así no hace falta migrar la base.
- * Si un recurso no tiene inglés, la página se muestra en español y el switch no aparece.
+ * Si un recurso no tiene un idioma, ese idioma no aparece en el selector y la página cae a español.
  */
 
-export type Lang = "es" | "en";
-export type ResourceEn = { title: string; summary: string; body: string };
+export type Lang = "es" | "en" | "pt";
+export type ResourceTr = { title: string; summary: string; body: string };
+export type ResourceEn = ResourceTr;
 
-export const langOf = (v: string | string[] | undefined): Lang => (v === "en" ? "en" : "es");
+export const LANGS: Lang[] = ["es", "en", "pt"];
+export const langOf = (v: string | string[] | undefined): Lang => (v === "en" ? "en" : v === "pt" ? "pt" : "es");
+
+/** Sufijo de la URL para un idioma ("" para español, que es el original). */
+export const langQuery = (l: Lang) => (l === "es" ? "" : `?lang=${l}`);
 
 const root = path.resolve(process.cwd(), "seed/recursos");
-const cache = new Map<string, ResourceEn | null>();
+const cache = new Map<string, ResourceTr | null>();
 
-export function getResourceEn(slug: string): ResourceEn | null {
-  if (process.env.NODE_ENV === "production" && cache.has(slug)) return cache.get(slug)!;
-  let out: ResourceEn | null = null;
-  const file = path.join(root, slug, "en.md");
+/** Traducción de un recurso (`en.md` / `pt.md`), o null si no existe. */
+export function getResourceTr(slug: string, lang: Lang): ResourceTr | null {
+  if (lang === "es") return null;
+  const key = `${lang}:${slug}`;
+  if (process.env.NODE_ENV === "production" && cache.has(key)) return cache.get(key)!;
+  let out: ResourceTr | null = null;
+  const file = path.join(root, slug, `${lang}.md`);
   if (/^[a-z0-9-]+$/.test(slug) && existsSync(file)) {
     // Formato: cabecera entre --- con `title:` y `summary:`, luego el cuerpo en el mismo markdown que body.md.
     const m = /^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/.exec(readFileSync(file, "utf8"));
@@ -29,8 +37,15 @@ export function getResourceEn(slug: string): ResourceEn | null {
       if (meta.title && m[2].trim()) out = { title: meta.title, summary: meta.summary ?? "", body: m[2].trim() };
     }
   }
-  cache.set(slug, out);
+  cache.set(key, out);
   return out;
+}
+
+export const getResourceEn = (slug: string) => getResourceTr(slug, "en");
+
+/** Idiomas en los que existe el recurso (siempre incluye español). */
+export function availableLangs(slug: string): Lang[] {
+  return LANGS.filter((l) => l === "es" || getResourceTr(slug, l));
 }
 
 /** Textos de la interfaz de un recurso en cada idioma. */
@@ -118,5 +133,47 @@ export const UI = {
     filesForDownload: (n: number) => `${n} file${n === 1 ? "" : "s"} to download`,
     guide: "Guide",
     dateLocale: "en",
+  },
+  pt: {
+    back: "‹ Todos os recursos",
+    draft: "Rascunho (só você vê)",
+    kicker: "Guia · prompts prontos para copiar",
+    readMin: "min de leitura",
+    prompt: (n: number) => (n === 1 ? "prompt" : "prompts"),
+    file: (n: number) => (n === 1 ? "arquivo" : "arquivos"),
+    free: "Grátis",
+    toc: "Neste guia",
+    welcomeTitle: "Pronto, sua conta foi criada!",
+    welcomeBody: "Agora você já pode baixar os arquivos abaixo.",
+    welcomeCard: "Crie seu cartão de membro",
+    optional: "Download opcional",
+    freeCommunity: "Comunidade grátis",
+    takeIt: "Quer levar com você?",
+    join: "Entre para a comunidade",
+    takeItBody:
+      "Você já leu o guia completo, sem conta. Se quiser os arquivos no seu computador, crie sua conta grátis: leva menos de um minuto.",
+    joinBody: "Crie sua conta grátis: leva menos de um minuto e não pede cartão.",
+    withAccount: "Com sua conta grátis você também tem",
+    perks: [
+      ["Downloads em todos os recursos", "Os arquivos de cada guia, os de hoje e os que forem saindo, sem precisar pedir de novo."],
+      ["Cursos grátis", "Aprenda passo a passo com aulas em vídeo e acompanhe seu progresso."],
+      ["Comunidade em espanhol", "Pergunte, compartilhe o que você faz e receba respostas de quem usa IA como você."],
+      ["Eventos ao vivo", "Avisamos antes de cada um para você não perder."],
+      ["Cartão de membro, pontos e ranking", "Ganhe pontos por participar e aprender, e suba no ranking."],
+    ],
+    byEmail: "Prefiro me cadastrar com meu e-mail",
+    create: "Criar minha conta grátis",
+    haveAccount: "Já tem conta?",
+    login: "Entrar",
+    downloads: "Arquivos para baixar",
+    myCard: "Meu cartão",
+    bio: "IA prática para criar conteúdo, fotos e marca.",
+    next: "Continue com",
+    copy: "Copiar prompt",
+    copied: "Copiado ✓",
+    copyFallback: "Copie o texto:",
+    filesForDownload: (n: number) => `${n} arquivo${n === 1 ? "" : "s"} para baixar`,
+    guide: "Guia",
+    dateLocale: "pt-BR",
   },
 } as const;
