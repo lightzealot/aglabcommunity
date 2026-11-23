@@ -173,12 +173,41 @@ async function apifySummarize(token: string, text: string, style: "paragraph" | 
  * Devuelve null si no hay token o el resultado no sirve: nunca se publica texto copiado.
  */
 async function writeOwnSummary(c: Candidate): Promise<{ title: string; summary: string } | null> {
+  const source = `${c.title}\n\n${c.text}`;
+  // Primero Claude (ANTHROPIC_API_KEY); si no hay clave o falla, el actor de Apify.
+  const claudeKey = process.env.ANTHROPIC_API_KEY;
+  if (claudeKey) {
+    try {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "x-api-key": claudeKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
+        body: JSON.stringify({
+          model: process.env.NEWS_MODEL || "claude-haiku-5-5",
+          max_tokens: 900,
+          system:
+            'Eres editor de una comunidad hispana que usa IA para trabajar. Reescribes la noticia con tus propias palabras, en español neutro (tuteo), sin copiar frases. Responde SOLO un JSON: {"title": titular de máx. 14 palabras sin punto final, "summary": 180 a 260 palabras en 2-3 párrafos: qué pasó, por qué importa y qué puede hacer un profesional o dueño de negocio con esto}.',
+          messages: [{ role: "user", content: source.slice(0, 9000) }],
+        }),
+        signal: AbortSignal.timeout(90_000),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status} ${(await res.text()).slice(0, 200)}`);
+      const data = (await res.json()) as { content?: { type: string; text?: string }[] };
+      const m = /\{[\s\S]*\}/.exec(data.content?.find((x) => x.type === "text")?.text ?? "");
+      const j = m ? (JSON.parse(m[0]) as { title?: string; summary?: string }) : null;
+      const title = j?.title?.replace(/^["“«]|["”»]$/g, "").replace(/\.$/, "").trim() ?? "";
+      if (j?.summary && title.length >= 10 && j.summary.length >= 300 && title.toLowerCase() !== c.title.toLowerCase()) {
+        return { title: title.slice(0, 140), summary: j.summary.trim() };
+      }
+      throw new Error("resultado no válido");
+    } catch (e) {
+      console.error("[news] Claude no pudo escribir el resumen", e);
+    }
+  }
   const token = process.env.APIFY_TOKEN;
   if (!token) {
-    console.warn("[news] falta APIFY_TOKEN: no se publica sin resumen propio");
+    console.warn("[news] falta ANTHROPIC_API_KEY o APIFY_TOKEN: no se publica sin resumen propio");
     return null;
   }
-  const source = `${c.title}\n\n${c.text}`;
   try {
     const [summary, title] = await Promise.all([
       apifySummarize(token, source, "paragraph", 260),
