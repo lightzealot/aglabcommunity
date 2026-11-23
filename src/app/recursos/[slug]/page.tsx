@@ -9,6 +9,7 @@ import { RichText } from "@/components/rich-text";
 import { SourceCookie } from "@/components/source-cookie";
 import { isGoogleEnabled } from "@/lib/google";
 import { excerpt } from "@/lib/news-format";
+import { LevelBadge } from "@/components/level-badge";
 import { EyeCount } from "@/components/eye-count";
 import { recordResourceView, viewCounts } from "@/lib/resource-views";
 import { getResourceBySlug, getViewer, listPublishedResources } from "@/lib/resources";
@@ -144,7 +145,8 @@ export default async function RecursoPage({ params, searchParams }: Props) {
           </>
         )}
       </div>
-      <div className="mt-3 flex flex-wrap gap-2">
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        <LevelBadge level={r.level} lang={lang} />
         {prompts > 0 && (
           <span className="rounded-full border border-hairline bg-accent-soft px-3 py-1 text-xs font-semibold text-accent">
             {prompts} {t.prompt(prompts)}

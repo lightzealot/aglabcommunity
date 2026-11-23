@@ -28,6 +28,7 @@ export async function listPublishedResources() {
       title: schema.resource.title,
       summary: schema.resource.summary,
       coverUrl: schema.resource.coverUrl,
+      level: schema.resource.level,
       files: sql<number>`(select count(*)::int from resource_file f where f.resource_id = "resource"."id")`,
     })
     .from(schema.resource)

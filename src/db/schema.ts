@@ -358,6 +358,8 @@ export const resource = pgTable("resource", {
   coverUrl: text("cover_url"),
   published: boolean("published").notNull().default(false),
   position: integer("position").notNull().default(0),
+  /** Nivel de conocimiento: principiante | intermedio | avanzado. */
+  level: text("level").notNull().default("principiante"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 

@@ -12,3 +12,8 @@ export const slugify = (s: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "")
     .slice(0, 70);
+
+/** Nivel de conocimiento de un recurso. */
+export const LEVELS = ["principiante", "intermedio", "avanzado"] as const;
+export type Level = (typeof LEVELS)[number];
+export const levelOf = (v: unknown): Level => (LEVELS as readonly string[]).includes(v as string) ? (v as Level) : "principiante";

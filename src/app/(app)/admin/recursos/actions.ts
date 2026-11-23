@@ -57,6 +57,7 @@ export async function saveResource(_prev: ResourceState, formData: FormData): Pr
       slug: z.string().trim().regex(SLUG_RE, "El enlace solo admite minúsculas, números y guiones.").max(80),
       summary: z.string().trim().max(300, "El resumen admite máx. 300 caracteres."),
       body: z.string().trim().max(30000, "El texto es demasiado largo."),
+      level: z.enum(["principiante", "intermedio", "avanzado"]).catch("principiante"),
       position: z.coerce.number().int().min(0).max(999),
     })
     .safeParse({
@@ -64,6 +65,7 @@ export async function saveResource(_prev: ResourceState, formData: FormData): Pr
       slug: formData.get("slug"),
       summary: formData.get("summary") ?? "",
       body: formData.get("body") ?? "",
+      level: formData.get("level"),
       position: formData.get("position") || 0,
     });
   if (!id.success || !parsed.success) {

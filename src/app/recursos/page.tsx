@@ -2,13 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
 import { LangSwitch } from "@/components/lang-switch";
+import { LevelBadge, LEVEL_LABEL } from "@/components/level-badge";
+import { levelOf, LEVELS } from "@/lib/resource-constants";
 import { EyeCount } from "@/components/eye-count";
 import { viewCounts } from "@/lib/resource-views";
 import { getViewer, listPublishedResources } from "@/lib/resources";
 import { getResourceTr, LANGS, langOf, langQuery, UI } from "@/lib/resource-i18n";
 import { abs, orgRef, siteUrl } from "@/lib/site";
 
-type Props = { searchParams: Promise<{ lang?: string }> };
+type Props = { searchParams: Promise<{ lang?: string; nivel?: string }> };
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const lang = langOf((await searchParams).lang);
@@ -27,13 +29,16 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 }
 
 export default async function RecursosPage({ searchParams }: Props) {
-  const lang = langOf((await searchParams).lang);
+  const sp = await searchParams;
+  const lang = langOf(sp.lang);
+  const nivel = (LEVELS as readonly string[]).includes(sp.nivel ?? "") ? levelOf(sp.nivel) : null;
   const t = UI[lang];
   const q = langQuery(lang);
   const pick = <T,>(o: { es: T; en: T; pt: T }) => o[lang];
   const viewer = await getViewer();
   const views = await viewCounts();
-  const resources = (await listPublishedResources()).map((r) => {
+  const all = await listPublishedResources();
+  const resources = all.filter((r) => !nivel || r.level === nivel).map((r) => {
     const tr = getResourceTr(r.slug, lang);
     return tr ? { ...r, title: tr.title, summary: tr.summary || r.summary } : r;
   });
@@ -89,6 +94,26 @@ export default async function RecursosPage({ searchParams }: Props) {
         </div>
       )}
 
+      <div className="mb-5 flex flex-wrap items-center gap-2 text-sm">
+        <span className="label !text-ash">{pick({ es: "Nivel", en: "Level", pt: "Nível" })}</span>
+        {[null, ...LEVELS].map((l) => {
+          const href = `/recursos${[lang !== "es" ? `lang=${lang}` : "", l ? `nivel=${l}` : ""].filter(Boolean).map((x, i) => (i ? "&" : "?") + x).join("")}`;
+          return (
+            <Link
+              key={l ?? "all"}
+              href={href}
+              scroll={false}
+              aria-current={nivel === l ? "true" : undefined}
+              className={`rounded-full border px-3 py-1 text-xs font-semibold transition ${
+                nivel === l ? "border-accent bg-accent text-white" : "border-hairline text-ash hover:text-ink"
+              }`}
+            >
+              {l ? LEVEL_LABEL[lang][l] : pick({ es: "Todos", en: "All", pt: "Todos" })}
+            </Link>
+          );
+        })}
+      </div>
+
       {resources.length === 0 ? (
         <p className="card p-10 text-center text-sm text-ash">{pick({ es: "Pronto publicaremos los primeros recursos.", en: "The first resources are coming soon.", pt: "Em breve publicaremos os primeiros recursos." })}</p>
       ) : (
@@ -110,6 +135,7 @@ export default async function RecursosPage({ searchParams }: Props) {
                 )}
               </div>
               <div className="flex flex-1 flex-col p-4">
+                <LevelBadge level={r.level} lang={lang} className="mb-2 self-start" />
                 <h2 className="text-lg leading-snug font-bold group-hover:text-accent">{r.title}</h2>
                 <p className="mt-1 line-clamp-3 text-sm text-ash">{r.summary}</p>
                 <div className="mt-auto flex items-center justify-between pt-3 text-xs">

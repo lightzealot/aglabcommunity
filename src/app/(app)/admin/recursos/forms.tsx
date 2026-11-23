@@ -8,6 +8,7 @@ type Resource = {
   title: string;
   slug: string;
   summary: string;
+  level: string;
   body: string;
   published: boolean;
   position: number;
@@ -32,6 +33,14 @@ export function ResourceForm({ resource }: { resource: Resource }) {
         placeholder="Resumen corto: aparece en la tarjeta y en Google"
         className="input"
       />
+      <label className="block text-sm">
+        <span className="mb-1 block text-ash">Nivel de conocimiento</span>
+        <select name="level" defaultValue={resource.level} className="input">
+          <option value="principiante">Principiante</option>
+          <option value="intermedio">Intermedio</option>
+          <option value="avanzado">Avanzado</option>
+        </select>
+      </label>
       <textarea
         name="body"
         rows={12}
