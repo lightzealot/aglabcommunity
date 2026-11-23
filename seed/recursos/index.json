@@ -461,5 +461,17 @@
       "prompt-reanimate.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "sketch-to-3d-claude",
+    "title": "Sketch to 3D: Claude dibuja tu producto 3D gratis",
+    "summary": "Qué es Sketch to 3D, la skill gratis y de código abierto (MIT) para Claude que convierte cualquier modelo 3D en un boceto de marcador que se dibuja solo, como lo haría un diseñador, y luego lo convierte en el render real, en video de cualquier tamaño o en vivo en tu web. Cómo instalarla, los prompts para usarla y sus límites. Guía completa para leer aquí; el PDF y el prompt se descargan con tu cuenta gratis.",
+    "position": 42,
+    "cover": "/recursos/covers/sketch-to-3d-claude.webp",
+    "files": [
+      "sketch-to-3d-guia.pdf",
+      "prompt-sketch-to-3d.md"
+    ],
+    "extra": true
   }
 ]
