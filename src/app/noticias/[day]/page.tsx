@@ -79,7 +79,7 @@ export default async function NoticiaPage({ params }: Props) {
       </Link>
 
       <article className="card mt-4 overflow-hidden">
-        <NewsCover day={n.day} label={dayLabel(n.day)} />
+        <NewsCover day={n.day} label={dayLabel(n.day)} imageUrl={n.imageUrl} source={n.source} />
         <div className="p-6">
           <p className="label !text-ash">
             <time dateTime={n.day}>{dayLabel(n.day)}</time>

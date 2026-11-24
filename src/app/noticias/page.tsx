@@ -54,7 +54,7 @@ export default async function NoticiasPage({ searchParams }: { searchParams: Pro
       ) : (
         <>
           <article className="card grid overflow-hidden lg:grid-cols-[1.15fr_1fr]">
-            <NewsCover day={featured.day} label={dayLabel(featured.day)} fill />
+            <NewsCover day={featured.day} label={dayLabel(featured.day)} imageUrl={featured.imageUrl} source={featured.source} fill />
             <div className="p-6 lg:p-8">
               <p className="label !text-ash">
                 {featured.day === today ? "Noticia destacada de hoy" : `Destacada · ${dayLabel(featured.day)}`}
@@ -78,7 +78,7 @@ export default async function NoticiasPage({ searchParams }: { searchParams: Pro
                 {shown.map((n) => (
                   <li key={n.id}>
                     <Link href={`/noticias/${n.day}`} className="card group flex h-full flex-col overflow-hidden transition hover:shadow-md">
-                      <NewsCover day={n.day} label={dayLabel(n.day)} compact />
+                      <NewsCover day={n.day} label={dayLabel(n.day)} imageUrl={n.imageUrl} source={n.source} compact />
                       <span className="flex flex-1 flex-col p-4">
                         <span className="block text-lg leading-snug font-semibold group-hover:text-accent">{n.title}</span>
                         <span className="mt-1 block text-sm text-ash">{excerpt(n.summary, 120)}</span>

@@ -1,4 +1,4 @@
-import { asc, desc, eq, gt, lt } from "drizzle-orm";
+import { asc, desc, eq, gt, isNull, lt } from "drizzle-orm";
 import { db, schema } from "@/db";
 import { pingIndexNow } from "@/lib/indexnow";
 import { dateKey } from "@/lib/streak";
@@ -40,6 +40,8 @@ type Candidate = {
   /** Texto completo de la nota: materia prima para escribir el resumen propio. */
   text: string;
   hasImage: boolean;
+  /** Foto de la nota original (del propio feed), si trae. */
+  image: string | null;
   publishedAt: Date;
   score: number;
 };
@@ -103,6 +105,7 @@ function parseFeed(xml: string, source: string): Candidate[] {
       summary: makeSummary(desc),
       text: plainText(desc).slice(0, 8000),
       hasImage: isHttps(img),
+      image: isHttps(img) ? img : null,
       publishedAt: published,
       score: 0,
     });
@@ -174,38 +177,9 @@ async function apifySummarize(token: string, text: string, style: "paragraph" | 
  */
 async function writeOwnSummary(c: Candidate): Promise<{ title: string; summary: string } | null> {
   const source = `${c.title}\n\n${c.text}`;
-  // Primero Claude (ANTHROPIC_API_KEY); si no hay clave o falla, el actor de Apify.
-  const claudeKey = process.env.ANTHROPIC_API_KEY;
-  if (claudeKey) {
-    try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: { "x-api-key": claudeKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
-        body: JSON.stringify({
-          model: process.env.NEWS_MODEL || "claude-haiku-5-5",
-          max_tokens: 900,
-          system:
-            'Eres editor de una comunidad hispana que usa IA para trabajar. Reescribes la noticia con tus propias palabras, en español neutro (tuteo), sin copiar frases. Responde SOLO un JSON: {"title": titular de máx. 14 palabras sin punto final, "summary": 180 a 260 palabras en 2-3 párrafos: qué pasó, por qué importa y qué puede hacer un profesional o dueño de negocio con esto}.',
-          messages: [{ role: "user", content: source.slice(0, 9000) }],
-        }),
-        signal: AbortSignal.timeout(90_000),
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status} ${(await res.text()).slice(0, 200)}`);
-      const data = (await res.json()) as { content?: { type: string; text?: string }[] };
-      const m = /\{[\s\S]*\}/.exec(data.content?.find((x) => x.type === "text")?.text ?? "");
-      const j = m ? (JSON.parse(m[0]) as { title?: string; summary?: string }) : null;
-      const title = j?.title?.replace(/^["“«]|["”»]$/g, "").replace(/\.$/, "").trim() ?? "";
-      if (j?.summary && title.length >= 10 && j.summary.length >= 300 && title.toLowerCase() !== c.title.toLowerCase()) {
-        return { title: title.slice(0, 140), summary: j.summary.trim() };
-      }
-      throw new Error("resultado no válido");
-    } catch (e) {
-      console.error("[news] Claude no pudo escribir el resumen", e);
-    }
-  }
   const token = process.env.APIFY_TOKEN;
   if (!token) {
-    console.warn("[news] falta ANTHROPIC_API_KEY o APIFY_TOKEN: no se publica sin resumen propio");
+    console.warn("[news] falta APIFY_TOKEN: no se publica sin resumen propio");
     return null;
   }
   try {
@@ -222,6 +196,49 @@ async function writeOwnSummary(c: Candidate): Promise<{ title: string; summary: 
     console.error("[news] no se pudo escribir el resumen", e);
     return null;
   }
+}
+
+/** Foto real de la nota original (og:image de la página). Devuelve null si no hay o no responde. */
+export async function articleImage(url: string): Promise<string | null> {
+  try {
+    const res = await fetch(url, {
+      headers: { "user-agent": "Mozilla/5.0 (compatible; AGLabBot/1.0)", accept: "text/html" },
+      signal: AbortSignal.timeout(15_000),
+      cache: "no-store",
+    });
+    if (!res.ok) return null;
+    const html = (await res.text()).slice(0, 200_000);
+    const meta =
+      html.match(/<meta[^>]+(?:property|name)=["']og:image(?::secure_url)?["'][^>]*content=["']([^"']+)["']/i)?.[1] ??
+      html.match(/<meta[^>]+content=["']([^"']+)["'][^>]*(?:property|name)=["']og:image["']/i)?.[1] ??
+      html.match(/<meta[^>]+name=["']twitter:image["'][^>]*content=["']([^"']+)["']/i)?.[1];
+    const img = meta ? decode(meta).trim() : "";
+    return isHttps(img) ? img : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Noticias ya publicadas sin foto: busca la de la nota original (unas pocas por pasada). */
+export async function backfillNewsImages(limit = 6) {
+  const rows = await db
+    .select({ id: schema.news.id, url: schema.news.url })
+    .from(schema.news)
+    .where(isNull(schema.news.imageUrl))
+    .orderBy(desc(schema.news.day))
+    .limit(limit);
+  let n = 0;
+  for (const r of rows) {
+    const img = await articleImage(r.url);
+    if (img) {
+      await db.update(schema.news).set({ imageUrl: img }).where(eq(schema.news.id, r.id));
+      n++;
+    } else {
+      // Sin foto en la fuente: se marca para no reintentar cada 5 minutos.
+      await db.update(schema.news).set({ imageUrl: "" }).where(eq(schema.news.id, r.id));
+    }
+  }
+  return n;
 }
 
 /**
@@ -256,7 +273,7 @@ export async function ensureDailyNews(now = new Date()) {
       summary: own.summary,
       url: best.url,
       source: best.source,
-      imageUrl: null,
+      imageUrl: (await articleImage(best.url)) ?? best.image,
       publishedAt: best.publishedAt,
     })
     .onConflictDoNothing()

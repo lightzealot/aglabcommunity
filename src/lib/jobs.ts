@@ -1,7 +1,7 @@
 import { and, desc, eq, gt, gte, isNull, lte, sql } from "drizzle-orm";
 import { db, schema } from "@/db";
 import { emailLayout, esc, sendMail } from "@/lib/mail";
-import { ensureDailyNews } from "@/lib/news";
+import { backfillNewsImages, ensureDailyNews } from "@/lib/news";
 import { notify } from "@/lib/notify";
 import { dateKey, TZ } from "@/lib/streak";
 
@@ -149,6 +149,7 @@ export async function runJobs(now = new Date()) {
     console.error("[jobs] noticia del día falló", e);
     return false;
   });
+  await backfillNewsImages().catch((e) => console.error("[jobs] fotos de noticias falló", e));
   return { reminders, digest, news };
 }
 
