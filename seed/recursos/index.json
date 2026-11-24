@@ -485,5 +485,16 @@
       "prompt-raea.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "cada-peso-deja-rastro",
+    "title": "Cada peso deja rastro: lo que de verdad pasa si te robas $10.000 millones en Colombia",
+    "summary": "Las cifras y las normas reales detrás de mi historia de ficción: cuánto pesa el efectivo, las líneas de reporte de la UIAF, por qué fraccionar depósitos te delata y la pena de 10 a 30 años. Cada dato con su fuente. Guía completa para leer aquí; el PDF se descarga con tu cuenta gratis.",
+    "position": 44,
+    "cover": "/recursos/covers/cada-peso-deja-rastro.webp",
+    "files": [
+      "cada-peso-guia.pdf"
+    ],
+    "extra": true
   }
 ]
