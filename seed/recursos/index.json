@@ -473,5 +473,17 @@
       "prompt-sketch-to-3d.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "raea-render-gpu",
+    "title": "raea: probé el motor que renderiza tus videos 7× más rápido, gratis",
+    "summary": "Qué es raea (Render Anything Engine), el motor gratis que dibuja tus videos de React en tu propia tarjeta gráfica, sin navegador. Las pruebas que hice en mi PC (de 127 s a 17 s en un reel completo), cómo instalarlo en Windows, Mac o Linux, el prompt para tu primer video y lo que debes saber antes de usarlo. Guía completa para leer aquí; el PDF y el prompt se descargan con tu cuenta gratis.",
+    "position": 43,
+    "cover": "/recursos/covers/raea-render-gpu.webp",
+    "files": [
+      "raea-guia.pdf",
+      "prompt-raea.md"
+    ],
+    "extra": true
   }
 ]
