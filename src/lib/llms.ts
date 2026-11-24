@@ -2,6 +2,8 @@ import { desc, eq } from "drizzle-orm";
 import { db, schema } from "@/db";
 import { excerpt } from "@/lib/news-format";
 import { abs, FOUNDER, SITE_DESCRIPTION, SITE_NAME } from "@/lib/site";
+import { availableLangs } from "@/lib/resource-i18n";
+import { levelOf } from "@/lib/resource-constants";
 
 async function load() {
   const [news, resources, courses] = await Promise.all([
@@ -31,14 +33,22 @@ export async function buildLlmsTxt() {
   if (resources.length)
     out.push(
       `## Recursos gratuitos (guías, prompts y plantillas)\n\n- [Todos los recursos](${abs("/recursos")})\n` +
-        resources.map((r) => `- [${r.title}](${abs(`/recursos/${r.slug}`)}): ${r.summary || excerpt(r.body, 140)}`).join("\n"),
+        resources
+          .map((r) => {
+            const alt = availableLangs(r.slug)
+              .filter((l) => l !== "es")
+              .map((l) => `[${l.toUpperCase()}](${abs(`/recursos/${r.slug}?lang=${l}`)})`)
+              .join(", ");
+            return `- [${r.title}](${abs(`/recursos/${r.slug}`)}) · nivel ${levelOf(r.level)} · [Markdown](${abs(`/recursos/${r.slug}/md`)})${alt ? ` · ${alt}` : ""}: ${r.summary || excerpt(r.body, 140)}`;
+          })
+          .join("\n"),
     );
   if (courses.length)
     out.push(
       `## Cursos\n\n` + courses.map((c) => `- [${c.title}](${abs(`/cursos/${c.slug}`)}): ${excerpt(c.description, 140)}`).join("\n"),
     );
   out.push(
-    `## Más\n\n- [Contenido completo en un solo archivo](${abs("/llms-full.txt")})\n- [Feed RSS](${abs("/feed.xml")})\n- [Sitemap](${abs("/sitemap.xml")})`,
+    `## Más\n\n- Cada recurso tiene versión en Markdown (/recursos/<slug>/md) y en inglés y portugués (?lang=en, ?lang=pt)\n- [Contenido completo en un solo archivo](${abs("/llms-full.txt")})\n- [Feed RSS](${abs("/feed.xml")})\n- [Sitemap](${abs("/sitemap.xml")})`,
   );
   return `${out.join("\n\n")}\n`;
 }
@@ -51,7 +61,7 @@ export async function buildLlmsFull() {
   for (const n of news) out.push(`### ${n.title}\n\nFecha: ${n.day}\nURL: ${abs(`/noticias/${n.day}`)}\n\n${n.summary}`);
   if (resources.length) out.push(`## Recursos gratuitos`);
   for (const r of resources)
-    out.push(`### ${r.title}\n\nURL: ${abs(`/recursos/${r.slug}`)}\n\n${r.summary ? `${r.summary}\n\n` : ""}${r.body}`);
+    out.push(`### ${r.title}\n\nURL: ${abs(`/recursos/${r.slug}`)}\nNivel: ${levelOf(r.level)}\n\n${r.summary ? `${r.summary}\n\n` : ""}${r.body}`);
   if (courses.length) out.push(`## Cursos`);
   for (const c of courses) out.push(`### ${c.title}\n\nURL: ${abs(`/cursos/${c.slug}`)}\n\n${c.description}`);
   return `${out.join("\n\n")}\n`;

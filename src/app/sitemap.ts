@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { desc, eq } from "drizzle-orm";
 import { db, schema } from "@/db";
 import { abs, siteUrl } from "@/lib/site";
+import { availableLangs, langQuery } from "@/lib/resource-i18n";
 
 // Se arma en cada petición: cada día entra una noticia nueva y los recursos cambian cuando el admin publica.
 export const dynamic = "force-dynamic";
@@ -30,20 +31,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
     { url: `${base}/noticias`, lastModified: newest(news.map((n) => n.createdAt)), changeFrequency: "daily", priority: 0.9 },
-    { url: `${base}/recursos`, lastModified: newest(resources.map((r) => r.createdAt)), changeFrequency: "weekly", priority: 0.8 },
+    {
+      url: `${base}/recursos`,
+      lastModified: newest(resources.map((r) => r.createdAt)),
+      changeFrequency: "weekly",
+      priority: 0.8,
+      alternates: { languages: { es: `${base}/recursos`, en: `${base}/recursos?lang=en`, pt: `${base}/recursos?lang=pt` } },
+    },
     ...news.map((n) => ({
       url: `${base}/noticias/${n.day}`,
       lastModified: n.createdAt,
       changeFrequency: "yearly" as const,
       priority: 0.7,
     })),
-    ...resources.map((r) => ({
-      url: `${base}/recursos/${r.slug}`,
-      lastModified: r.createdAt,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-      images: r.coverUrl ? [abs(r.coverUrl)] : undefined,
-    })),
+    // Cada idioma es su propia URL (?lang=en / ?lang=pt) con hreflang cruzado, para que Google y los agentes ofrezcan la versión correcta.
+    ...resources.flatMap((r) => {
+      const langs = availableLangs(r.slug);
+      const languages = Object.fromEntries(langs.map((l) => [l, `${base}/recursos/${r.slug}${langQuery(l)}`]));
+      return langs.map((l) => ({
+        url: `${base}/recursos/${r.slug}${langQuery(l)}`,
+        lastModified: r.createdAt,
+        changeFrequency: "monthly" as const,
+        priority: l === "es" ? 0.7 : 0.6,
+        images: r.coverUrl ? [abs(r.coverUrl)] : undefined,
+        alternates: langs.length > 1 ? { languages } : undefined,
+      }));
+    }),
     ...courses.flatMap((c) =>
       c.slug
         ? [

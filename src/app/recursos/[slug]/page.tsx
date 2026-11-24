@@ -9,7 +9,8 @@ import { RichText } from "@/components/rich-text";
 import { SourceCookie } from "@/components/source-cookie";
 import { isGoogleEnabled } from "@/lib/google";
 import { excerpt } from "@/lib/news-format";
-import { LevelBadge } from "@/components/level-badge";
+import { LevelBadge, LEVEL_LABEL } from "@/components/level-badge";
+import { levelOf } from "@/lib/resource-constants";
 import { EyeCount } from "@/components/eye-count";
 import { recordResourceView, viewCounts } from "@/lib/resource-views";
 import { getResourceBySlug, getViewer, listPublishedResources } from "@/lib/resources";
@@ -33,13 +34,13 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   return {
     title: r.title,
     description,
-    alternates:
-      langs.length > 1
-        ? {
-            canonical: `${path}${langQuery(lang)}`,
-            languages: { ...Object.fromEntries(langs.map((l) => [l, `${path}${langQuery(l)}`])), "x-default": path },
-          }
-        : undefined,
+    alternates: {
+      canonical: `${path}${langQuery(lang)}`,
+      types: { "text/markdown": `${path}/md${langQuery(lang)}` },
+      ...(langs.length > 1
+        ? { languages: { ...Object.fromEntries(langs.map((l) => [l, `${path}${langQuery(l)}`])), "x-default": path } }
+        : {}),
+    },
     openGraph: {
       title: r.title,
       description,
@@ -96,6 +97,12 @@ export default async function RecursoPage({ params, searchParams }: Props) {
       dateModified: r.createdAt.toISOString(),
       inLanguage: lang,
       isAccessibleForFree: true,
+      educationalLevel: LEVEL_LABEL[lang][levelOf(r.level)],
+      learningResourceType: "Guía práctica",
+      timeRequired: `PT${readMinutes(r.body)}M`,
+      keywords: ["inteligencia artificial", "IA", "prompts", r.title].join(", "),
+      encodingFormat: "text/html",
+      associatedMedia: { "@type": "MediaObject", encodingFormat: "text/markdown", contentUrl: abs(`/recursos/${r.slug}/md${q}`) },
       author: orgRef(),
       publisher: orgRef(),
       isPartOf: { "@id": `${siteUrl()}/#website` },
