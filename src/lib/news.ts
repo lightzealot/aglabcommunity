@@ -183,15 +183,14 @@ async function writeOwnSummary(c: Candidate): Promise<{ title: string; summary: 
     return null;
   }
   try {
-    const [summary, title] = await Promise.all([
-      apifySummarize(token, source, "paragraph", 260),
-      apifySummarize(token, source, "one-line", 14),
-    ]);
-    if (!summary || !title) throw new Error("el resumidor no devolvió resultado");
-    const cleanTitle = title.replace(/^["“«]|["”»]$/g, "").replace(/\.$/, "").trim();
-    if (cleanTitle.length < 10 || summary.length < 300) throw new Error("resultado demasiado corto");
-    if (cleanTitle.toLowerCase() === c.title.toLowerCase()) throw new Error("el titular es igual al original");
-    return { title: cleanTitle.slice(0, 140), summary };
+    // Una sola ejecución del actor por intento (el plan gratis de Apify es limitado): el titular se saca del resumen.
+    const summary = await apifySummarize(token, source, "paragraph", 240);
+    if (!summary) throw new Error("el resumidor no devolvió resultado");
+    const first = summary.split(/(?<=[.!?])\s+/)[0].replace(/^["“«]|["”»]$/g, "").replace(/[.]$/, "").trim();
+    const cut = first.length > 110 ? `${first.slice(0, 110).replace(/\s+\S*$/, "")}…` : first;
+    if (cut.length < 10 || summary.length < 300) throw new Error("resultado demasiado corto");
+    if (cut.toLowerCase() === c.title.toLowerCase()) throw new Error("el titular es igual al original");
+    return { title: cut, summary };
   } catch (e) {
     console.error("[news] no se pudo escribir el resumen", e);
     return null;
@@ -246,10 +245,18 @@ export async function backfillNewsImages(limit = 6) {
  * Es idempotente: `day` es único, así que dos réplicas no la duplican.
  * Devuelve true si creó una noticia nueva.
  */
+const attempts = globalThis as unknown as { newsTry?: { day: string; n: number; at: number } };
+
 export async function ensureDailyNews(now = new Date()) {
   const day = dateKey(now);
   const [existing] = await db.select({ id: schema.news.id }).from(schema.news).where(eq(schema.news.day, day));
   if (existing) return false;
+
+  // Cuida los créditos de Apify: máx. 3 intentos al día, separados por al menos 2 horas.
+  const t = attempts.newsTry?.day === day ? attempts.newsTry : { day, n: 0, at: 0 };
+  if (t.n >= 3 || now.getTime() - t.at < 2 * 3_600_000) return false;
+  if (!process.env.APIFY_TOKEN) return false;
+  attempts.newsTry = { ...t, n: t.n + 1, at: now.getTime() };
 
   const used = new Set((await db.select({ url: schema.news.url }).from(schema.news)).map((r) => r.url));
   const all = (await loadCandidates(now)).filter((c) => !used.has(c.url) && c.publishedAt <= new Date(now.getTime() + 3_600_000));
