@@ -485,5 +485,16 @@
       "prompt-raea.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "10-herramientas-animacion-github",
+    "title": "10 herramientas gratis de GitHub para animar lo que imaginas (y por dónde empezar)",
+    "summary": "Las 10 herramientas de animación gratuitas y de código abierto del carrusel, con su enlace y una ruta para elegir por dónde empezar: dibujo 2D, movimiento para tu web, captura de movimiento, efectos y VFX. Datos de GitHub al 24 de noviembre de 2026. Guía completa para leer aquí; el PDF se descarga con tu cuenta gratis.",
+    "position": 44,
+    "cover": "/recursos/covers/10-herramientas-animacion-github.webp",
+    "files": [
+      "animacion-guia.pdf"
+    ],
+    "extra": true
   }
 ]
