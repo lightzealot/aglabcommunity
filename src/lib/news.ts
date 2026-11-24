@@ -192,6 +192,7 @@ async function writeOwnSummary(c: Candidate): Promise<{ title: string; summary: 
     if (cut.toLowerCase() === c.title.toLowerCase()) throw new Error("el titular es igual al original");
     return { title: cut, summary };
   } catch (e) {
+    lastNewsProblem = `Apify falló: ${e instanceof Error ? e.message : String(e)}`;
     console.error("[news] no se pudo escribir el resumen", e);
     return null;
   }
@@ -247,15 +248,21 @@ export async function backfillNewsImages(limit = 6) {
  */
 const attempts = globalThis as unknown as { newsTry?: { day: string; n: number; at: number } };
 
-export async function ensureDailyNews(now = new Date()) {
+/** Último motivo por el que no se pudo publicar (para el diagnóstico del admin). */
+export let lastNewsProblem = "";
+
+export async function ensureDailyNews(now = new Date(), force = false) {
   const day = dateKey(now);
   const [existing] = await db.select({ id: schema.news.id }).from(schema.news).where(eq(schema.news.day, day));
   if (existing) return false;
 
   // Cuida los créditos de Apify: máx. 3 intentos al día, separados por al menos 2 horas.
   const t = attempts.newsTry?.day === day ? attempts.newsTry : { day, n: 0, at: 0 };
-  if (t.n >= 3 || now.getTime() - t.at < 2 * 3_600_000) return false;
-  if (!process.env.APIFY_TOKEN) return false;
+  if (!process.env.APIFY_TOKEN) {
+    lastNewsProblem = "Falta la variable APIFY_TOKEN en el servidor.";
+    return false;
+  }
+  if (!force && (t.n >= 3 || now.getTime() - t.at < 2 * 3_600_000)) return false;
   attempts.newsTry = { ...t, n: t.n + 1, at: now.getTime() };
 
   const used = new Set((await db.select({ url: schema.news.url }).from(schema.news)).map((r) => r.url));
@@ -263,6 +270,7 @@ export async function ensureDailyNews(now = new Date()) {
   const within = (h: number) => all.filter((c) => now.getTime() - c.publishedAt.getTime() <= h * 3_600_000);
   const pool = within(MAX_AGE_H).length ? within(MAX_AGE_H) : within(FALLBACK_AGE_H);
   if (!pool.length) {
+    lastNewsProblem = "No hay notas candidatas nuevas en los feeds.";
     console.warn("[news] sin candidatos para", day);
     return false;
   }

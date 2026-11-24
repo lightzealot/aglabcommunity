@@ -13,6 +13,7 @@ const ADMIN_LINKS = [
   { href: "/admin/usuarios", label: "Usuarios" },
   { href: "/admin/cursos", label: "Cursos" },
   { href: "/admin/recursos", label: "Recursos" },
+  { href: "/admin/noticias", label: "Noticias" },
   { href: "/admin/eventos", label: "Eventos" },
   { href: "/admin/boards", label: "Boards" },
   { href: "/admin/configuracion", label: "Configuración" },
