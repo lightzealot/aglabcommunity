@@ -15,7 +15,7 @@ export async function notify(
       userId,
       type: n.type,
       title: n.title.slice(0, 200),
-      body: (n.body ?? "").slice(0, 300),
+      body: (n.body ?? "").slice(0, 1000),
       href: n.href ?? null,
     })),
   );

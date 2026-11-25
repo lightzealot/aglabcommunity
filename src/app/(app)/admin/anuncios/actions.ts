@@ -12,7 +12,7 @@ export type AnnounceState = { error?: string; ok?: boolean; count?: number };
 
 const announceSchema = z.object({
   title: z.string().trim().min(1, "Escribe un título.").max(120, "Máximo 120 caracteres."),
-  body: z.string().trim().max(300, "Máximo 300 caracteres.").optional(),
+  body: z.string().trim().max(1000, "Máximo 1000 caracteres.").optional(),
   href: z.string().trim().optional(),
 });
 

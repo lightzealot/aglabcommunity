@@ -32,7 +32,7 @@ export default async function NotificacionesPage() {
           {n.type === "announcement" && <span className="label !text-[10px]">Aviso</span>}
           {n.title}
         </span>
-        {n.body && <span className="block truncate text-sm text-ash">{n.body}</span>}
+        {n.body && <span className="line-clamp-4 block text-sm whitespace-pre-line text-ash">{n.body}</span>}
       </span>
       <span className="shrink-0 text-xs text-hollow">{timeAgo(n.createdAt)}</span>
     </Link>

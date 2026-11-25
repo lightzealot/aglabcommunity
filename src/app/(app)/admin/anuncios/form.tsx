@@ -1,13 +1,17 @@
 "use client";
 
-import { useActionState, useEffect, useRef } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { sendAnnouncement, type AnnounceState } from "./actions";
 
 export function AnnounceForm() {
   const [state, action, pending] = useActionState<AnnounceState, FormData>(sendAnnouncement, {});
   const ref = useRef<HTMLFormElement>(null);
+  const [len, setLen] = useState(0);
   useEffect(() => {
-    if (state.ok) ref.current?.reset();
+    if (state.ok) {
+      ref.current?.reset();
+      setLen(0);
+    }
   }, [state]);
 
   return (
@@ -18,7 +22,8 @@ export function AnnounceForm() {
       </div>
       <div>
         <label htmlFor="body" className="block text-sm font-semibold">Mensaje <span className="font-normal text-ash">(opcional)</span></label>
-        <textarea id="body" name="body" rows={3} maxLength={300} placeholder="Una o dos frases." className="input mt-1" />
+        <textarea id="body" name="body" rows={5} maxLength={1000} onChange={(e) => setLen(e.target.value.length)} placeholder="Escribe el aviso completo." className="input mt-1" />
+        <p className="mt-1 text-right text-xs text-hollow">{len}/1000 caracteres · el título admite hasta 120</p>
       </div>
       <div>
         <label htmlFor="href" className="block text-sm font-semibold">Enlace al tocar <span className="font-normal text-ash">(opcional)</span></label>
