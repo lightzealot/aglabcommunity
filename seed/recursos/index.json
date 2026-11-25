@@ -496,5 +496,16 @@
       "animacion-guia.pdf"
     ],
     "extra": true
+  },
+  {
+    "slug": "stiksound-stickers-con-sonido",
+    "title": "¿Tus stickers están mudos? StikSound les pone el sonido de cualquier meme",
+    "summary": "Cómo usar StikSound, la herramienta gratis y de código abierto que junta tu sticker con hasta 5 o 10 segundos del sonido de cualquier meme, paso a paso, y cómo llevarlo a WhatsApp. Guía completa para leer aquí; el PDF se descarga con tu cuenta gratis.",
+    "position": 45,
+    "cover": "/recursos/covers/stiksound-stickers-con-sonido.webp",
+    "files": [
+      "StikSound-guia.pdf"
+    ],
+    "extra": true
   }
 ]
