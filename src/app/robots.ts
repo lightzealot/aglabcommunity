@@ -35,6 +35,7 @@ const PRIVATE = [
   "/miembros",
   "/ranking",
   "/calendario",
+  "/evento/",
   "/perfil",
   "/notificaciones",
   "/buscar",

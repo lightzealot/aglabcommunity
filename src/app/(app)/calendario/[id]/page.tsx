@@ -1,6 +1,7 @@
 import { and, eq, sql } from "drizzle-orm";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { InviteShare } from "@/components/invite-share";
 import { LocalTime } from "@/components/local-time";
 import { db, schema } from "@/db";
 import { UUID_RE } from "@/lib/courses";
@@ -68,6 +69,21 @@ export default async function EventoPage({ params }: { params: Promise<{ id: str
         )}
         <span className="ml-auto text-xs text-hollow">{n} confirmado{n === 1 ? "" : "s"}</span>
       </div>
+
+      {!finished && (
+        <div className="card mt-4 flex flex-wrap items-center gap-3 p-4">
+          <div className="min-w-0 flex-1 text-sm">
+            <p className="font-semibold">Trae a alguien contigo</p>
+            <p className="text-ash">
+              Comparte la invitación: quien la reciba ve el evento, se une gratis a la comunidad y queda con su lugar confirmado.
+            </p>
+          </div>
+          <InviteShare
+            path={`/evento/${ev.id}?ref=${encodeURIComponent(user.id)}`}
+            text={`Te invito a "${ev.title}" en AG Lab, la comunidad de IA en español. Únete gratis:`}
+          />
+        </div>
+      )}
     </>
   );
 }

@@ -7,6 +7,7 @@ import { isGoogleEnabled } from "@/lib/google";
 import { notify } from "@/lib/notify";
 import { getRequireApproval } from "@/lib/settings";
 import { sourceFromHeaders } from "@/lib/signup-source";
+import { inviteFromHeaders } from "@/lib/invite";
 import { emailLayout, sendMail } from "@/lib/mail";
 
 const adminEmails = (process.env.ADMIN_EMAIL ?? "")
@@ -73,7 +74,26 @@ export const auth = betterAuth({
             },
           };
         },
-        after: async (user) => {
+        after: async (user, context) => {
+          // Invitado a un evento: si entra directo, queda confirmado y se avisa a quien lo invitó.
+          try {
+            const inv = await inviteFromHeaders(context?.request?.headers ?? (context as { headers?: Headers } | null)?.headers);
+            const [me] = inv ? await db.select({ status: schema.user.status }).from(schema.user).where(eq(schema.user.id, user.id)) : [];
+            if (inv && me?.status === "approved") {
+              await db.insert(schema.eventRsvp).values({ userId: user.id, eventId: inv.eventId }).onConflictDoNothing();
+              await notify(user.id, { type: "welcome", title: `Tu lugar en "${inv.title}" está confirmado`, href: `/calendario/${inv.eventId}` });
+              if (inv.refId && inv.refId !== user.id) {
+                await notify(inv.refId, {
+                  type: "invite",
+                  title: `${user.name} se unió con tu invitación`,
+                  body: `Aceptó tu invitación a "${inv.title}" y ya está en la comunidad.`,
+                  href: `/u/${user.id}`,
+                });
+              }
+            }
+          } catch (e) {
+            console.error("[invitación] no se pudo registrar", e);
+          }
           if (adminEmails.includes(user.email.toLowerCase())) return;
           const base = process.env.BETTER_AUTH_URL ?? "";
           const [row] = await db
