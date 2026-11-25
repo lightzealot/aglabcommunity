@@ -291,6 +291,23 @@ export const event = pgTable("event", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
+/** Comentarios de un evento (preguntas, saludos, dudas antes y después). */
+export const eventComment = pgTable(
+  "event_comment",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    eventId: uuid("event_id")
+      .notNull()
+      .references(() => event.id, { onDelete: "cascade" }),
+    authorId: text("author_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    body: text("body").notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (t) => [index("event_comment_event_idx").on(t.eventId, t.createdAt)],
+);
+
 export const eventRsvp = pgTable(
   "event_rsvp",
   {

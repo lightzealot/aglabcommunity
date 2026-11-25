@@ -2,12 +2,15 @@ import { and, eq, sql } from "drizzle-orm";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { InviteShare } from "@/components/invite-share";
+import { Avatar } from "@/components/avatar";
+import { EventCommentForm } from "@/components/event-comment-form";
+import { timeAgo } from "@/lib/time";
 import { LocalTime } from "@/components/local-time";
 import { db, schema } from "@/db";
 import { UUID_RE } from "@/lib/courses";
 import { googleCalendarUrl, hasEnded } from "@/lib/events";
 import { requireMember } from "@/lib/session";
-import { toggleRsvp } from "../actions";
+import { deleteEventComment, toggleRsvp } from "../actions";
 
 export default async function EventoPage({ params }: { params: Promise<{ id: string }> }) {
   const { user } = await requireMember();
@@ -31,6 +34,19 @@ export default async function EventoPage({ params }: { params: Promise<{ id: str
     .where(eq(schema.eventRsvp.eventId, id));
 
   const finished = hasEnded(ev);
+  const comments = await db
+    .select({
+      id: schema.eventComment.id,
+      body: schema.eventComment.body,
+      createdAt: schema.eventComment.createdAt,
+      authorId: schema.eventComment.authorId,
+      name: schema.user.name,
+      image: schema.user.image,
+    })
+    .from(schema.eventComment)
+    .innerJoin(schema.user, eq(schema.user.id, schema.eventComment.authorId))
+    .where(eq(schema.eventComment.eventId, id))
+    .orderBy(schema.eventComment.createdAt);
 
   return (
     <>
@@ -84,6 +100,36 @@ export default async function EventoPage({ params }: { params: Promise<{ id: str
           />
         </div>
       )}
+
+      <section id="comentarios" className="mt-8">
+        <h2 className="font-semibold">Comentarios · {comments.length}</h2>
+        <div className="card mt-3 p-4">
+          <EventCommentForm eventId={ev.id} />
+        </div>
+        <ul className="mt-4 space-y-4">
+          {comments.map((c) => (
+            <li key={c.id} className="flex gap-3">
+              <Link href={`/u/${c.authorId}`} className="shrink-0">
+                <Avatar name={c.name} image={c.image} size={36} />
+              </Link>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm">
+                  <Link href={`/u/${c.authorId}`} className="font-semibold hover:text-accent">{c.name}</Link>
+                  <span className="ml-2 text-xs text-hollow">{timeAgo(c.createdAt)}</span>
+                </p>
+                <p className="mt-0.5 break-words whitespace-pre-line text-sm">{c.body}</p>
+                {(c.authorId === user.id || user.role === "admin") && (
+                  <form action={deleteEventComment} className="mt-1">
+                    <input type="hidden" name="id" value={c.id} />
+                    <button className="text-xs text-hollow hover:text-red-600">Borrar</button>
+                  </form>
+                )}
+              </div>
+            </li>
+          ))}
+          {comments.length === 0 && <li className="text-sm text-ash">Sé el primero en comentar.</li>}
+        </ul>
+      </section>
     </>
   );
 }
