@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { db, schema } from "@/db";
-import { emailLayout, sendMail } from "@/lib/mail";
+import { bulkHeaders, emailLayout, sendMail } from "@/lib/mail";
 import { isInternalPath, notify } from "@/lib/notify";
 import { requireAdmin } from "@/lib/session";
 
@@ -41,14 +41,23 @@ export async function sendAnnouncement(_prev: AnnounceState, formData: FormData)
 
   if (formData.get("email") === "on") {
     const base = process.env.BETTER_AUTH_URL ?? "";
-    for (const m of recipients.filter((r) => r.wants)) {
-      await sendMail({
-        to: m.email,
-        subject: title,
-        text: `${title}\n${body ?? ""}\n${base}${href ?? ""}`,
-        html: emailLayout(title, body ?? "", { label: "Abrir en la comunidad", url: `${base}${href ?? "/"}` }),
-      }).catch((e) => console.error("[anuncio] correo falló", m.email, e));
-    }
+    // En segundo plano y de a uno, con pausa: no bloquea al admin y evita topes del servidor de correo.
+    const wanting = recipients.filter((r) => r.wants);
+    void (async () => {
+      for (const m of wanting) {
+        await sendMail({
+          to: m.email,
+          subject: title,
+          text: `${title}\n${body ?? ""}\n${base}${href ?? ""}\n\nPara dejar de recibir estos correos: ${base}/perfil`,
+          html: emailLayout(title, body ?? "", { label: "Abrir en la comunidad", url: `${base}${href ?? "/"}` }).replace(
+            "AG Lab · comunidad.andresgomez.store",
+            `AG Lab · <a href="${base}/perfil" style="color:#8f8f8f">Dejar de recibir estos correos</a>`,
+          ),
+          headers: bulkHeaders(),
+        }).catch((e) => console.error("[anuncio] correo falló", m.email, e));
+        await new Promise((r) => setTimeout(r, 1500));
+      }
+    })();
   }
 
   revalidatePath("/", "layout");

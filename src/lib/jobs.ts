@@ -1,6 +1,6 @@
 import { and, desc, eq, gt, gte, isNull, lte, sql } from "drizzle-orm";
 import { db, schema } from "@/db";
-import { emailLayout, esc, sendMail } from "@/lib/mail";
+import { bulkHeaders, emailLayout, esc, sendMail } from "@/lib/mail";
 import { backfillNewsImages, ensureDailyNews } from "@/lib/news";
 import { notify } from "@/lib/notify";
 import { dateKey, TZ } from "@/lib/streak";
@@ -133,7 +133,7 @@ export async function sendWeeklyDigest(now = new Date()) {
   let sent = 0;
   for (const r of recipients) {
     try {
-      await sendMail({ to: r.email, subject: "Tu resumen semanal · AG Lab", text: `Tu resumen semanal: ${base()}`, html });
+      await sendMail({ to: r.email, subject: "Tu resumen semanal · AG Lab", text: `Tu resumen semanal: ${base()}`, html, headers: bulkHeaders() });
       sent++;
     } catch (e) {
       console.error("[jobs] resumen falló", r.email, e);

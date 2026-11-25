@@ -22,6 +22,7 @@ export async function sendMail(opts: {
   subject: string;
   text: string;
   html?: string;
+  headers?: Record<string, string>;
 }) {
   if (!process.env.SMTP_PASS) {
     console.warn(`[mail] SMTP no configurado, no se envió: ${opts.subject} -> ${opts.to}`);
@@ -31,6 +32,17 @@ export async function sendMail(opts: {
     from: process.env.SMTP_FROM ?? process.env.SMTP_USER,
     ...opts,
   });
+}
+
+/** Cabeceras de correo masivo: permiten darse de baja desde el propio cliente de correo y bajan el riesgo de spam. */
+export function bulkHeaders() {
+  const base = process.env.BETTER_AUTH_URL ?? "";
+  const from = process.env.SMTP_USER ?? "";
+  return {
+    "List-Unsubscribe": `<${base}/perfil>${from ? `, <mailto:${from}?subject=Baja>` : ""}`,
+    Precedence: "bulk",
+    "Auto-Submitted": "auto-generated",
+  };
 }
 
 export function esc(s: string) {
