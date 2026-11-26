@@ -507,5 +507,17 @@
       "StikSound-guia.pdf"
     ],
     "extra": true
+  },
+  {
+    "slug": "checklist-legal-lanzar-app",
+    "title": "¿Tu app hecha con IA te puede meter en líos legales? 35 puntos para pedirle a Claude antes de lanzar",
+    "summary": "Los 35 puntos legales y técnicos que debes revisar antes de lanzar una app hecha con IA (privacidad, términos, cookies, pagos, marketing, accesibilidad, licencias y datos de usuarios), en 7 bloques, y un prompt listo para que Claude Code revise tu app. Guía completa para leer aquí; el PDF y el prompt se descargan con tu cuenta gratis.",
+    "position": 46,
+    "cover": "/recursos/covers/checklist-legal-lanzar-app.webp",
+    "files": [
+      "Checklist-legal-guia.pdf",
+      "prompt.md"
+    ],
+    "extra": true
   }
 ]
