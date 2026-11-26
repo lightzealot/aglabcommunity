@@ -541,5 +541,16 @@
       "Respaldo-Claude-guia.pdf"
     ],
     "extra": true
+  },
+  {
+    "slug": "que-es-una-api-explicado-facil",
+    "title": "¿Te dicen API y no entiendes? 10 palabras de programación explicadas como si tuvieras 5 años",
+    "summary": "API, frontend, backend, base de datos, servidor, bug, deploy, Git, límite de uso y token, explicados como si tuvieras 5 años con la pizzería del reel, y dos prompts para que Claude te los explique con tu propio proyecto. Guía completa para leer aquí; el PDF se descarga con tu cuenta gratis.",
+    "position": 49,
+    "cover": "/recursos/covers/que-es-una-api-explicado-facil.webp",
+    "files": [
+      "API-10-palabras-guia.pdf"
+    ],
+    "extra": true
   }
 ]
