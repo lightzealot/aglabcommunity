@@ -552,5 +552,16 @@
       "API-10-palabras-guia.pdf"
     ],
     "extra": true
+  },
+  {
+    "slug": "voces-con-ia-que-suenan-reales",
+    "title": "¿Tu voz con IA suena a robot? 3 herramientas para voces que suenan reales",
+    "summary": "MiniMax Audio, Google AI Studio (la voz de Gemini) y ElevenLabs: para qué sirve cada una, qué tiene gratis y el paso a paso para crear tu voz, más un prompt para que el texto suene natural. Guía completa para leer aquí; el PDF se descarga con tu cuenta gratis.",
+    "position": 50,
+    "cover": "/recursos/covers/voces-con-ia-que-suenan-reales.webp",
+    "files": [
+      "Voces-IA-guia.pdf"
+    ],
+    "extra": true
   }
 ]
