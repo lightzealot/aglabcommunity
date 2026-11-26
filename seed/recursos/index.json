@@ -530,5 +530,16 @@
       "Claude-agente-guia.pdf"
     ],
     "extra": true
+  },
+  {
+    "slug": "que-claude-no-rompa-tu-proyecto",
+    "title": "¿Claude te tumbó la app? 6 capas para que Claude Code nunca rompa tu proyecto",
+    "summary": "Los checkpoints y /rewind de Claude Code, Git antes de cada cambio grande, pruebas y producción separados, permisos que bloquean comandos peligrosos, respaldos que sí sirven y las reglas de seguridad para tu CLAUDE.md. Y qué hacer si ya se rompió. Guía completa para leer aquí; el PDF se descarga con tu cuenta gratis.",
+    "position": 48,
+    "cover": "/recursos/covers/que-claude-no-rompa-tu-proyecto.webp",
+    "files": [
+      "Respaldo-Claude-guia.pdf"
+    ],
+    "extra": true
   }
 ]
