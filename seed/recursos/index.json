@@ -519,5 +519,16 @@
       "prompt.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "claude-como-tu-agente",
+    "title": "¿Tu IA solo te dice cómo? Haz que Claude sea tu agente (y el pago lo apruebas tú)",
+    "summary": "La diferencia entre el modo chat y el modo agente, dónde está (Claude en Chrome, Cowork y Claude Code), los 3 modos de permiso, lo que Claude nunca hace por ti y prompts listos para copiar. Guía completa para leer aquí; el PDF se descarga con tu cuenta gratis.",
+    "position": 47,
+    "cover": "/recursos/covers/claude-como-tu-agente.webp",
+    "files": [
+      "Claude-agente-guia.pdf"
+    ],
+    "extra": true
   }
 ]
