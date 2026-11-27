@@ -563,5 +563,16 @@
       "Voces-IA-guia.pdf"
     ],
     "extra": true
+  },
+  {
+    "slug": "instalar-claude-como-app",
+    "title": "¿Lo de Claude se queda en un chat? Instálalo como app (+ 10 apps para pedir hoy)",
+    "summary": "Cómo instalar un artefacto de Claude como app en Mac o Windows: requisitos, paso a paso, permisos y 10 ideas de apps con su prompt. Guía completa para leer aquí; el PDF se descarga con tu cuenta gratis.",
+    "position": 51,
+    "cover": "/recursos/covers/instalar-claude-como-app.webp",
+    "files": [
+      "Claude-Apps-guia.pdf"
+    ],
+    "extra": true
   }
 ]
