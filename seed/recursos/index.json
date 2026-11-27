@@ -574,5 +574,17 @@
       "Claude-Apps-guia.pdf"
     ],
     "extra": true
+  },
+  {
+    "slug": "6-repos-que-puedes-vender",
+    "title": "¿No sabes qué vender con IA? 6 repos gratis que sí puedes cobrar",
+    "summary": "Seis proyectos de GitHub con licencia MIT: a quién ofrecer cada uno, cómo venderlo, qué revisar antes de cobrar y dos ejemplos con letra pequeña. Guía completa para leer aquí; el PDF se descarga con tu cuenta gratis.",
+    "position": 52,
+    "cover": "/recursos/covers/6-repos-que-puedes-vender.webp",
+    "files": [
+      "6-repos-que-puedes-vender.pdf",
+      "prompt-revisar-licencia.md"
+    ],
+    "extra": true
   }
 ]
