@@ -586,5 +586,17 @@
       "prompt-revisar-licencia.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "colibri-ia-gigante-en-tu-pc",
+    "title": "¿Tu PC no aguanta una IA gigante? Colibri y qué modelo le cabe a tu RAM",
+    "summary": "Repo gratis escrito en C que deja en la RAM lo esencial del modelo y lee el resto desde tu SSD. Instalación en Windows, Mac y Linux, tabla de modelos por RAM y límites reales de velocidad y disco. Guía completa para leer aquí; el PDF se descarga con tu cuenta gratis.",
+    "position": 53,
+    "cover": "/recursos/covers/colibri-ia-gigante-en-tu-pc.webp",
+    "files": [
+      "colibri-ia-gigante-guia.pdf",
+      "prompt-instalar-colibri.md"
+    ],
+    "extra": true
   }
 ]
