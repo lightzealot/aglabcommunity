@@ -611,5 +611,16 @@
       "drones-cueva-guia.pdf"
     ],
     "extra": true
+  },
+  {
+    "slug": "claude-meetings-llamada-ventas",
+    "title": "Claude Meetings: que Claude trabaje en tu llamada de ventas",
+    "summary": "Claude entra a tu Google Meet como un participante más: toma notas, arma pizarras y la propuesta en un documento que tu equipo edita en vivo, y al colgar te deja transcripción, resumen y pendientes. Qué hace de verdad, quién lo tiene (Team y Enterprise, en beta), cómo activarlo y cómo usarlo con un cliente. Guía completa para leer aquí; el PDF se descarga con tu cuenta gratis.",
+    "position": 55,
+    "cover": "/recursos/covers/claude-meetings-llamada-ventas.webp",
+    "files": [
+      "claude-meetings-guia.pdf"
+    ],
+    "extra": true
   }
 ]
