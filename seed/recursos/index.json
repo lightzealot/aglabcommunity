@@ -598,5 +598,18 @@
       "prompt-instalar-colibri.md"
     ],
     "extra": true
+  },
+  {
+    "slug": "drones-cueva-neuroevolucion",
+    "title": "200 drones que no saben volar: así aprenden solos (simulador en Python)",
+    "summary": "Neuroevolución explicada con la corrida real del reel: 200 drones, una red de 68 pesos y un algoritmo genético que copia con errores a los que llegan más lejos. Tabla generación por generación, cómo correr el simulador y el visor en tu compu, y qué reglas cambiar. Guía completa para leer aquí; el simulador y el PDF se descargan con tu cuenta gratis.",
+    "position": 54,
+    "cover": "/recursos/covers/drones-cueva-neuroevolucion.webp",
+    "files": [
+      "drones_cueva.py",
+      "ver_drones.py",
+      "drones-cueva-guia.pdf"
+    ],
+    "extra": true
   }
 ]
