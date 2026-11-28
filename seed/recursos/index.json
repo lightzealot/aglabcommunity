@@ -622,5 +622,16 @@
       "claude-meetings-guia.pdf"
     ],
     "extra": true
+  },
+  {
+    "slug": "sonido-claude-earshot",
+    "title": "Dale oídos a Claude: el flujo de sonido de mis reels",
+    "summary": "Claude edita bien pero no oye, por eso tus videos suenan mal. Las 3 piezas que uso en cada reel: earshot para que escuche y mida, efectos en cada corte y música de ElevenLabs con ducking bajo la voz. Comandos, la mezcla con ffmpeg y el prompt para Claude Code. Guía completa para leer aquí; el PDF se descarga con tu cuenta gratis.",
+    "position": 56,
+    "cover": "/recursos/covers/sonido-claude-earshot.webp",
+    "files": [
+      "sonido-guia.pdf"
+    ],
+    "extra": true
   }
 ]
